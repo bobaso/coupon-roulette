@@ -3,77 +3,116 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- スマートフォン表示用 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
-    <title>クーポンおみくじ</title>
+    <title>クーポン抽選キャンペーン</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="app">
+    <main class="coupon-site">
 
-        <!-- =========================
-             スタート画面
-        ========================== -->
-        <section id="startScreen" class="screen">
+        <!-- =================================
+             キャンペーンロゴ
+             後から画像を挿入する場所
+        ================================== -->
+        <section class="campaign-logo">
 
-            <div class="startContent">
-
-                <h1 class="title">
-                    クーポンおみくじ
-                </h1>
-
-                <p class="description">
-                    ボタンを押して<br>
-                    クーポンをゲット！
-                </p>
-
-                <button id="couponBtn" class="couponButton">
-                    クーポン取得
-                </button>
-
-            </div>
+            <img
+                src=""
+                alt="クーポン抽選キャンペーン"
+                class="campaign-logo-image"
+            >
 
         </section>
 
 
-        <!-- =========================
-             結果画面
-        ========================== -->
-        <section id="resultScreen" class="screen hidden">
+        <!-- =================================
+             クーポン取得ボタン
+        ================================== -->
+        <section class="coupon-button-area">
 
-            <div class="resultContent">
+            <button
+                type="button"
+                class="coupon-button"
+            >
+                クーポン取得
+            </button>
 
-                <p class="resultLabel">
-                    抽選結果
-                </p>
+        </section>
 
-                <h2 id="rankText" class="rank">
-                    3等
-                </h2>
 
-                <div class="couponBox">
+        <!-- =================================
+             区切り線
+        ================================== -->
+        <div class="section-divider"></div>
 
-                    <p id="couponText" class="couponName">
-                        5％引き券
-                    </p>
 
+        <!-- =================================
+             クーポンリスト
+        ================================== -->
+        <section class="coupon-list">
+
+            <h2 class="coupon-list-title">
+                クーポンリスト
+            </h2>
+
+
+            <!-- 1等 -->
+            <div class="coupon-item rank-1">
+
+                <div class="rank-label">
+                    <span>1等</span>
                 </div>
 
-                <button id="retryBtn" class="retryButton">
-                    もう一度引く
-                </button>
+                <div class="coupon-content">
+                    ドリンク無料券
+                </div>
 
             </div>
+
+
+            <!-- 2等 -->
+            <div class="coupon-item rank-2">
+
+                <div class="rank-label">
+                    <span>2等</span>
+                </div>
+
+                <div class="coupon-content">
+                    10%OFFクーポン
+                </div>
+
+            </div>
+
+
+            <!-- 3等 -->
+            <div class="coupon-item rank-3">
+
+                <div class="rank-label">
+                    <span>3等</span>
+                </div>
+
+                <div class="coupon-content">
+                    5%OFFクーポン
+                </div>
+
+            </div>
+
+
+            <!--
+                4等以降を追加する場合は
+                このcoupon-itemをコピーして増やせます。
+            -->
 
         </section>
 
     </main>
-
-    <script src="script.js"></script>
 
 </body>
 </html>
