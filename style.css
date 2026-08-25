@@ -271,7 +271,8 @@ body {
 
 
 /* =========================================
-   等賞ラベル
+   等賞リボン
+   画像で表示
 ========================================= */
 
 .rank-label {
@@ -284,7 +285,7 @@ body {
     z-index: 2;
 
     width: 56px;
-    height: 62px;
+    height: 82px;
 
     display: flex;
 
@@ -293,46 +294,75 @@ body {
 
     padding-top: 7px;
 
-    color: #ffffff;
-
     font-size: 25px;
-
     font-weight: 900;
-
     line-height: 1;
 
-    background: currentColor;
-
-    /* 重要：本体は四角形のまま */
-    clip-path: none;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 56px 82px;
 }
 
 
 /* =========================================
-   リボンの先端
-   下側だけ二股
+   文字
 ========================================= */
 
-.rank-label::after {
+.rank-label span {
 
-    content: "";
+    position: relative;
 
-    position: absolute;
+    z-index: 5;
 
-    left: 0;
-    top: 61px;
+    display: block;
 
-    width: 56px;
-    height: 20px;
+    color: #ffffff;
 
-    background: inherit;
+    margin: 0;
+    padding: 0;
 
-    clip-path: polygon(
-        0 0,
-        100% 0,
-        50% 100%,
-        0 0
-    );
+    line-height: 1;
+}
+
+
+/* =========================================
+   1等
+========================================= */
+
+.rank-1 .rank-label {
+
+    background-image: url("images/rank-1.png");
+}
+
+
+/* =========================================
+   2等
+========================================= */
+
+.rank-2 .rank-label {
+
+    background-image: url("images/rank-2.png");
+}
+
+
+/* =========================================
+   3等
+========================================= */
+
+.rank-3 .rank-label {
+
+    background-image: url("images/rank-3.png");
+}
+
+
+/* =========================================
+   4等以降
+   3等と同じリボンを使用
+========================================= */
+
+.rank-4 .rank-label {
+
+    background-image: url("images/rank-3.png");
 }
 
 
