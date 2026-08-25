@@ -38,6 +38,8 @@ body {
 
 .coupon-site {
 
+    position: relative;
+
     width: 100%;
     max-width: 430px;
 
@@ -49,7 +51,6 @@ body {
 
     overflow: hidden;
 }
-
 
 /* =========================================
    キャンペーンロゴ
