@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- スマートフォン表示用 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>クーポンおみくじ</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <!-- =========================
+             スタート画面
+        ========================== -->
+        <section id="startScreen" class="screen">
+
+            <div class="startContent">
+
+                <h1 class="title">
+                    クーポンおみくじ
+                </h1>
+
+                <p class="description">
+                    ボタンを押して<br>
+                    クーポンをゲット！
+                </p>
+
+                <button id="couponBtn" class="couponButton">
+                    クーポン取得
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             結果画面
+        ========================== -->
+        <section id="resultScreen" class="screen hidden">
+
+            <div class="resultContent">
+
+                <p class="resultLabel">
+                    抽選結果
+                </p>
+
+                <h2 id="rankText" class="rank">
+                    3等
+                </h2>
+
+                <div class="couponBox">
+
+                    <p id="couponText" class="couponName">
+                        5％引き券
+                    </p>
+
+                </div>
+
+                <button id="retryBtn" class="retryButton">
+                    もう一度引く
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
