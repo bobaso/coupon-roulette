@@ -67,6 +67,10 @@ body {
     padding: 0;
 
     line-height: 0;
+
+    position: relative;
+
+    top: 0;
 }
 
 
@@ -81,6 +85,16 @@ body {
     padding: 0;
 
     object-fit: contain;
+
+    position: relative;
+    top: 0;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
 }
 
 
