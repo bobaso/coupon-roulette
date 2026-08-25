@@ -260,25 +260,13 @@ body {
 
     width: 100%;
 
-    min-height: 105px;
+    min-height: 0;
 
     margin-bottom: 15px;
 
     padding-top: 21px;
-
     padding-left: 7px;
-
     padding-right: 7px;
-}
-
-
-/*
-    最後の項目だけ余白を小さくする
-*/
-
-.coupon-item:last-child {
-
-    margin-bottom: 0;
 }
 
 
