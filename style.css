@@ -301,12 +301,16 @@ body {
 
     line-height: 1;
 
-    /* リボン本体 */
+    background: currentColor;
+
+    /* 重要：本体は四角形のまま */
     clip-path: none;
 }
+
+
 /* =========================================
    リボンの先端
-   下だけ二股にする
+   下側だけ二股
 ========================================= */
 
 .rank-label::after {
@@ -316,21 +320,25 @@ body {
     position: absolute;
 
     left: 0;
-    bottom: -1px;
+    top: 61px;
 
     width: 56px;
-    height: 16px;
+    height: 18px;
 
-    background: currentColor;
+    background: inherit;
 
     clip-path: polygon(
         0 0,
         100% 0,
         100% 100%,
-        50% 45%,
+        75% 65%,
+        50% 100%,
+        25% 65%,
         0 100%
     );
 }
+
+
 /* =========================================
    等賞文字
 ========================================= */
@@ -345,7 +353,11 @@ body {
 
     color: #ffffff;
 
-    margin-top: 0;
+    margin: 0;
+
+    padding: 0;
+
+    line-height: 1;
 }
 /* =========================================
    クーポン本体
