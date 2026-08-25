@@ -323,17 +323,15 @@ body {
     top: 61px;
 
     width: 56px;
-    height: 18px;
+    height: 20px;
 
     background: inherit;
 
     clip-path: polygon(
         0 0,
+        50% 55%,
         100% 0,
         100% 100%,
-        75% 65%,
-        50% 100%,
-        25% 65%,
         0 100%
     );
 }
