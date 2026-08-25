@@ -1,0 +1,350 @@
+/* ==========================
+   全体
+========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Hiragino Sans",
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+
+    background: #e8f5ff;
+
+    overflow-x: hidden;
+}
+
+
+/* ==========================
+   アプリ本体
+========================== */
+
+.app {
+    width: 100%;
+    max-width: 430px;
+
+    min-height: 100dvh;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* ==========================
+   画面共通
+========================== */
+
+.screen {
+    width: 100%;
+    min-height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 20px;
+
+    text-align: center;
+}
+
+
+/* 非表示 */
+
+.hidden {
+    display: none;
+}
+
+
+/* ==========================
+   スタート画面
+========================== */
+
+#startScreen {
+    background: linear-gradient(
+        180deg,
+        #dff4ff 0%,
+        #ffffff 100%
+    );
+}
+
+
+.startContent {
+    width: 100%;
+    max-width: 360px;
+}
+
+
+/* タイトル */
+
+.title {
+    font-size: 9vw;
+
+    max-font-size: 40px;
+
+    font-weight: 800;
+
+    color: #238bd3;
+
+    letter-spacing: 0.05em;
+
+    margin-bottom: 30px;
+}
+
+
+/* 説明 */
+
+.description {
+    font-size: 4.5vw;
+
+    max-font-size: 20px;
+
+    line-height: 1.8;
+
+    color: #555;
+
+    margin-bottom: 50px;
+}
+
+
+/* ==========================
+   クーポン取得ボタン
+========================== */
+
+.couponButton {
+    width: 85%;
+
+    min-height: 75px;
+
+    padding: 15px 20px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #ff9f43;
+
+    color: #ffffff;
+
+    font-size: 6vw;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 #d97820,
+        0 10px 20px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+}
+
+
+/* ボタンを押したとき */
+
+.couponButton:active {
+    transform: translateY(5px);
+
+    box-shadow:
+        0 1px 0 #d97820,
+        0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ==========================
+   結果画面
+========================== */
+
+#resultScreen {
+    background: linear-gradient(
+        180deg,
+        #fff8df 0%,
+        #ffffff 100%
+    );
+}
+
+
+.resultContent {
+    width: 100%;
+    max-width: 360px;
+}
+
+
+/* 抽選結果 */
+
+.resultLabel {
+    font-size: 5vw;
+
+    font-weight: 600;
+
+    color: #777;
+
+    margin-bottom: 15px;
+}
+
+
+/* ==========================
+   等賞
+========================== */
+
+.rank {
+    font-size: 15vw;
+
+    font-weight: 900;
+
+    color: #ff8a00;
+
+    letter-spacing: 0.05em;
+
+    margin-bottom: 30px;
+
+    text-shadow:
+        2px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==========================
+   クーポン表示
+========================== */
+
+.couponBox {
+    width: 100%;
+
+    padding: 35px 20px;
+
+    margin-bottom: 45px;
+
+    background: #ffffff;
+
+    border: 4px dashed #ffb52e;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.couponName {
+    font-size: 7vw;
+
+    font-weight: 800;
+
+    line-height: 1.5;
+
+    color: #333;
+}
+
+
+/* ==========================
+   もう一度引くボタン
+========================== */
+
+.retryButton {
+    width: 75%;
+
+    min-height: 60px;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #55aee8;
+
+    color: #ffffff;
+
+    font-size: 5vw;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 0 #3288bd;
+
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+}
+
+
+.retryButton:active {
+    transform: translateY(4px);
+
+    box-shadow:
+        0 1px 0 #3288bd;
+}
+
+
+/* ==========================
+   PCで見た場合
+   スマホ幅に固定
+========================== */
+
+@media (min-width: 431px) {
+
+    body {
+        background: #d7d7d7;
+    }
+
+    .app {
+        width: 430px;
+
+        min-height: 100dvh;
+
+        background: #ffffff;
+
+        box-shadow:
+            0 0 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .title {
+        font-size: 38px;
+    }
+
+    .description {
+        font-size: 19px;
+    }
+
+    .couponButton {
+        font-size: 26px;
+    }
+
+    .resultLabel {
+        font-size: 20px;
+    }
+
+    .rank {
+        font-size: 64px;
+    }
+
+    .couponName {
+        font-size: 28px;
+    }
+
+    .retryButton {
+        font-size: 21px;
+    }
+}
