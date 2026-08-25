@@ -316,17 +316,19 @@ body {
     left: 0;
     bottom: -1px;
 
-    width: 0;
-    height: 0;
+    width: 56px;
+    height: 16px;
 
-    border-left: 28px solid transparent;
-    border-right: 28px solid transparent;
+    background: inherit;
 
-    border-top: 15px solid currentColor;
-
-    transform: translateY(1px);
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 100%,
+        50% 45%,
+        0 100%
+    );
 }
-
 
 /*
     文字を前面にする
