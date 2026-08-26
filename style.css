@@ -332,6 +332,12 @@ body {
 .rank-1 .rank-label {
 
     background-image: url("images/rank-1.png");
+
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 56px 82px;
+
+    color: #ffffff;
 }
 
 
@@ -342,8 +348,13 @@ body {
 .rank-2 .rank-label {
 
     background-image: url("images/rank-2.png");
-}
 
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 56px 82px;
+
+    color: #ffffff;
+}
 
 /* =========================================
    3等
@@ -352,6 +363,12 @@ body {
 .rank-3 .rank-label {
 
     background-image: url("images/rank-3.png");
+
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 56px 82px;
+
+    color: #ffffff;
 }
 
 
@@ -363,6 +380,12 @@ body {
 .rank-4 .rank-label {
 
     background-image: url("images/rank-3.png");
+
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 56px 82px;
+
+    color: #ffffff;
 }
 
 
@@ -425,14 +448,6 @@ body {
    1等
 ========================================= */
 
-.rank-1 .rank-label {
-
-    background: #ffcb00;
-
-    color: #ffcb00;
-}
-
-
 .rank-1 .coupon-content {
 
     border-color: #ffcb00;
@@ -445,14 +460,6 @@ body {
    2等
 ========================================= */
 
-.rank-2 .rank-label {
-
-    background: #c8bed7;
-
-    color: #c8bed7;
-}
-
-
 .rank-2 .coupon-content {
 
     border-color: #c8bed7;
@@ -464,14 +471,6 @@ body {
 /* =========================================
    3等
 ========================================= */
-
-.rank-3 .rank-label {
-
-    background: #b4916e;
-
-    color: #b4916e;
-}
-
 
 .rank-3 .coupon-content {
 
@@ -495,15 +494,6 @@ body {
 
     色は後から指定できます。
 */
-
-.rank-4 .rank-label {
-
-    background: #b4916e;
-
-    color: #b4916e;
-}
-
-
 .rank-4 .coupon-content {
 
     border-color: #b4916e;
