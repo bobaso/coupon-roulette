@@ -66,7 +66,8 @@ const resultCouponItem =
 const couponList =
     document.getElementById("couponList");
 
-
+const confettiContainer =
+    document.getElementById("confetti-container");
 /* ==================================================
    クーポンリスト自動生成
 ================================================== */
