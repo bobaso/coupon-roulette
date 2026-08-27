@@ -133,32 +133,38 @@
     </div>
 
 
-    <!-- =================================
+<!-- =================================
      抽選結果画面
 ================================= -->
 
 <div id="resultScreen" class="hidden">
 
     <!-- =================================
-         結果画面 上部
-         background-logo.pngを背景として使用
+         結果画面上部
+         background-logo.png
     ================================== -->
 
     <section class="result-top">
 
+        <!-- 背景画像 -->
         <img
             src="images/background-logo.png"
             alt=""
             class="result-background"
         >
 
-        <!-- 抽選結果の文字 -->
+
+        <!-- 抽選結果タイトル -->
         <h2 class="result-title">
             抽選結果
         </h2>
 
+
         <!-- =================================
-             当選内容
+             当選結果
+             
+             coupon-item と rank-1～3 を
+             クーポンリストと共通利用
         ================================== -->
 
         <div
@@ -166,14 +172,13 @@
             class="coupon-item"
         >
 
-            <!-- 当選した等賞のリボン -->
             <div class="rank-label">
 
                 <span id="rankText"></span>
 
             </div>
 
-            <!-- 当選したクーポン -->
+
             <div
                 class="coupon-content"
                 id="couponText"
