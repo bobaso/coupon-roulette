@@ -134,57 +134,70 @@
 
 
     <!-- =================================
-         抽選結果画面
+     抽選結果画面
+================================= -->
+
+<div id="resultScreen" class="hidden">
+
+    <!-- =================================
+         結果画面 上部
+         background-logo.pngを背景として使用
     ================================== -->
 
-    <div
-        id="resultScreen"
-        class="hidden"
-    >
+    <section class="result-top">
 
-        <section class="coupon-list">
+        <img
+            src="images/background-logo.png"
+            alt=""
+            class="result-background"
+        >
 
-            <h2 class="coupon-list-title">
-                抽選結果
-            </h2>
+        <!-- 抽選結果の文字 -->
+        <h2 class="result-title">
+            抽選結果
+        </h2>
 
+        <!-- =================================
+             当選内容
+        ================================== -->
 
-            <!-- =================================
-                 当選した等賞
-            ================================== -->
+        <div
+            id="resultCouponItem"
+            class="coupon-item"
+        >
 
-            <div class="coupon-item">
+            <!-- 当選した等賞のリボン -->
+            <div class="rank-label">
 
-                <div class="rank-label">
-                    <span id="rankText"></span>
-                </div>
-
-                <div
-                    class="coupon-content"
-                    id="couponText"
-                >
-                </div>
+                <span id="rankText"></span>
 
             </div>
 
-
-            <!-- =================================
-                 もう一度引く
-            ================================== -->
-
-            <button
-                type="button"
-                id="retryBtn"
-                class="coupon-button"
+            <!-- 当選したクーポン -->
+            <div
+                class="coupon-content"
+                id="couponText"
             >
-                もう一度引く
-            </button>
+            </div>
 
-        </section>
+        </div>
 
-    </div>
+    </section>
 
 
+    <!-- =================================
+         もう一度引く
+    ================================== -->
+
+    <button
+        type="button"
+        id="retryBtn"
+        class="coupon-button result-retry-button"
+    >
+        もう一度引く
+    </button>
+
+</div>
 </main>
 
 
