@@ -136,14 +136,13 @@ body {
 }
 /* =========================================
    開催期間
-   ロゴより前面に表示
 ========================================= */
 
 .campaign-period {
 
     position: absolute;
 
-    top: 285px;
+    top: 250px;
 
     left: 50%;
 
@@ -153,7 +152,7 @@ body {
 
     color: #ffffd7;
 
-    font-size: 24pt;
+    font-size: 15pt;
 
     font-weight: 800;
 
