@@ -265,7 +265,7 @@ function createConfetti() {
         ============================== */
 
         confetti.style.left =
-            (Math.random() * 100) + "%";
+            (45 + Math.random() * 10) + "%";
 
 
         /* ==============================
@@ -286,8 +286,8 @@ function createConfetti() {
            横方向への広がり
         ============================== */
 
-        const moveX =
-            (Math.random() - 0.5) * 500;
+const moveX =
+    (Math.random() - 0.5) * 700;
 
         confetti.style.setProperty(
             "--move-x",
@@ -336,8 +336,8 @@ function createConfetti() {
            開始タイミング
         ============================== */
 
-        const delay =
-            Math.random() * 1.2;
+  const delay =
+    Math.random() * 0.15;
 
         confetti.style.animationDelay =
             delay + "s";
