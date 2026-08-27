@@ -952,38 +952,57 @@ body {
 ================================================== */
 
 #confetti-container {
+
     position: fixed;
-    inset: 0;
-    width: 100%;
+
+    left: 0;
+    top: 0;
+
+    width: 100vw;
     height: 100dvh;
 
     pointer-events: none;
 
     overflow: hidden;
 
-    z-index: 9999;
+    z-index: 99999;
+
 }
 
 
-/* 紙吹雪1枚 */
+/* =========================================
+   紙吹雪
+========================================= */
 
 .confetti {
+
     position: absolute;
 
+    left: 0;
     bottom: -30px;
 
     width: 9px;
     height: 18px;
 
+    background: #ffffff;
+
     opacity: 0;
 
+    border-radius: 2px;
+
     animation-name: confetti-fly;
+
     animation-timing-function: linear;
+
     animation-fill-mode: forwards;
+
 }
 
 
-/* 紙吹雪が下から舞い上がる */
+/* =========================================
+   紙吹雪アニメーション
+   下から上へ舞い上がる
+========================================= */
 
 @keyframes confetti-fly {
 
@@ -994,20 +1013,29 @@ body {
             rotate(0deg);
 
         opacity: 1;
+
     }
+
 
     20% {
 
         opacity: 1;
+
     }
+
 
     100% {
 
         transform:
-            translate3d(var(--move-x), -110dvh, 0)
+            translate3d(
+                var(--move-x),
+                -110dvh,
+                0
+            )
             rotate(var(--rotate));
 
         opacity: 0;
+
     }
 
 }
