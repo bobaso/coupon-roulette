@@ -692,8 +692,7 @@ body {
 
     background-repeat: no-repeat;
 
-    /* ★ background-logo.pngを50px下へ */
-    background-position: center 50px;
+     background-position: center top;
 
     background-size: 430px auto;
 }
