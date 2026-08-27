@@ -992,14 +992,9 @@ body {
 
     animation-name: confetti-fly;
 
-    animation-timing-function: cubic-bezier(
-        0.15,
-        0.8,
-        0.35,
-        1
-    );
+animation-timing-function: linear;
 
-    animation-fill-mode: forwards;
+animation-fill-mode: forwards;
 
 }
 
