@@ -30,11 +30,13 @@ const coupons = [
         name: "とっっっってもながいなまえの5％OFFクーポン",
         probability: 1
     },
+
     {
         rank: "４等",
         name: "1％OFFクーポン",
         probability: 1
     }
+
 ];
 
 
@@ -66,8 +68,7 @@ const resultCouponItem =
 const couponList =
     document.getElementById("couponList");
 
-const confettiContainer =
-    document.getElementById("confetti-container");
+
 /* ==================================================
    クーポンリスト自動生成
 ================================================== */
@@ -107,7 +108,9 @@ function createCouponList() {
         const rankLabel =
             document.createElement("div");
 
-        rankLabel.classList.add("rank-label");
+        rankLabel.classList.add(
+            "rank-label"
+        );
 
 
         const rankSpan =
@@ -117,7 +120,9 @@ function createCouponList() {
             coupon.rank;
 
 
-        rankLabel.appendChild(rankSpan);
+        rankLabel.appendChild(
+            rankSpan
+        );
 
 
         /* ==============================
@@ -139,16 +144,22 @@ function createCouponList() {
            クーポンを組み立てる
         ============================== */
 
-        couponItem.appendChild(rankLabel);
+        couponItem.appendChild(
+            rankLabel
+        );
 
-        couponItem.appendChild(couponContent);
+        couponItem.appendChild(
+            couponContent
+        );
 
 
         /* ==============================
            リストに追加
         ============================== */
 
-        couponList.appendChild(couponItem);
+        couponList.appendChild(
+            couponItem
+        );
 
     });
 
@@ -172,14 +183,14 @@ function drawCoupon() {
 
 
     /*
-        上から順番に確率を足していき、
-        ランダムな数字が入った賞を当選にする
+        上から順番に確率を足していく
     */
 
     for (const coupon of coupons) {
 
         cumulativeProbability +=
             coupon.probability;
+
 
         if (
             random <
@@ -194,35 +205,64 @@ function drawCoupon() {
 
 
     /*
-        万が一確率の合計が100未満だった場合、
+        万が一確率の合計が100未満だった場合
         最後のクーポンを返す
     */
 
-    return coupons[coupons.length - 1];
+    return coupons[
+        coupons.length - 1
+    ];
 
 }
+
+
 /* ==================================================
    1等 紙吹雪
 ================================================== */
+
 function createConfetti() {
 
     confetti({
+
+        /* 紙吹雪の数 */
+
         particleCount: 100,
+
+
+        /* 発射角度 */
 
         angle: 90,
 
+
+        /* 左右への広がり */
+
         spread: 90,
+
+
+        /* 重力 */
 
         gravity: 0.2,
 
+
+        /* 横方向への流れ */
+
         drift: 0,
 
+
+        /* アニメーション時間 */
+
         ticks: 200,
+
+
+        /* 発射位置 */
 
         origin: {
             x: 0.5,
             y: 0.8
         },
+
+
+        /* 色 */
 
         colors: [
             '#165B33',
@@ -231,14 +271,40 @@ function createConfetti() {
             '#EA4630'
         ],
 
+
+        /* 四角形のみ */
+
         shapes: ['square'],
+
+
+        /* サイズ */
 
         scalar: 0.8,
 
+
+        /* 重なり順 */
+
         zIndex: 100
+
     });
 
 }
+
+
+/* ==================================================
+   抽選結果表示
+================================================== */
+
+function showResult() {
+
+    /* =================================
+       クーポンを抽選
+    ================================= */
+
+    const result =
+        drawCoupon();
+
+
     /* =================================
        結果を書き換える
     ================================= */
@@ -275,6 +341,7 @@ function createConfetti() {
     const resultIndex =
         coupons.indexOf(result);
 
+
     resultCouponItem.classList.add(
         `rank-${resultIndex + 1}`
     );
@@ -296,6 +363,17 @@ function createConfetti() {
     resultScreen.classList.remove(
         "hidden"
     );
+
+
+    /* =================================
+       1等の場合だけ紙吹雪
+    ================================= */
+
+    if (result.rank === "1等") {
+
+        createConfetti();
+
+    }
 
 }
 
