@@ -709,19 +709,12 @@ body {
 
     position: absolute;
 
-    top: 50;
+    top: 50px;
 
     left: 0;
 
-    /*
-       固定430pxをやめて
-       親要素の幅いっぱいにする
-    */
     width: 100%;
 
-    /*
-       430 × 480 の比率を維持
-    */
     aspect-ratio: 430 / 480;
 
     height: auto;
