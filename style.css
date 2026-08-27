@@ -818,7 +818,14 @@ body {
 
 .result-use-button {
 
-    position: relative;
+    position: absolute;
+
+    /* background-result.pngの上に移動 */
+    top: 390px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
 
     z-index: 20;
 
@@ -828,7 +835,7 @@ body {
 
     height: 68px;
 
-    margin: 5px auto 15px;
+    margin: 0;
 
     border: none;
 
@@ -860,7 +867,6 @@ body {
         transform 0.1s ease,
         box-shadow 0.1s ease;
 }
-
 
 /* =========================================
    クーポンを使用ボタンを押したとき
