@@ -677,8 +677,8 @@ body {
 
 /* =========================================
    結果画面上部
-   background-logo.pngを背景として表示
-========================================= */
+   background-logo.png
+   ========================================= */
 
 .result-top {
 
@@ -688,16 +688,19 @@ body {
 
     height: 480px;
 
-    /* 一番下の背景 */
+    /* background-logoをそのまま表示 */
     background-image: url("images/background-logo.png");
 
     background-repeat: no-repeat;
 
     background-position: center top;
 
-    background-size: 430px 480px;
+    /* アスペクト比を維持 */
+    background-size: contain;
 
 }
+
+
 /* =========================================
    background-result.png
    background-logoの上に重ねる
@@ -723,13 +726,16 @@ body {
 
     background-position: center top;
 
+    /* 430×480pxの画像をそのまま配置 */
     background-size: 430px 480px;
 
     z-index: 2;
 
+    /* この画像がクリックを邪魔しない */
     pointer-events: none;
 
 }
+
 
 /* =========================================
    抽選結果タイトル
@@ -759,6 +765,8 @@ body {
         0 3px 5px rgba(120, 65, 0, 0.25);
 
 }
+
+
 /* =========================================
    抽選結果のクーポン
    既存のcoupon-itemをそのまま使用
@@ -781,7 +789,6 @@ body {
 
 /* =========================================
    結果画面のリボン
-   既存rank-labelをそのまま使用
 ========================================= */
 
 .result-top .rank-label {
@@ -793,8 +800,8 @@ body {
 
 /* =========================================
    結果画面のクーポン本体
-   既存coupon-contentをそのまま使用
 ========================================= */
+
 .result-top .coupon-content {
 
     position: relative;
@@ -802,6 +809,7 @@ body {
     z-index: 4;
 
 }
+
 
 /* =========================================
    もう一度引くボタン
@@ -821,5 +829,4 @@ body {
 
     margin: 25px auto 40px;
 
-}
 }
