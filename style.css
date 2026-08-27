@@ -689,7 +689,9 @@ body {
 
     height: 480px;
 
-    /* background-logo.pngを使用 */
+    /* background-logo.png
+       元画像：480 × 860 */
+
     background-image: url("images/background-logo.png");
 
     background-repeat: no-repeat;
@@ -697,10 +699,9 @@ body {
     background-position: center top;
 
     /*
-        元画像480×860の比率を維持
-        横幅430pxに合わせる
+       画面幅に合わせて縮小
     */
-    background-size: 430px auto;
+    background-size: 100% auto;
 
 }
 
@@ -719,13 +720,20 @@ body {
 
     top: 0;
 
-    left: 50%;
+    left: 0;
 
-    width: 430px;
+    /*
+       固定430pxをやめて
+       親要素の幅いっぱいにする
+    */
+    width: 100%;
 
-    height: 480px;
+    /*
+       430 × 480 の比率を維持
+    */
+    aspect-ratio: 430 / 480;
 
-    transform: translateX(-50%);
+    height: auto;
 
     background-image: url("images/background-result.png");
 
@@ -734,15 +742,13 @@ body {
     background-position: center top;
 
     /*
-        元画像430×480をそのまま表示
+       画像を横幅いっぱいに拡大・縮小
+       元画像の比率を維持
     */
-    background-size: 430px 480px;
+    background-size: 100% 100%;
 
     z-index: 2;
 
-    /*
-        背景画像がクリックを邪魔しない
-    */
     pointer-events: none;
 
 }
