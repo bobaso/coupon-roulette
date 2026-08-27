@@ -678,6 +678,7 @@ body {
 /* =========================================
    結果画面上部
    background-logo.png
+   元画像：480 × 860
    ========================================= */
 
 .result-top {
@@ -688,21 +689,25 @@ body {
 
     height: 480px;
 
-    /* background-logoをそのまま表示 */
+    /* background-logo.pngを使用 */
     background-image: url("images/background-logo.png");
 
     background-repeat: no-repeat;
 
     background-position: center top;
 
-    /* アスペクト比を維持 */
-    background-size: contain;
+    /*
+        元画像480×860の比率を維持
+        横幅430pxに合わせる
+    */
+    background-size: 430px auto;
 
 }
 
 
 /* =========================================
    background-result.png
+   元画像：430 × 480
    background-logoの上に重ねる
 ========================================= */
 
@@ -713,9 +718,11 @@ body {
     position: absolute;
 
     top: 0;
+
     left: 50%;
 
     width: 430px;
+
     height: 480px;
 
     transform: translateX(-50%);
@@ -726,12 +733,16 @@ body {
 
     background-position: center top;
 
-    /* 430×480pxの画像をそのまま配置 */
+    /*
+        元画像430×480をそのまま表示
+    */
     background-size: 430px 480px;
 
     z-index: 2;
 
-    /* この画像がクリックを邪魔しない */
+    /*
+        背景画像がクリックを邪魔しない
+    */
     pointer-events: none;
 
 }
