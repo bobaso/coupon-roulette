@@ -12,19 +12,19 @@ const coupons = [
 
     {
         rank: "1等",
-        name: "ジュース一杯無料券",
+        name: "ドリンク一杯無料券",
         probability: 5
     },
 
     {
         rank: "2等",
-        name: "10％引き券",
+        name: "10％OFFクーポン",
         probability: 20
     },
 
     {
         rank: "3等",
-        name: "5％引き券",
+        name: "5％OFFクーポン",
         probability: 75
     }
 
