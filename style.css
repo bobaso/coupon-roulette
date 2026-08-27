@@ -682,6 +682,7 @@ body {
    ========================================= */
 
 .result-top {
+
     position: relative;
 
     width: 100%;
@@ -691,11 +692,11 @@ body {
 
     background-repeat: no-repeat;
 
- background-position: center 50px;
+    /* ★ background-logo.pngを50px下へ */
+    background-position: center 50px;
 
     background-size: 430px auto;
 }
-
 
 /* =========================================
    background-result.png
