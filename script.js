@@ -49,7 +49,30 @@ const couponText = document.getElementById("couponText");
 
 const resultCouponItem =
     document.getElementById("resultCouponItem");
+/* ==================================================
+   クーポンリスト表示
+   couponsの設定をそのまま表示
+================================================== */
 
+document.getElementById("rankList1").textContent =
+    coupons[0].rank;
+
+document.getElementById("couponList1").textContent =
+    coupons[0].name;
+
+
+document.getElementById("rankList2").textContent =
+    coupons[1].rank;
+
+document.getElementById("couponList2").textContent =
+    coupons[1].name;
+
+
+document.getElementById("rankList3").textContent =
+    coupons[2].rank;
+
+document.getElementById("couponList3").textContent =
+    coupons[2].name;
 /* ==================================================
    クーポン抽選
 ================================================== */
