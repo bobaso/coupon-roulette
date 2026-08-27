@@ -47,6 +47,8 @@ const rankText = document.getElementById("rankText");
 
 const couponText = document.getElementById("couponText");
 
+const resultCouponItem =
+    document.getElementById("resultCouponItem");
 
 /* ==================================================
    クーポン抽選
@@ -107,6 +109,53 @@ function showResult() {
     rankText.textContent = result.rank;
 
     couponText.textContent = result.name;
+
+
+    /*
+        等賞に合わせて
+        結果画面のデザインを変更
+    */
+
+    resultCouponItem.classList.remove(
+        "rank-1",
+        "rank-2",
+        "rank-3",
+        "rank-4"
+    );
+
+
+    /*
+        1等
+    */
+
+    if (result.rank === "1等") {
+
+        resultCouponItem.classList.add("rank-1");
+
+    }
+
+
+    /*
+        2等
+    */
+
+    else if (result.rank === "2等") {
+
+        resultCouponItem.classList.add("rank-2");
+
+    }
+
+
+    /*
+        3等
+        それ以外も3等デザイン
+    */
+
+    else {
+
+        resultCouponItem.classList.add("rank-3");
+
+    }
 
 
     /*
