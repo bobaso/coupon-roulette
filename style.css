@@ -115,7 +115,7 @@ body {
     /* 初期状態 */
     opacity: 0;
 
-    transform: translateY(-60px);
+    transform: translateY(-100px);
 
     /* アニメーション */
     animation: logoFadeIn 1s ease-out 0.1s forwards;
