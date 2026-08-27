@@ -326,7 +326,7 @@ const moveX =
         ============================== */
 
         const duration =
-            Math.random() * 0.1 + 0.3;
+            Math.random() * 0.3 + 0.5;
 
         confetti.style.animationDuration =
             duration + "s";
