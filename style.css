@@ -88,7 +88,8 @@ body {
 
 
 /* =========================================
-   オレンジ色のチケットロゴ
+   キャンペーンロゴ
+   上からフェードイン
 ========================================= */
 
 .campaign-logo-image {
@@ -110,11 +111,33 @@ body {
     vertical-align: top;
 
     z-index: 2;
+
+    /* 初期状態 */
+    opacity: 0;
+
+    transform: translateY(-60px);
+
+    /* アニメーション */
+    animation: logoFadeIn 1s ease-out 0.1s forwards;
+}
+
+
+@keyframes logoFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* =========================================
    クーポン取得ボタン
-   キャンペーン画像の上に配置
+   上からフェードイン
 ========================================= */
 
 .coupon-button-area {
@@ -134,6 +157,36 @@ body {
     margin: 0;
 
     z-index: 10;
+
+    /* 初期状態 */
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        translateY(-60px);
+
+    /* アニメーション */
+    animation: buttonFadeIn 1s ease-out 0.35s forwards;
+}
+
+
+@keyframes buttonFadeIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(-60px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
 }
 
 
