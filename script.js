@@ -201,7 +201,115 @@ function drawCoupon() {
     return coupons[coupons.length - 1];
 
 }
+/* ==================================================
+   1等 紙吹雪
+================================================== */
 
+function createConfetti() {
+
+    /* 前回の紙吹雪を削除 */
+
+    confettiContainer.innerHTML = "";
+
+
+    /* 紙吹雪の枚数 */
+
+    const confettiCount = 70;
+
+
+    for (let i = 0; i < confettiCount; i++) {
+
+        const confetti =
+            document.createElement("div");
+
+
+        confetti.classList.add("confetti");
+
+
+        /* ==============================
+           横位置
+        ============================== */
+
+        confetti.style.left =
+            Math.random() * 100 + "%";
+
+
+        /* ==============================
+           サイズ
+        ============================== */
+
+        const width =
+            Math.random() * 7 + 5;
+
+        const height =
+            Math.random() * 12 + 8;
+
+        confetti.style.width =
+            width + "px";
+
+        confetti.style.height =
+            height + "px";
+
+
+        /* ==============================
+           横方向への移動量
+        ============================== */
+
+        const moveX =
+            (Math.random() - 0.5) * 180;
+
+        confetti.style.setProperty(
+            "--move-x",
+            moveX + "px"
+        );
+
+
+        /* ==============================
+           回転
+        ============================== */
+
+        const rotate =
+            Math.random() * 1440 - 720;
+
+        confetti.style.setProperty(
+            "--rotate",
+            rotate + "deg"
+        );
+
+
+        /* ==============================
+           アニメーション時間
+        ============================== */
+
+        const duration =
+            Math.random() * 2 + 3;
+
+        confetti.style.animationDuration =
+            duration + "s";
+
+
+        /* ==============================
+           開始タイミングをランダムにする
+        ============================== */
+
+        const delay =
+            Math.random() * 1.5;
+
+        confetti.style.animationDelay =
+            delay + "s";
+
+
+        /* ==============================
+           紙吹雪を追加
+        ============================== */
+
+        confettiContainer.appendChild(
+            confetti
+        );
+
+    }
+
+}
 
 /* ==================================================
    抽選結果表示
@@ -212,7 +320,21 @@ function showResult() {
     const result =
         drawCoupon();
 
+/* =================================
+   1等の場合だけ紙吹雪
+================================= */
 
+if (result.rank === "1等") {
+
+    createConfetti();
+
+}
+
+else {
+
+    confettiContainer.innerHTML = "";
+
+}
     /* =================================
        結果を書き換える
     ================================= */
