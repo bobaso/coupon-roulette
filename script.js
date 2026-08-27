@@ -28,9 +28,13 @@ const coupons = [
     {
         rank: "3等",
         name: "とっっっってもながいなまえの5％OFFクーポン",
-        probability: 75
+        probability: 37.5
+    },
+    {
+        rank: "４等",
+        name: "1％OFFクーポン",
+        probability: 37.5
     }
-
 ];
 
 
