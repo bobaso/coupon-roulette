@@ -204,179 +204,39 @@ function drawCoupon() {
 /* ==================================================
    1等 紙吹雪
 ================================================== */
-
 function createConfetti() {
 
-    /* 前回の紙吹雪を削除 */
+    confetti({
+        particleCount: 100,
 
-    confettiContainer.innerHTML = "";
+        angle: 90,
 
+        spread: 90,
 
-    /* ==============================
-       紙吹雪の枚数
-    ============================== */
+        gravity: 0.2,
 
-    const confettiCount = 100;
+        drift: 0,
 
+        ticks: 200,
 
-    /* ==============================
-       紙吹雪の色
-    ============================== */
+        origin: {
+            x: 0.5,
+            y: 0.8
+        },
 
-    const colors = [
-        "#ff4d4d",
-        "#ffd93d",
-        "#4dabf7",
-        "#51cf66",
-    ];
+        colors: [
+            '#165B33',
+            '#BB2528',
+            '#146B3A',
+            '#EA4630'
+        ],
 
+        shapes: ['square'],
 
-    /* ==============================
-       紙吹雪を生成
-    ============================== */
+        scalar: 0.8,
 
-    for (let i = 0; i < confettiCount; i++) {
-
-        const confetti =
-            document.createElement("div");
-
-
-        confetti.classList.add("confetti");
-
-
-        /* ==============================
-           色
-        ============================== */
-
-        const color =
-            colors[
-                Math.floor(
-                    Math.random() * colors.length
-                )
-            ];
-
-        confetti.style.backgroundColor =
-            color;
-
-
-        /* ==============================
-           横位置
-           画面下部からランダム
-        ============================== */
-
-        confetti.style.left =
-            (45 + Math.random() * 10) + "%";
-
-
-        /* ==============================
-           サイズ
-        ============================== */
-
-        const size =
-            Math.random() * 6 + 5;
-
-        confetti.style.width =
-            size + "px";
-
-        confetti.style.height =
-            size * 1.4 + "px";
-
-
-        /* ==============================
-           横方向への広がり
-        ============================== */
-
-const moveX =
-    (Math.random() - 0.5) * 700;
-
-        confetti.style.setProperty(
-            "--move-x",
-            moveX + "px"
-        );
-
-
-        /* ==============================
-           上方向への移動量
-        ============================== */
-
-        const moveY =
-            -(Math.random() * 30 + 80);
-
-        confetti.style.setProperty(
-            "--move-y",
-            moveY + "vh"
-        );
-
-
-        /* ==============================
-           回転
-        ============================== */
-
-        const rotate =
-            Math.random() * 1080 - 540;
-
-        confetti.style.setProperty(
-            "--rotate",
-            rotate + "deg"
-        );
-
-
-        /* ==============================
-           アニメーション時間
-        ============================== */
-
-        const duration =
-            Math.random() * 0.6 + 1.1;
-
-        confetti.style.animationDuration =
-            duration + "s";
-
-
-        /* ==============================
-           開始タイミング
-        ============================== */
-
-  const delay =
-    Math.random() * 0.15;
-
-        confetti.style.animationDelay =
-            delay + "s";
-
-
-        /* ==============================
-           紙吹雪を追加
-        ============================== */
-
-        confettiContainer.appendChild(
-            confetti
-        );
-
-    }
-
-}
-
-/* ==================================================
-   抽選結果表示
-================================================== */
-
-function showResult() {
-
-    const result =
-        drawCoupon();
-
-/* =================================
-   1等の場合だけ紙吹雪
-================================= */
-
-if (result.rank === "1等") {
-
-    createConfetti();
-
-}
-
-else {
-
-    confettiContainer.innerHTML = "";
+        zIndex: 100
+    });
 
 }
     /* =================================
