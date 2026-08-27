@@ -1009,80 +1009,91 @@ body {
 
 @keyframes confetti-fly {
 
+    /* ==============================
+       発射直後
+    ============================== */
+
     0% {
 
         transform:
-            translate3d(
-                0,
-                0,
-                0
-            )
-            rotate(0deg)
-            scale(1);
+            translate3d(0, 0, 0)
+            rotate(0deg);
 
         opacity: 1;
 
     }
 
 
-    20% {
+    /* ==============================
+       勢いよく上昇
+    ============================== */
+
+    25% {
 
         transform:
             translate3d(
-                calc(var(--move-x) * 0.25),
+                calc(var(--move-x) * 0.35),
                 -25vh,
                 0
             )
-            rotate(calc(var(--rotate) * 0.25))
-            scale(1);
+            rotate(calc(var(--rotate) * 0.3));
 
         opacity: 1;
 
     }
 
+
+    /* ==============================
+       左右に大きく広がる
+    ============================== */
 
     50% {
 
         transform:
             translate3d(
-                calc(var(--move-x) * 0.65),
-                -55vh,
+                calc(var(--move-x) * 0.75),
+                -48vh,
                 0
             )
-            rotate(calc(var(--rotate) * 0.6))
-            scale(0.95);
+            rotate(calc(var(--rotate) * 0.6));
 
         opacity: 1;
 
     }
 
 
+    /* ==============================
+       さらに外側へ
+    ============================== */
+
     75% {
 
         transform:
             translate3d(
-                calc(var(--move-x) * 0.9),
-                -78vh,
+                calc(var(--move-x) * 1.05),
+                -65vh,
                 0
             )
-            rotate(calc(var(--rotate) * 0.85))
-            scale(0.9);
+            rotate(calc(var(--rotate) * 0.85));
 
-        opacity: 0.9;
+        opacity: 0.8;
 
     }
 
+
+    /* ==============================
+       最後は外側へ流れて消える
+    ============================== */
 
     100% {
 
         transform:
             translate3d(
-                var(--move-x),
-                var(--move-y),
+                calc(var(--move-x) * 1.25),
+                -78vh,
                 0
             )
-            rotate(var(--rotate))
-            scale(0.8);
+            rotate(var(--rotate));
 
         opacity: 0;
 
