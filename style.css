@@ -888,7 +888,8 @@ body {
 ========================================= */
 
 .result-retry-button {
-
+  top: -30px;
+   
     position: relative;
 
     z-index: 20;
@@ -899,7 +900,7 @@ body {
 
     height: 68px;
 
-    margin: 0px auto 40px;
+    margin: 15px auto 40px;
 
     border: none;
 
