@@ -688,16 +688,48 @@ body {
 
     height: 480px;
 
+    /* 一番下の背景 */
     background-image: url("images/background-logo.png");
 
     background-repeat: no-repeat;
 
     background-position: center top;
 
-    background-size: cover;
+    background-size: 430px 480px;
 
 }
+/* =========================================
+   background-result.png
+   background-logoの上に重ねる
+========================================= */
 
+.result-top::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 430px;
+    height: 480px;
+
+    transform: translateX(-50%);
+
+    background-image: url("images/background-result.png");
+
+    background-repeat: no-repeat;
+
+    background-position: center top;
+
+    background-size: 430px 480px;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+}
 
 /* =========================================
    抽選結果タイトル
@@ -727,8 +759,6 @@ body {
         0 3px 5px rgba(120, 65, 0, 0.25);
 
 }
-
-
 /* =========================================
    抽選結果のクーポン
    既存のcoupon-itemをそのまま使用
@@ -765,7 +795,6 @@ body {
    結果画面のクーポン本体
    既存coupon-contentをそのまま使用
 ========================================= */
-
 .result-top .coupon-content {
 
     position: relative;
@@ -773,7 +802,6 @@ body {
     z-index: 4;
 
 }
-
 
 /* =========================================
    もう一度引くボタン
