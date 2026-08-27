@@ -823,6 +823,70 @@ body {
 
 
 /* =========================================
+   クーポンを使用ボタン
+========================================= */
+
+.result-use-button {
+
+    position: relative;
+
+    z-index: 20;
+
+    display: block;
+
+    width: calc(100% - 100px);
+
+    height: 68px;
+
+    margin: 25px auto 15px;
+
+    border: none;
+
+    border-radius: 22px;
+
+    background: #ffffd7;
+
+    color: #ff7800;
+
+    font-family: inherit;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 rgba(188, 92, 0, 0.95),
+        0 9px 13px rgba(120, 65, 0, 0.20);
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
+}
+
+
+/* =========================================
+   クーポンを使用ボタンを押したとき
+========================================= */
+
+.result-use-button:active {
+
+    transform: translateY(6px);
+
+    box-shadow:
+        0 1px 0 rgba(188, 92, 0, 0.95),
+        0 4px 8px rgba(120, 65, 0, 0.20);
+}
+
+
+/* =========================================
    もう一度引くボタン
 ========================================= */
 
@@ -838,6 +902,49 @@ body {
 
     height: 68px;
 
-    margin: 25px auto 40px;
+    margin: 15px auto 40px;
 
+    border: none;
+
+    border-radius: 22px;
+
+    background: #ffffd7;
+
+    color: #ff7800;
+
+    font-family: inherit;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 rgba(188, 92, 0, 0.95),
+        0 9px 13px rgba(120, 65, 0, 0.20);
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
+}
+
+
+/* =========================================
+   もう一度引くボタンを押したとき
+========================================= */
+
+.result-retry-button:active {
+
+    transform: translateY(6px);
+
+    box-shadow:
+        0 1px 0 rgba(188, 92, 0, 0.95),
+        0 4px 8px rgba(120, 65, 0, 0.20);
 }
