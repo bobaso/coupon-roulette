@@ -979,20 +979,25 @@ body {
     position: absolute;
 
     left: 0;
-    bottom: -30px;
+    bottom: -20px;
 
-    width: 9px;
-    height: 18px;
-
-    background: #ffffff;
+    width: 7px;
+    height: 10px;
 
     opacity: 0;
 
-    border-radius: 2px;
+    border-radius: 1px;
+
+    transform-origin: center;
 
     animation-name: confetti-fly;
 
-    animation-timing-function: linear;
+    animation-timing-function: cubic-bezier(
+        0.15,
+        0.8,
+        0.35,
+        1
+    );
 
     animation-fill-mode: forwards;
 
@@ -1000,8 +1005,28 @@ body {
 
 
 /* =========================================
+   三角形の紙吹雪
+========================================= */
+
+.confetti-triangle {
+
+    width: 0 !important;
+
+    height: 0 !important;
+
+    background: transparent !important;
+
+    border-left: 5px solid transparent;
+
+    border-right: 5px solid transparent;
+
+    border-bottom: 10px solid;
+
+}
+
+
+/* =========================================
    紙吹雪アニメーション
-   下から上へ舞い上がる
 ========================================= */
 
 @keyframes confetti-fly {
@@ -1009,8 +1034,13 @@ body {
     0% {
 
         transform:
-            translate3d(0, 0, 0)
-            rotate(0deg);
+            translate3d(
+                0,
+                0,
+                0
+            )
+            rotate(0deg)
+            scale(1);
 
         opacity: 1;
 
@@ -1019,7 +1049,48 @@ body {
 
     20% {
 
+        transform:
+            translate3d(
+                calc(var(--move-x) * 0.25),
+                -25vh,
+                0
+            )
+            rotate(calc(var(--rotate) * 0.25))
+            scale(1);
+
         opacity: 1;
+
+    }
+
+
+    50% {
+
+        transform:
+            translate3d(
+                calc(var(--move-x) * 0.65),
+                -55vh,
+                0
+            )
+            rotate(calc(var(--rotate) * 0.6))
+            scale(0.95);
+
+        opacity: 1;
+
+    }
+
+
+    75% {
+
+        transform:
+            translate3d(
+                calc(var(--move-x) * 0.9),
+                -78vh,
+                0
+            )
+            rotate(calc(var(--rotate) * 0.85))
+            scale(0.9);
+
+        opacity: 0.9;
 
     }
 
@@ -1029,10 +1100,11 @@ body {
         transform:
             translate3d(
                 var(--move-x),
-                -110dvh,
+                var(--move-y),
                 0
             )
-            rotate(var(--rotate));
+            rotate(var(--rotate))
+            scale(0.8);
 
         opacity: 0;
 
