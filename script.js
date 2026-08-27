@@ -212,10 +212,28 @@ function createConfetti() {
     confettiContainer.innerHTML = "";
 
 
-    /* 紙吹雪の枚数 */
+    /* ==============================
+       紙吹雪の枚数
+    ============================== */
 
-    const confettiCount = 70;
+    const confettiCount = 100;
 
+
+    /* ==============================
+       紙吹雪の色
+    ============================== */
+
+    const colors = [
+        "#ff4d4d",
+        "#ffd93d",
+        "#4dabf7",
+        "#51cf66",
+    ];
+
+
+    /* ==============================
+       紙吹雪を生成
+    ============================== */
 
     for (let i = 0; i < confettiCount; i++) {
 
@@ -227,36 +245,63 @@ function createConfetti() {
 
 
         /* ==============================
+           色
+        ============================== */
+
+        const color =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        confetti.style.backgroundColor =
+            color;
+
+
+        /* ==============================
+           形
+           正方形 or 三角形
+        ============================== */
+
+        if (Math.random() < 0.35) {
+
+            confetti.classList.add(
+                "confetti-triangle"
+            );
+
+        }
+
+
+        /* ==============================
            横位置
+           画面下部からランダム
         ============================== */
 
         confetti.style.left =
-            Math.random() * 100 + "%";
+            (Math.random() * 100) + "%";
 
 
         /* ==============================
            サイズ
         ============================== */
 
-        const width =
-            Math.random() * 7 + 5;
-
-        const height =
-            Math.random() * 12 + 8;
+        const size =
+            Math.random() * 6 + 5;
 
         confetti.style.width =
-            width + "px";
+            size + "px";
 
         confetti.style.height =
-            height + "px";
+            size * 1.4 + "px";
 
 
         /* ==============================
-           横方向への移動量
+           横方向への広がり
         ============================== */
 
         const moveX =
-            (Math.random() - 0.5) * 180;
+            (Math.random() - 0.5) * 500;
 
         confetti.style.setProperty(
             "--move-x",
@@ -265,11 +310,24 @@ function createConfetti() {
 
 
         /* ==============================
+           上方向への移動量
+        ============================== */
+
+        const moveY =
+            -(Math.random() * 30 + 80);
+
+        confetti.style.setProperty(
+            "--move-y",
+            moveY + "vh"
+        );
+
+
+        /* ==============================
            回転
         ============================== */
 
         const rotate =
-            Math.random() * 1440 - 720;
+            Math.random() * 1080 - 540;
 
         confetti.style.setProperty(
             "--rotate",
@@ -289,11 +347,11 @@ function createConfetti() {
 
 
         /* ==============================
-           開始タイミングをランダムにする
+           開始タイミング
         ============================== */
 
         const delay =
-            Math.random() * 1.5;
+            Math.random() * 1.2;
 
         confetti.style.animationDelay =
             delay + "s";
