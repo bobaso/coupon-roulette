@@ -118,7 +118,7 @@ body {
     transform: translateY(-100px);
 
     /* アニメーション */
-    animation: logoFadeIn 1s ease-out 0.1s forwards;
+    animation: logoFadeIn 0.5s ease-out 0.5s forwards;
 }
 
 
@@ -166,7 +166,7 @@ body {
         translateY(-60px);
 
     /* アニメーション */
-    animation: buttonFadeIn 1s ease-out 0.35s forwards;
+    animation: buttonFadeIn 0.5s ease-out 0.15s forwards;
 }
 
 
