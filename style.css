@@ -1426,11 +1426,12 @@ body {
 
     100% {
         transform:
-            translate(-25px, -180px)
-            rotate(-30deg);
+            translate(-35px, -220px)
+            rotate(-45deg);
         opacity: 0;
     }
 }
+
 
 
 /* ==================================================
@@ -1448,8 +1449,8 @@ body {
 
     100% {
         transform:
-            translate(25px, 180px)
-            rotate(30deg);
+            translate(35px, 220px)
+            rotate(45deg);
         opacity: 0;
     }
 }
