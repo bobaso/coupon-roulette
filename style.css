@@ -1387,16 +1387,6 @@ body {
    カプセルが割れる
 ================================================== */
 
-.gacha-capsule.break {
-
-    animation:
-        capsuleBreak 0.55s
-        ease-out
-        forwards;
-
-}
-
-
 /* 上半分 */
 
 .gacha-capsule.break .capsule-top {
@@ -1428,23 +1418,18 @@ body {
 @keyframes capsuleTopBreak {
 
     0% {
-
         transform:
             translate(0, 0)
             rotate(0deg);
-
+        opacity: 1;
     }
 
     100% {
-
         transform:
-            translate(0, -200px)
+            translate(-25px, -180px)
             rotate(-30deg);
-
         opacity: 0;
-
     }
-
 }
 
 
@@ -1455,23 +1440,18 @@ body {
 @keyframes capsuleBottomBreak {
 
     0% {
-
         transform:
             translate(0, 0)
             rotate(0deg);
-
+        opacity: 1;
     }
 
     100% {
-
         transform:
-            translate(0, 200px)
-            rotate(8deg);
-
+            translate(25px, 180px)
+            rotate(30deg);
         opacity: 0;
-
     }
-
 }
 
 
