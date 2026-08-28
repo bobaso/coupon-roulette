@@ -846,12 +846,10 @@ gachaCapsule.classList.remove(
 setTimeout(function () {
 
     /*
-     * 抽選中テキストのアニメーション停止
+     * 抽選中テキストを停止
      */
-
-    clearInterval(
-        lotteryTextTimer
-    );
+    clearInterval(lotteryTextTimer);
+    clearTimeout(lotteryTextTimeout);
 
     lotteryText.classList.remove(
         "is-active",
@@ -862,7 +860,6 @@ setTimeout(function () {
     /*
      * 抽選画面を終了
      */
-
     lotteryScreen.classList.add(
         "hidden"
     );
@@ -871,14 +868,32 @@ setTimeout(function () {
     /*
      * 結果画面を表示
      */
-
     resultScreen.classList.remove(
         "hidden"
     );
 
 
     /*
+     * =========================================
+     * 1等なら「もう一度引く」を非表示
+     * =========================================
+     */
+
+    if (result.rank === "1等") {
+
+        retryBtn.style.display = "none";
+
+    } else {
+
+        retryBtn.style.display = "block";
+
+    }
+
+
+    /*
+     * =========================================
      * 1等なら紙吹雪
+     * =========================================
      */
 
     if (result.rank === "1等") {
@@ -888,8 +903,6 @@ setTimeout(function () {
     }
 
 }, 3700);
-
-}
 
 
 /* ==================================================
