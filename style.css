@@ -1216,7 +1216,80 @@ body {
     overflow: visible;
 }
 
+/* ==================================================
+   カプセル排出
+================================================== */
 
+.gacha-capsule.eject {
+
+    animation:
+        capsuleEject
+        0.7s
+        ease-out
+        forwards;
+
+}
+
+
+@keyframes capsuleEject {
+
+    0% {
+
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+
+        opacity: 0;
+
+    }
+
+    100% {
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* ==================================================
+   カプセルズーム
+================================================== */
+
+.gacha-capsule.zoom {
+
+    animation:
+        capsuleZoom
+        0.75s
+        ease-in-out
+        forwards;
+
+}
+
+
+@keyframes capsuleZoom {
+
+    0% {
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+
+    }
+
+    100% {
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.5);
+
+    }
+
+}
 /* ==================================================
    カプセル上半分
 ================================================== */
