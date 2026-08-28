@@ -202,7 +202,7 @@ body {
 
     position: absolute;
 
-    top: 322px;
+    top: 325px;
 
     left: 50%;
 
@@ -253,7 +253,9 @@ body {
     display: block;
 
     width: 300px;
-margin: 0 auto;
+   
+    margin: 0 auto;
+   
     height: 60px;
 
     border: none;
