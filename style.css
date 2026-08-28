@@ -1392,7 +1392,7 @@ body {
 .gacha-capsule.break .capsule-top {
 
     animation:
-        capsuleTopBreak 0.55s
+        capsuleTopBreak 0.8s
         ease-out
         forwards;
 
@@ -1404,7 +1404,7 @@ body {
 .gacha-capsule.break .capsule-bottom {
 
     animation:
-        capsuleBottomBreak 0.55s
+        capsuleBottomBreak 0.8s
         ease-out
         forwards;
 
