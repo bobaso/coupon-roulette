@@ -82,44 +82,6 @@ const lotteryText =
 const whiteout =
     document.getElementById("whiteout");
 
-/* ==================================================
-   抽選中テキストを1文字ずつ分解
-================================================== */
-
-function setupLotteryText() {
-
-    const text =
-        lotteryText.textContent.trim();
-
-    lotteryText.innerHTML = "";
-
-    const chars =
-        [...text];
-
-    chars.forEach(function (char, index) {
-
-        const span =
-            document.createElement("span");
-
-        span.classList.add("char");
-
-        span.style.setProperty(
-            "--char-index",
-            index
-        );
-
-        span.style.setProperty(
-            "--reverse-index",
-            chars.length - 1 - index
-        );
-
-        span.textContent = char;
-
-        lotteryText.appendChild(span);
-
-    });
-
-}
 
 /* ==================================================
    抽選中テキストアニメーション
