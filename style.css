@@ -950,9 +950,9 @@ body {
         0 1px 0 rgba(188, 92, 0, 0.95),
         0 4px 8px rgba(120, 65, 0, 0.20);
 }
-/* =========================================
+/* ==================================================
    抽選中画面
-========================================= */
+================================================== */
 
 #lotteryScreen {
 
@@ -964,23 +964,24 @@ body {
     width: 100%;
     height: 100dvh;
 
-    background: #ffb300;
+    background: #fb3000;
 
     overflow: hidden;
 
     z-index: 200;
+
 }
 
 
-/* =========================================
+/* ==================================================
    抽選中の文字
-========================================= */
+================================================== */
 
 .lottery-text {
 
     position: absolute;
 
-    top: 18%;
+    top: 60px;
 
     left: 0;
 
@@ -988,104 +989,83 @@ body {
 
     color: #ffffff;
 
-    font-size: 34px;
+    font-size: 32px;
 
     font-weight: 900;
 
-    line-height: 1;
-
     text-align: center;
 
-    z-index: 10;
-
-    animation:
-        lotteryTextFade 1s ease-in-out infinite alternate;
-}
-
-
-@keyframes lotteryTextFade {
-
-    from {
-        opacity: 0.55;
-    }
-
-    to {
-        opacity: 1;
-    }
+    z-index: 30;
 
 }
 
 
-/* =========================================
+/* ==================================================
    Skipボタン
-========================================= */
+================================================== */
 
 .skip-button {
 
     position: absolute;
 
     top: 20px;
+
     right: 20px;
 
-    width: 100px;
-    height: 48px;
+    width: 90px;
 
-    padding: 0;
+    height: 42px;
 
     border: 3px solid #ff7800;
 
     border-radius: 10%;
 
-    background: transparent;
+    background: #ff7800;
 
     color: #ffffff;
 
     font-family: inherit;
 
-    font-size: 20px;
+    font-size: 18px;
 
     font-weight: 800;
 
     line-height: 1;
 
-    text-align: center;
-
     cursor: pointer;
 
-    z-index: 30;
+    z-index: 50;
+
 }
 
 
-/* =========================================
+/* ==================================================
    ガチャ演出エリア
-========================================= */
+================================================== */
 
 .gacha-animation {
 
     position: absolute;
 
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
 
-    width: 320px;
-    height: 420px;
+    width: 100%;
+    height: 100%;
 
-    transform: translate(-50%, -50%);
-
-    z-index: 5;
 }
 
 
-/* =========================================
+/* ==================================================
    ガチャ機
-========================================= */
+================================================== */
 
 .gacha-machine {
 
     position: absolute;
 
-    top: 50%;
     left: 50%;
+    top: 50%;
 
     width: 300px;
 
@@ -1094,20 +1074,20 @@ body {
     transform:
         translate(-50%, -50%);
 
-    transform-origin: center bottom;
+    z-index: 10;
 
-    z-index: 5;
 }
 
 
-/* =========================================
+/* ==================================================
    ガチャ機 1回目の揺れ
-========================================= */
+================================================== */
 
 .gacha-machine.shake-1 {
 
     animation:
-        gachaShake1 0.35s ease-in-out;
+        gachaShake1 0.45s ease-in-out;
+
 }
 
 
@@ -1119,67 +1099,27 @@ body {
             rotate(0deg);
     }
 
-    25% {
+    20% {
         transform:
-            translate(calc(-50% - 12px), -50%)
+            translate(calc(-50% - 10px), -50%)
             rotate(-3deg);
     }
 
-    50% {
+    40% {
         transform:
-            translate(calc(-50% + 12px), -50%)
+            translate(calc(-50% + 10px), -50%)
             rotate(3deg);
     }
 
-    75% {
+    60% {
         transform:
-            translate(calc(-50% - 7px), -50%)
+            translate(calc(-50% - 8px), -50%)
             rotate(-2deg);
     }
 
-    100% {
+    80% {
         transform:
-            translate(-50%, -50%)
-            rotate(0deg);
-    }
-
-}
-
-
-/* =========================================
-   ガチャ機 2回目の揺れ
-========================================= */
-
-.gacha-machine.shake-2 {
-
-    animation:
-        gachaShake2 0.35s ease-in-out;
-}
-
-
-@keyframes gachaShake2 {
-
-    0% {
-        transform:
-            translate(-50%, -50%)
-            rotate(0deg);
-    }
-
-    25% {
-        transform:
-            translate(calc(-50% + 14px), -50%)
-            rotate(3deg);
-    }
-
-    50% {
-        transform:
-            translate(calc(-50% - 14px), -50%)
-            rotate(-3deg);
-    }
-
-    75% {
-        transform:
-            translate(calc(-50% + 7px), -50%)
+            translate(calc(-50% + 6px), -50%)
             rotate(2deg);
     }
 
@@ -1192,9 +1132,68 @@ body {
 }
 
 
-/* =========================================
-   排出カプセル
-========================================= */
+/* ==================================================
+   ガチャ機 2回目の揺れ
+================================================== */
+
+.gacha-machine.shake-2 {
+
+    animation:
+        gachaShake2 0.45s ease-in-out;
+
+}
+
+
+@keyframes gachaShake2 {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+    15% {
+        transform:
+            translate(calc(-50% - 13px), -50%)
+            rotate(-4deg);
+    }
+
+    30% {
+        transform:
+            translate(calc(-50% + 13px), -50%)
+            rotate(4deg);
+    }
+
+    45% {
+        transform:
+            translate(calc(-50% - 10px), -50%)
+            rotate(-3deg);
+    }
+
+    60% {
+        transform:
+            translate(calc(-50% + 8px), -50%)
+            rotate(3deg);
+    }
+
+    75% {
+        transform:
+            translate(calc(-50% - 4px), -50%)
+            rotate(-1deg);
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+}
+
+
+/* ==================================================
+   カプセル本体
+================================================== */
 
 .gacha-capsule {
 
@@ -1202,45 +1201,110 @@ body {
 
     left: 50%;
 
-    top: 60%;
+    top: 53%;
 
-    width: 70px;
-    height: 70px;
+    width: 130px;
+
+    height: 130px;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0);
+
+    z-index: 20;
+
+    pointer-events: none;
+
+}
+
+
+/* ==================================================
+   カプセル上下画像
+================================================== */
+
+.capsule-top,
+.capsule-bottom {
+
+    position: absolute;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+/* ==================================================
+   カプセル上半分
+================================================== */
+
+.capsule-top {
+
+    top: 0;
+
+    transform-origin: center bottom;
+
+}
+
+
+/* ==================================================
+   カプセル下半分
+================================================== */
+
+.capsule-bottom {
+
+    top: 0;
+
+    transform-origin: center top;
+
+}
+
+
+/* ==================================================
+   カプセル内部の光
+================================================== */
+
+.capsule-light {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 30px;
+    height: 30px;
 
     border-radius: 50%;
 
-    background:
-        linear-gradient(
-            to bottom,
-            #ffffff 0%,
-            #ffffff 48%,
-            #ff7800 48%,
-            #ff7800 52%,
-            #ffffff 52%,
-            #ffffff 100%
-        );
+    background: #ffffff;
 
     box-shadow:
-        0 5px 15px rgba(120, 65, 0, 0.35);
+        0 0 20px #ffffff,
+        0 0 40px #ffffff,
+        0 0 70px #ffffff;
 
     transform:
-        translate(-50%, 0)
+        translate(-50%, -50%)
         scale(0);
 
     opacity: 0;
 
-    z-index: 8;
 }
 
 
-/* =========================================
+/* ==================================================
    カプセル排出
-========================================= */
+================================================== */
 
 .gacha-capsule.eject {
 
     animation:
-        capsuleEject 0.65s ease-out forwards;
+        capsuleEject 0.7s ease-out forwards;
+
 }
 
 
@@ -1251,8 +1315,8 @@ body {
         opacity: 0;
 
         transform:
-            translate(-50%, 0)
-            scale(0.4);
+            translate(-50%, -20%)
+            scale(0.35);
 
     }
 
@@ -1261,16 +1325,16 @@ body {
         opacity: 1;
 
         transform:
-            translate(-50%, -70px)
-            scale(1);
+            translate(-50%, -65%)
+            scale(0.65);
 
     }
 
     70% {
 
         transform:
-            translate(-50%, -120px)
-            scale(1.05);
+            translate(-50%, -45%)
+            scale(0.8);
 
     }
 
@@ -1279,7 +1343,7 @@ body {
         opacity: 1;
 
         transform:
-            translate(-50%, -155px)
+            translate(-50%, -50%)
             scale(1);
 
     }
@@ -1287,14 +1351,17 @@ body {
 }
 
 
-/* =========================================
+/* ==================================================
    カプセルズーム
-========================================= */
+================================================== */
 
 .gacha-capsule.zoom {
 
     animation:
-        capsuleZoom 0.75s ease-in forwards;
+        capsuleZoom 0.75s
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        forwards;
+
 }
 
 
@@ -1302,110 +1369,130 @@ body {
 
     0% {
 
-        opacity: 1;
-
         transform:
-            translate(-50%, -155px)
+            translate(-50%, -50%)
             scale(1);
 
     }
 
     100% {
 
-        opacity: 1;
-
         transform:
-            translate(-50%, -155px)
-            scale(7);
+            translate(-50%, -50%)
+            scale(2.8);
 
     }
 
 }
 
 
-/* =========================================
-   カプセル割れ
-========================================= */
+/* ==================================================
+   カプセルが割れる
+================================================== */
 
 .gacha-capsule.break {
 
     animation:
-        capsuleBreak 0.35s ease-out forwards;
+        capsuleBreak 0.55s
+        ease-out
+        forwards;
+
 }
 
 
-@keyframes capsuleBreak {
+/* 上半分 */
+
+.gacha-capsule.break .capsule-top {
+
+    animation:
+        capsuleTopBreak 0.55s
+        ease-out
+        forwards;
+
+}
+
+
+/* 下半分 */
+
+.gacha-capsule.break .capsule-bottom {
+
+    animation:
+        capsuleBottomBreak 0.55s
+        ease-out
+        forwards;
+
+}
+
+
+/* ==================================================
+   上半分が上へ飛ぶ
+================================================== */
+
+@keyframes capsuleTopBreak {
 
     0% {
 
-        opacity: 1;
-
         transform:
-            translate(-50%, -155px)
-            scale(7);
+            translate(0, 0)
+            rotate(0deg);
 
     }
 
     100% {
 
-        opacity: 0;
-
         transform:
-            translate(-50%, -155px)
-            scale(8);
+            translate(-35px, -100px)
+            rotate(-25deg);
+
+        opacity: 0;
 
     }
 
 }
 
 
-/* =========================================
-   光
-========================================= */
+/* ==================================================
+   下半分が下へ飛ぶ
+================================================== */
 
-.lottery-light {
+@keyframes capsuleBottomBreak {
 
-    position: absolute;
+    0% {
 
-    top: 50%;
-    left: 50%;
+        transform:
+            translate(0, 0)
+            rotate(0deg);
 
-    width: 80px;
-    height: 80px;
+    }
 
-    border-radius: 50%;
+    100% {
 
-    background: #ffffff;
+        transform:
+            translate(35px, 100px)
+            rotate(25deg);
 
-    box-shadow:
-        0 0 30px #ffffff,
-        0 0 70px #ffffff,
-        0 0 120px #ffffff;
+        opacity: 0;
 
-    opacity: 0;
+    }
 
-    transform:
-        translate(-50%, -50%)
-        scale(0);
-
-    z-index: 15;
-
-    pointer-events: none;
 }
 
 
-/* =========================================
-   光が拡散
-========================================= */
+/* ==================================================
+   カプセル中央の光
+================================================== */
 
-.lottery-light.flash {
+.gacha-capsule.break .capsule-light {
 
     animation:
-        lightFlash 0.8s ease-out forwards;
+        capsuleLight 0.7s
+        ease-out
+        forwards;
+
 }
 
 
-@keyframes lightFlash {
+@keyframes capsuleLight {
 
     0% {
 
@@ -1423,7 +1510,7 @@ body {
 
         transform:
             translate(-50%, -50%)
-            scale(3);
+            scale(1);
 
     }
 
@@ -1433,37 +1520,121 @@ body {
 
         transform:
             translate(-50%, -50%)
-            scale(15);
+            scale(10);
 
     }
 
 }
 
 
-/* =========================================
-   ホワイトアウト
-========================================= */
+/* ==================================================
+   光の拡散
+================================================== */
 
-.whiteout {
+.lottery-light {
 
     position: absolute;
 
-    inset: 0;
+    top: 50%;
+    left: 50%;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0);
+
+    opacity: 0;
+
+    z-index: 40;
+
+    pointer-events: none;
+
+}
+
+
+.lottery-light.flash {
+
+    animation:
+        lotteryFlash 0.8s
+        ease-out
+        forwards;
+
+}
+
+
+@keyframes lotteryFlash {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+
+    }
+
+    30% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(4);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(30);
+
+    }
+
+}
+
+
+/* ==================================================
+   ホワイトアウト
+================================================== */
+
+.whiteout {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100dvh;
 
     background: #ffffff;
 
     opacity: 0;
 
-    z-index: 25;
-
     pointer-events: none;
+
+    z-index: 100;
+
 }
 
 
 .whiteout.show {
 
     animation:
-        whiteoutAnimation 0.7s ease-out forwards;
+        whiteoutAnimation 0.45s
+        ease-in
+        forwards;
+
 }
 
 
@@ -1471,10 +1642,6 @@ body {
 
     0% {
         opacity: 0;
-    }
-
-    60% {
-        opacity: 1;
     }
 
     100% {
