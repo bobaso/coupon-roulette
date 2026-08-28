@@ -1205,9 +1205,7 @@ body {
     width: 130px;
     height: 130px;
 
-    transform:
-        translate(-50%, -50%)
-        scale(0);
+    transform: translate(-50%, -50%) scale(0);
 
     z-index: 20;
 
@@ -1215,6 +1213,7 @@ body {
 
     overflow: visible;
 }
+
 
 /* ==================================================
    カプセル排出
@@ -1307,6 +1306,10 @@ body {
     z-index: 2;
 
     overflow: visible;
+
+    transform: translateY(0);
+
+    opacity: 1;
 }
 
 
@@ -1341,7 +1344,12 @@ body {
     z-index: 1;
 
     overflow: visible;
+
+    transform: translateY(0);
+
+    opacity: 1;
 }
+
 
 
 /* 下半分の画像 */
@@ -1369,7 +1377,6 @@ body {
         0.8s
         ease-out
         forwards;
-
 }
 
 
@@ -1380,7 +1387,6 @@ body {
         0.8s
         ease-out
         forwards;
-
 }
 
 
@@ -1391,21 +1397,14 @@ body {
 @keyframes capsuleTopBreak {
 
     0% {
-
-        top: -5px;
-
+        transform: translateY(0);
         opacity: 1;
-
     }
 
     100% {
-
-        top: -220px;
-
+        transform: translateY(-220px);
         opacity: 0;
-
     }
-
 }
 
 
@@ -1416,21 +1415,14 @@ body {
 @keyframes capsuleBottomBreak {
 
     0% {
-
-        top: 30px;
-
+        transform: translateY(0);
         opacity: 1;
-
     }
 
     100% {
-
-        top: 250px;
-
+        transform: translateY(220px);
         opacity: 0;
-
     }
-
 }
 /* ==================================================
    カプセル中央の光
