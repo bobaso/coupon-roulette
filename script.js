@@ -526,23 +526,7 @@ function resetCapsuleAnimation() {
 function openCapsule() {
 
     /*
-     * 念のため
-     * breakは使用しない
-     *
-     * zoomは開封開始時点で終了しているので
-     * openだけを追加する
-     */
-
-    gachaCapsule.classList.remove(
-        "break"
-    );
-
-
-    /*
      * カプセルを開く
-     *
-     * CSSの
-     *
      * .gacha-capsule.open .capsule-top-wrap
      * .gacha-capsule.open .capsule-bottom-wrap
      *
