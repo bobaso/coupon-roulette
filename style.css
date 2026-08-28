@@ -1310,6 +1310,11 @@ body {
     transform: translateY(0);
 
     opacity: 1;
+
+    /* transitionで滑らかに移動 */
+    transition:
+        transform 0.8s ease-out,
+        opacity 0.8s ease-out;
 }
 
 
@@ -1348,6 +1353,11 @@ body {
     transform: translateY(0);
 
     opacity: 1;
+
+    /* transitionで滑らかに移動 */
+    transition:
+        transform 0.8s ease-out,
+        opacity 0.8s ease-out;
 }
 
 
@@ -1367,53 +1377,23 @@ body {
 
 
 /* ==================================================
-   カプセルが割れる
+   カプセルを開く
+   transition方式
 ================================================== */
 
-.gacha-capsule.break .capsule-top-wrap {
-    animation: capsuleTopBreak 0.8s ease-out forwards;
+.gacha-capsule.open .capsule-top-wrap {
+
+    transform: translateY(-220px);
+
+    opacity: 0;
 }
 
 
-.gacha-capsule.break .capsule-bottom-wrap {
-    animation: capsuleBottomBreak 0.8s ease-out forwards;
-}
+.gacha-capsule.open .capsule-bottom-wrap {
 
+    transform: translateY(220px);
 
-
-/* ==================================================
-   上半分 → 上方向
-================================================== */
-
-@keyframes capsuleTopBreak {
-
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(-220px);
-        opacity: 0;
-    }
-}
-
-
-/* ==================================================
-   下半分 → 下方向
-================================================== */
-
-@keyframes capsuleBottomBreak {
-
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(220px);
-        opacity: 0;
-    }
+    opacity: 0;
 }
 /* ==================================================
    カプセル中央の光
