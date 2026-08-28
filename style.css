@@ -975,6 +975,8 @@ body {
 
 /* ==================================================
    抽選中の文字
+   右 → 中央 → 左へフェード
+   ホワイトアウトするまで繰り返す
 ================================================== */
 
 .lottery-text {
@@ -995,7 +997,84 @@ body {
 
     text-align: center;
 
+    white-space: nowrap;
+
     z-index: 30;
+
+    /* 初期状態 */
+    opacity: 0;
+
+    transform: translateX(100%);
+
+    /* 無限に繰り返す */
+    animation:
+        lotteryTextSlide
+        1.8s
+        ease-in-out
+        infinite;
+
+}
+
+
+/* ==================================================
+   抽選中の文字アニメーション
+================================================== */
+
+@keyframes lotteryTextSlide {
+
+    /* 右側から開始 */
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(100%);
+
+    }
+
+
+    /* 右から中央へフェードイン */
+    25% {
+
+        opacity: 1;
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    /* 中央で少し表示 */
+    50% {
+
+        opacity: 1;
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    /* 中央から左へフェードアウト */
+    75% {
+
+        opacity: 0;
+
+        transform:
+            translateX(-100%);
+
+    }
+
+
+    /* 次のループのため右側へ戻す */
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateX(100%);
+
+    }
 
 }
 
