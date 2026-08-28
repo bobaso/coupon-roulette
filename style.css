@@ -1393,10 +1393,11 @@ body {
 
     animation:
         capsuleTopBreak 0.8s
-        ease-out
+        cubic-bezier(0.2, 0.8, 0.2, 1)
         forwards;
 
 }
+
 
 
 /* 下半分 */
@@ -1405,7 +1406,7 @@ body {
 
     animation:
         capsuleBottomBreak 0.8s
-        ease-out
+        cubic-bezier(0.2, 0.8, 0.2, 1)
         forwards;
 
 }
@@ -1418,19 +1419,27 @@ body {
 @keyframes capsuleTopBreak {
 
     0% {
+
         transform:
             translate(0, 0)
             rotate(0deg);
+
         opacity: 1;
+
     }
 
     100% {
+
         transform:
-            translate(-35px, -220px)
-            rotate(-45deg);
+            translate(0, -250px)
+            rotate(-15deg);
+
         opacity: 0;
+
     }
+
 }
+
 
 
 
@@ -1441,18 +1450,25 @@ body {
 @keyframes capsuleBottomBreak {
 
     0% {
+
         transform:
             translate(0, 0)
             rotate(0deg);
+
         opacity: 1;
+
     }
 
     100% {
+
         transform:
-            translate(35px, 220px)
-            rotate(45deg);
+            translate(0, 250px)
+            rotate(15deg);
+
         opacity: 0;
+
     }
+
 }
 
 
