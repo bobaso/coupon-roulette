@@ -126,13 +126,59 @@ function setupLotteryText() {
 ================================================== */
 
 let lotteryTextTimer = null;
+let lotteryTextTimeout = null;
 
+
+/* ==================================================
+   抽選中テキストを1文字ずつ分解
+================================================== */
+
+function setupLotteryText() {
+
+    const text =
+        lotteryText.textContent.trim();
+
+    lotteryText.innerHTML = "";
+
+    const chars =
+        [...text];
+
+    chars.forEach(function (char, index) {
+
+        const span =
+            document.createElement("span");
+
+        span.classList.add("char");
+
+        span.style.setProperty(
+            "--char-index",
+            index
+        );
+
+        span.style.setProperty(
+            "--reverse-index",
+            chars.length - 1 - index
+        );
+
+        span.textContent = char;
+
+        lotteryText.appendChild(span);
+
+    });
+
+}
+
+
+/* ==================================================
+   抽選中テキストアニメーション開始
+================================================== */
 
 function startLotteryTextAnimation() {
 
-    /* 既存タイマーを停止 */
+    /* 既存タイマーを完全停止 */
 
     clearInterval(lotteryTextTimer);
+    clearTimeout(lotteryTextTimeout);
 
 
     /* 初期状態 */
@@ -143,9 +189,9 @@ function startLotteryTextAnimation() {
     );
 
 
-    /*
-     * 少し待ってから表示
-     */
+    /* ==========================================
+       ① 文字を表示
+       ========================================== */
 
     setTimeout(function () {
 
@@ -153,31 +199,77 @@ function startLotteryTextAnimation() {
             "is-active"
         );
 
-    }, 50);
+
+        /* ==========================================
+           ② 表示後にフェードアウト
+           ========================================== */
+
+        lotteryTextTimeout =
+            setTimeout(function () {
+
+                lotteryText.classList.remove(
+                    "is-active"
+                );
+
+                lotteryText.classList.add(
+                    "is-hide"
+                );
 
 
-    /*
-     * 一定時間ごとに
-     *
-     * 表示
-     * ↓
-     * 非表示
-     *
-     * を繰り返す
-     */
+            }, 1500);
+
+
+    }, 100);
+
+
+    /* ==========================================
+       ③ 繰り返す
+       ========================================== */
 
     lotteryTextTimer =
         setInterval(function () {
 
-            lotteryText.classList.toggle(
-                "is-active"
-            );
-
-            lotteryText.classList.toggle(
+            lotteryText.classList.remove(
+                "is-active",
                 "is-hide"
             );
 
-        }, 1800);
+
+            /*
+             * ブラウザに一度リセットさせる
+             */
+
+            void lotteryText.offsetWidth;
+
+
+            /*
+             * もう一度表示
+             */
+
+            lotteryText.classList.add(
+                "is-active"
+            );
+
+
+            /*
+             * 表示後に消す
+             */
+
+            lotteryTextTimeout =
+                setTimeout(function () {
+
+                    lotteryText.classList.remove(
+                        "is-active"
+                    );
+
+                    lotteryText.classList.add(
+                        "is-hide"
+                    );
+
+                }, 1500);
+
+
+        }, 3000);
 
 }
 /* ==================================================
@@ -589,7 +681,7 @@ function startLotteryAnimation() {
         "hidden"
     );
 startLotteryTextAnimation();
-
+createCouponList();
     /*
      * =============================================
      * アニメーションを完全リセット
