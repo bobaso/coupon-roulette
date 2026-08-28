@@ -1219,22 +1219,23 @@ body {
 
 
 /* ==================================================
-   カプセル上下画像
+    カプセル下半分
 ================================================== */
 
-.capsule-top,
 .capsule-bottom {
 
     position: absolute;
 
     left: 0;
+    top: 30px;
 
     width: 100%;
-
     height: 100%;
 
     object-fit: contain;
 
+    /* 奥 */
+    z-index: 1;
 }
 
 
@@ -1244,25 +1245,21 @@ body {
 
 .capsule-top {
 
+    position: absolute;
+
+    left: 0;
     top: 0;
 
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    /* 手前 */
+    z-index: 2;
+
     transform-origin: center bottom;
-
 }
-
-
-/* ==================================================
-   カプセル下半分
-================================================== */
-
-.capsule-bottom {
-
-    top: 30px;
-
-    transform-origin: center top;
-
-}
-
 
 /* ==================================================
    カプセル内部の光
