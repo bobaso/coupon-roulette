@@ -1200,33 +1200,6 @@ body {
     position: absolute;
 
     left: 50%;
-
-    top: 53%;
-
-    width: 130px;
-
-    height: 130px;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0);
-
-    z-index: 20;
-
-    pointer-events: none;
-
-}
-
-
-/* ==================================================
-   カプセル本体
-================================================== */
-
-.gacha-capsule {
-
-    position: absolute;
-
-    left: 50%;
     top: 53%;
 
     width: 130px;
