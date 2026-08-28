@@ -643,7 +643,6 @@ function startLotteryAnimation() {
         "hidden"
     );
 startLotteryTextAnimation();
-createCouponList();
     /*
      * =============================================
      * アニメーションを完全リセット
