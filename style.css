@@ -208,7 +208,7 @@ body {
 
     transform: translateX(-50%);
 
-    width: calc(100% - 100px);
+    width: 320px;
 
     padding: 0;
 
@@ -252,13 +252,13 @@ body {
 
     display: block;
 
-    width: 100%;
+    width: 320%;
 
-    height: 68px;
+    height: 60px;
 
     border: none;
 
-    border-radius: 22px;
+    border-radius: 10px;
 
     background: #ffffd7;
 
@@ -832,15 +832,15 @@ body {
 
     display: block;
 
-    width: calc(100% - 100px);
+    width: 320px;
 
-    height: 68px;
+    height: 60px;
 
     margin: 0;
 
     border: none;
 
-    border-radius: 22px;
+    border-radius: 10px;
 
     background: #ffffd7;
 
