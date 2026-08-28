@@ -72,11 +72,114 @@ const gachaCapsule =
 
 const lotteryLight =
     document.getElementById("lotteryLight");
+/* ==================================================
+   抽選中テキスト
+================================================== */
+
+const lotteryText =
+    document.querySelector(".lottery-text");
 
 const whiteout =
     document.getElementById("whiteout");
 
+/* ==================================================
+   抽選中テキストを1文字ずつ分解
+================================================== */
 
+function setupLotteryText() {
+
+    const text =
+        lotteryText.textContent.trim();
+
+    lotteryText.innerHTML = "";
+
+    const chars =
+        [...text];
+
+    chars.forEach(function (char, index) {
+
+        const span =
+            document.createElement("span");
+
+        span.classList.add("char");
+
+        span.style.setProperty(
+            "--char-index",
+            index
+        );
+
+        span.style.setProperty(
+            "--reverse-index",
+            chars.length - 1 - index
+        );
+
+        span.textContent = char;
+
+        lotteryText.appendChild(span);
+
+    });
+
+}
+
+/* ==================================================
+   抽選中テキストアニメーション
+================================================== */
+
+let lotteryTextTimer = null;
+
+
+function startLotteryTextAnimation() {
+
+    /* 既存タイマーを停止 */
+
+    clearInterval(lotteryTextTimer);
+
+
+    /* 初期状態 */
+
+    lotteryText.classList.remove(
+        "is-active",
+        "is-hide"
+    );
+
+
+    /*
+     * 少し待ってから表示
+     */
+
+    setTimeout(function () {
+
+        lotteryText.classList.add(
+            "is-active"
+        );
+
+    }, 50);
+
+
+    /*
+     * 一定時間ごとに
+     *
+     * 表示
+     * ↓
+     * 非表示
+     *
+     * を繰り返す
+     */
+
+    lotteryTextTimer =
+        setInterval(function () {
+
+            lotteryText.classList.toggle(
+                "is-active"
+            );
+
+            lotteryText.classList.toggle(
+                "is-hide"
+            );
+
+        }, 1800);
+
+}
 /* ==================================================
    クーポンリスト自動生成
 ================================================== */
@@ -501,7 +604,7 @@ function startLotteryAnimation() {
     lotteryScreen.classList.remove(
         "hidden"
     );
-
+startLotteryTextAnimation();
 
     /*
      * =============================================
@@ -664,28 +767,51 @@ gachaCapsule.classList.remove(
      * =============================================
      */
 
-    setTimeout(function () {
+setTimeout(function () {
 
-        lotteryScreen.classList.add(
-            "hidden"
-        );
+    /*
+     * 抽選中テキストのアニメーション停止
+     */
 
-        resultScreen.classList.remove(
-            "hidden"
-        );
+    clearInterval(
+        lotteryTextTimer
+    );
+
+    lotteryText.classList.remove(
+        "is-active",
+        "is-hide"
+    );
 
 
-        /*
-         * 1等なら紙吹雪
-         */
+    /*
+     * 抽選画面を終了
+     */
 
-        if (result.rank === "1等") {
+    lotteryScreen.classList.add(
+        "hidden"
+    );
 
-            createConfetti();
 
-        }
+    /*
+     * 結果画面を表示
+     */
 
-    }, 3700);
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /*
+     * 1等なら紙吹雪
+     */
+
+    if (result.rank === "1等") {
+
+        createConfetti();
+
+    }
+
+}, 3700);
 
 }
 
