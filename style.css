@@ -1438,7 +1438,7 @@ body {
     100% {
 
         transform:
-            translate(0, -100px)
+            translate(0, -200px)
             rotate(-8deg);
 
         opacity: 0;
@@ -1465,7 +1465,7 @@ body {
     100% {
 
         transform:
-            translate(0, 100px)
+            translate(0, 200px)
             rotate(8deg);
 
         opacity: 0;
