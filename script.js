@@ -943,7 +943,7 @@ retryBtn.addEventListener(
     "click",
     function () {
 
-        showResult();
+        startLotteryAnimation();
 
     }
 );
