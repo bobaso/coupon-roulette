@@ -364,18 +364,21 @@ function showResult(result) {
 function resetCapsuleAnimation() {
 
     /*
-     * すべてのアニメーションクラスを削除
+     * カプセルの状態をすべてリセット
+     *
+     * breakは使用しない
+     * openもここで削除する
      */
 
     gachaCapsule.classList.remove(
         "eject",
         "zoom",
-        "break"
+        "open"
     );
 
 
     /*
-     * ブラウザに状態を反映させる
+     * ブラウザに状態を反映
      */
 
     void gachaCapsule.offsetWidth;
@@ -390,17 +393,21 @@ function resetCapsuleAnimation() {
         "shake-2"
     );
 
-
     void gachaMachine.offsetWidth;
 
 
     /*
-     * 光もリセット
+     * 光をリセット
      */
 
     lotteryLight.classList.remove(
         "flash"
     );
+
+
+    /*
+     * ホワイトアウトをリセット
+     */
 
     whiteout.classList.remove(
         "show"
@@ -408,45 +415,44 @@ function resetCapsuleAnimation() {
 
 }
 
-
 /* ==================================================
-   カプセルを確実に開く
+   カプセルを開く
+   transition方式
 ================================================== */
 
 function openCapsule() {
 
     /*
      * 念のため
-     * eject / zoom を削除
+     * breakは使用しない
+     *
+     * zoomは開封開始時点で終了しているので
+     * openだけを追加する
      */
 
     gachaCapsule.classList.remove(
-        "eject",
-        "zoom"
-    );
-
-
-    /*
-     * ブラウザに変更を認識させる
-     */
-
-    void gachaCapsule.offsetWidth;
-
-
-    /*
-     * ★ここで必ずbreakを付ける
-     */
-
-    gachaCapsule.classList.add(
         "break"
     );
 
 
     /*
-     * デバッグ用
+     * カプセルを開く
      *
-     * ブラウザのコンソールで
-     * breakが付いたことを確認できます。
+     * CSSの
+     *
+     * .gacha-capsule.open .capsule-top-wrap
+     * .gacha-capsule.open .capsule-bottom-wrap
+     *
+     * が発動する
+     */
+
+    gachaCapsule.classList.add(
+        "open"
+    );
+
+
+    /*
+     * デバッグ用
      */
 
     console.log(
@@ -455,8 +461,6 @@ function openCapsule() {
     );
 
 }
-
-
 /* ==================================================
    抽選演出開始
 ================================================== */
@@ -552,10 +556,10 @@ function startLotteryAnimation() {
 
     setTimeout(function () {
 
-        gachaCapsule.classList.remove(
-            "zoom",
-            "break"
-        );
+gachaCapsule.classList.remove(
+    "zoom",
+    "open"
+);
 
         void gachaCapsule.offsetWidth;
 
