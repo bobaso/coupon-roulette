@@ -96,58 +96,92 @@
 
 <section id="lotteryScreen" class="hidden">
 
-    <!-- スキップボタン -->
-    <button
-        id="skipButton"
-        class="skip-button"
-        type="button">
-        Skip▶︎
-    </button>
+<!-- =================================
+     スキップボタン
+================================== -->
+
+<button
+    id="skipButton"
+    class="skip-button"
+    type="button">
+    Skip▶︎
+</button>
 
 
-    <!-- 抽選中 -->
-    <div class="lottery-text">
-        抽選中
-    </div>
+<!-- =================================
+     抽選中
+================================== -->
+
+<div class="lottery-text">
+    抽選中
+</div>
 
 
-    <!-- ガチャ演出 -->
-    <div class="gacha-animation">
+<!-- =================================
+     ガチャ演出
+================================== -->
 
-        <!--
-            ここにガチャ機の画像を入れてください
-            ファイル名は後から変更可能です
-        -->
+<div class="gacha-animation">
+
+    <!-- ガチャ機 -->
+
+    <img
+        id="gachaMachine"
+        class="gacha-machine"
+        src="images/gacha-machine.png"
+        alt="抽選中">
+
+
+    <!-- =================================
+         排出されるカプセル
+    ================================== -->
+
+    <div
+        id="gachaCapsule"
+        class="gacha-capsule">
+
+        <!-- カプセル上半分 -->
+
         <img
-            id="gachaMachine"
-            class="gacha-machine"
-            src="images/gacha-machine.png"
-            alt="抽選中">
+            src="images/capsule-top.png"
+            class="capsule-top"
+            alt="">
 
 
-        <!-- 排出されるカプセル -->
-        <div
-            id="gachaCapsule"
-            class="gacha-capsule">
-        </div>
+        <!-- カプセル下半分 -->
+
+        <img
+            src="images/capsule-bottom.png"
+            class="capsule-bottom"
+            alt="">
 
     </div>
 
-
-    <!-- カプセルが割れたときの光 -->
-    <div
-        id="lotteryLight"
-        class="lottery-light">
-    </div>
+</div>
 
 
-    <!-- ホワイトアウト -->
-    <div
-        id="whiteout"
-        class="whiteout">
-    </div>
+<!-- =================================
+     カプセルから出る光
+================================== -->
+
+<div
+    id="lotteryLight"
+    class="lottery-light">
+</div>
+
+
+<!-- =================================
+     ホワイトアウト
+================================== -->
+
+<div
+    id="whiteout"
+    class="whiteout">
+</div>
+```
 
 </section>
+
 <!-- =================================
      抽選結果画面
 ================================= -->
