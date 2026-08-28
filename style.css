@@ -664,16 +664,19 @@ body {
 
 #resultScreen {
 
-    position: relative;
+    position: fixed;
+
+    top: 0;
+    left: 0;
 
     width: 100%;
-
-    min-height: 100dvh;
+    height: 100dvh;
 
     background: #ffb300;
 
     overflow: hidden;
 
+    z-index: 100;
 }
 
 
