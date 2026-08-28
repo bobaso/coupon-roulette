@@ -13,13 +13,13 @@ const coupons = [
     {
         rank: "2等",
         name: "10％OFFクーポン",
-        probability: １
+        probability: 1
     },
 
     {
         rank: "3等",
         name: "5％OFFクーポン",
-        probability: １
+        probability: 1
     }
 
 ];
@@ -475,75 +475,6 @@ function createConfetti() {
     });
 
 }
-
-
-/* ==================================================
-   抽選結果画面を表示
-================================================== */
-
-function showResult(result) {
-
-    /* 結果が渡されなかった場合だけ抽選 */
-
-    if (!result) {
-
-        result =
-            drawCoupon();
-
-    }
-
-
-    /* 結果を設定 */
-
-    setResultCoupon(result);
-
-
-    /* スタート画面を隠す */
-
-    startScreen.classList.add(
-        "hidden"
-    );
-
-
-    /* 抽選画面を隠す */
-
-    lotteryScreen.classList.add(
-        "hidden"
-    );
-
-
-    /* 結果画面を表示 */
-
-    resultScreen.classList.remove(
-        "hidden"
-    );
-
-
-    /* 1等なら引き直しボタンを非表示 */
-
-    if (result.rank === "1等") {
-
-        retryBtn.style.display =
-            "none";
-
-    } else {
-
-        retryBtn.style.display =
-            "block";
-
-    }
-
-
-    /* 1等なら紙吹雪 */
-
-    if (result.rank === "1等") {
-
-        createConfetti();
-
-    }
-
-}
-
 
 /* ==================================================
    カプセルアニメーションを完全リセット
