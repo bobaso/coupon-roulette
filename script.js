@@ -397,6 +397,241 @@ createCouponList();
 
 
 /* ==================================================
+   抽選中アニメーション
+================================================== */
+
+const lotteryScreen =
+    document.getElementById("lotteryScreen");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const gachaMachine =
+    document.getElementById("gachaMachine");
+
+const gachaCapsule =
+    document.getElementById("gachaCapsule");
+
+const lotteryLight =
+    document.getElementById("lotteryLight");
+
+const whiteout =
+    document.getElementById("whiteout");
+
+
+/* =================================
+   抽選演出開始
+================================= */
+
+function startLotteryAnimation() {
+
+    /* 抽選結果を先に決定 */
+
+    const result =
+        drawCoupon();
+
+
+    /* 結果を書き換える */
+
+    rankText.textContent =
+        result.rank;
+
+    couponText.textContent =
+        result.name;
+
+
+    /* 等賞クラスをリセット */
+
+    resultCouponItem.classList.remove(
+        "rank-1",
+        "rank-2",
+        "rank-3",
+        "rank-4",
+        "rank-5",
+        "rank-6",
+        "rank-7",
+        "rank-8",
+        "rank-9",
+        "rank-10"
+    );
+
+
+    const resultIndex =
+        coupons.indexOf(result);
+
+
+    resultCouponItem.classList.add(
+        `rank-${resultIndex + 1}`
+    );
+
+
+    /* スタート画面を隠す */
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+
+    /* 抽選画面を表示 */
+
+    lotteryScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* アニメーションを初期化 */
+
+    gachaMachine.className =
+        "gacha-machine";
+
+    gachaCapsule.className =
+        "gacha-capsule";
+
+    lotteryLight.className =
+        "lottery-light";
+
+    whiteout.className =
+        "whiteout";
+
+
+    /* =================================
+       ① ガチャ機1回目
+    ================================= */
+
+    setTimeout(function () {
+
+        gachaMachine.classList.add(
+            "shake-1"
+        );
+
+    }, 300);
+
+
+    /* =================================
+       ② ガチャ機2回目
+    ================================= */
+
+    setTimeout(function () {
+
+        gachaMachine.classList.remove(
+            "shake-1"
+        );
+
+        void gachaMachine.offsetWidth;
+
+        gachaMachine.classList.add(
+            "shake-2"
+        );
+
+    }, 850);
+
+
+    /* =================================
+       ③ カプセル排出
+    ================================= */
+
+    setTimeout(function () {
+
+        gachaCapsule.classList.add(
+            "eject"
+        );
+
+    }, 1300);
+
+
+    /* =================================
+       ④ カプセルズーム
+    ================================= */
+
+    setTimeout(function () {
+
+        gachaCapsule.classList.remove(
+            "eject"
+        );
+
+        void gachaCapsule.offsetWidth;
+
+        gachaCapsule.classList.add(
+            "zoom"
+        );
+
+    }, 2050);
+
+
+    /* =================================
+       ⑤ カプセルが割れる
+    ================================= */
+
+    setTimeout(function () {
+
+        gachaCapsule.classList.remove(
+            "zoom"
+        );
+
+        void gachaCapsule.offsetWidth;
+
+        gachaCapsule.classList.add(
+            "break"
+        );
+
+    }, 2800);
+
+
+    /* =================================
+       ⑥ 光が拡散
+    ================================= */
+
+    setTimeout(function () {
+
+        lotteryLight.classList.add(
+            "flash"
+        );
+
+    }, 2950);
+
+
+    /* =================================
+       ⑦ ホワイトアウト
+    ================================= */
+
+    setTimeout(function () {
+
+        whiteout.classList.add(
+            "show"
+        );
+
+    }, 3250);
+
+
+    /* =================================
+       ⑧ 結果画面
+    ================================= */
+
+    setTimeout(function () {
+
+        lotteryScreen.classList.add(
+            "hidden"
+        );
+
+        resultScreen.classList.remove(
+            "hidden"
+        );
+
+
+        /* 1等の場合だけ紙吹雪 */
+
+        if (result.rank === "1等") {
+
+            createConfetti();
+
+        }
+
+    }, 3700);
+
+}
+
+
+/* ==================================================
    クーポン取得ボタン
 ================================================== */
 
@@ -404,7 +639,36 @@ couponBtn.addEventListener(
     "click",
     function () {
 
-        showResult();
+        startLotteryAnimation();
+
+    }
+);
+
+
+/* ==================================================
+   Skipボタン
+================================================== */
+
+skipButton.addEventListener(
+    "click",
+    function () {
+
+        /*
+         * 現在のアニメーションを止める
+         */
+
+        lotteryScreen.classList.add(
+            "hidden"
+        );
+
+
+        /*
+         * 結果画面を表示
+         */
+
+        resultScreen.classList.remove(
+            "hidden"
+        );
 
     }
 );
