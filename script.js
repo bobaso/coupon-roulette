@@ -72,6 +72,12 @@ const gachaCapsule =
 
 const lotteryLight =
     document.getElementById("lotteryLight");
+
+const capsuleTop =
+    document.querySelector(".capsule-top");
+
+const capsuleBottom =
+    document.querySelector(".capsule-bottom");
 /* ==================================================
    抽選中テキスト
 ================================================== */
@@ -401,7 +407,32 @@ function setResultCoupon(result) {
     );
 
 }
+/* ==================================================
+   ガチャカプセルの色変更
+   1等だけ特別カラー
+================================================== */
 
+function setCapsuleImage(result) {
+
+    if (result.rank === "1等") {
+
+        capsuleTop.src =
+            "images/capsule-top1.png";
+
+        capsuleBottom.src =
+            "images/capsule-bottom1.png";
+
+    } else {
+
+        capsuleTop.src =
+            "images/capsule-top.png";
+
+        capsuleBottom.src =
+            "images/capsule-bottom.png";
+
+    }
+
+}
 
 /* ==================================================
    紙吹雪
@@ -616,7 +647,7 @@ function startLotteryAnimation() {
 
     const result =
         drawCoupon();
-
+setCapsuleImage(result);
 
     /*
      * 結果画面の内容を先にセット
