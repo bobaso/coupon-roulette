@@ -253,7 +253,7 @@ body {
     display: block;
 
     width: 300px;
-
+margin: 0 auto;
     height: 60px;
 
     border: none;
@@ -822,8 +822,10 @@ body {
 
     position: absolute;
 
-    top: 340px;
-
+    top: 300px;
+   
+    margin: 0 auto;
+   
     left: 50%;
 
     transform: translateX(-50%);
