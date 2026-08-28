@@ -1,14 +1,5 @@
 /* ==================================================
    クーポン設定
-   ==================================================
-
-   ★クーポンの内容はここだけ変更してください。
-
-   rank        → 等賞
-   name        → クーポン名
-   probability → 当選確率
-
-   probability の合計は100にしてください。
 ================================================== */
 
 const coupons = [
@@ -64,27 +55,37 @@ const couponList =
 
 
 /* ==================================================
+   抽選演出用HTML要素
+================================================== */
+
+const lotteryScreen =
+    document.getElementById("lotteryScreen");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const gachaMachine =
+    document.getElementById("gachaMachine");
+
+const gachaCapsule =
+    document.getElementById("gachaCapsule");
+
+const lotteryLight =
+    document.getElementById("lotteryLight");
+
+const whiteout =
+    document.getElementById("whiteout");
+
+
+/* ==================================================
    クーポンリスト自動生成
 ================================================== */
 
 function createCouponList() {
 
-    /* クーポンリストを一度空にする */
-
     couponList.innerHTML = "";
 
-
-    /* couponsの数だけ自動生成 */
-
     coupons.forEach((coupon, index) => {
-
-        /*
-         * 1番目 → rank-1
-         * 2番目 → rank-2
-         * 3番目 → rank-3
-         * 4番目 → rank-4
-         * ...
-         */
 
         const couponItem =
             document.createElement("div");
@@ -135,7 +136,7 @@ function createCouponList() {
 
 
         /* ==============================
-           クーポンを組み立てる
+           組み立て
         ============================== */
 
         couponItem.appendChild(
@@ -148,7 +149,7 @@ function createCouponList() {
 
 
         /* ==============================
-           リストに追加
+           リストへ追加
         ============================== */
 
         couponList.appendChild(
@@ -166,19 +167,11 @@ function createCouponList() {
 
 function drawCoupon() {
 
-    /*
-        0～100のランダムな数字を作る
-    */
-
     const random =
         Math.random() * 100;
 
     let cumulativeProbability = 0;
 
-
-    /*
-        上から順番に確率を足していく
-    */
 
     for (const coupon of coupons) {
 
@@ -198,10 +191,7 @@ function drawCoupon() {
     }
 
 
-    /*
-        万が一確率の合計が100未満だった場合
-        最後のクーポンを返す
-    */
+    /* 念のため */
 
     return coupons[
         coupons.length - 1
@@ -211,52 +201,75 @@ function drawCoupon() {
 
 
 /* ==================================================
-   1等 紙吹雪
+   結果画面の等賞クラスを設定
+================================================== */
+
+function setResultCoupon(result) {
+
+    /* 既存クラスを削除 */
+
+    resultCouponItem.classList.remove(
+        "rank-1",
+        "rank-2",
+        "rank-3",
+        "rank-4",
+        "rank-5",
+        "rank-6",
+        "rank-7",
+        "rank-8",
+        "rank-9",
+        "rank-10"
+    );
+
+
+    /* 結果を書き換え */
+
+    rankText.textContent =
+        result.rank;
+
+    couponText.textContent =
+        result.name;
+
+
+    /* 当選順位を取得 */
+
+    const resultIndex =
+        coupons.indexOf(result);
+
+
+    /* クラスを追加 */
+
+    resultCouponItem.classList.add(
+        `rank-${resultIndex + 1}`
+    );
+
+}
+
+
+/* ==================================================
+   紙吹雪
 ================================================== */
 
 function createConfetti() {
 
     confetti({
 
-        /* 紙吹雪の数 */
-
         particleCount: 100,
-
-
-        /* 発射角度 */
 
         angle: 90,
 
-
-        /* 左右への広がり */
-
         spread: 90,
-
-
-        /* 重力 */
 
         gravity: 0.2,
 
-
-        /* 横方向への流れ */
-
         drift: 0,
 
-
-        /* アニメーション時間 */
-
         ticks: 200,
-
-
-        /* 発射位置 */
 
         origin: {
             x: 0.5,
             y: 0.8
         },
-
-
-        /* 色 */
 
         colors: [
             '#165B33',
@@ -265,20 +278,11 @@ function createConfetti() {
             '#EA4630'
         ],
 
-
-        /* 四角形のみ */
-
         shapes: ['square'],
-
-
-        /* サイズ */
 
         scalar: 0.8,
 
-
-        /* 重なり順 */
-
-        zIndex: 100
+        zIndex: 300
 
     });
 
@@ -286,183 +290,24 @@ function createConfetti() {
 
 
 /* ==================================================
-   抽選結果表示
+   抽選結果画面を表示
 ================================================== */
 
-function showResult() {
+function showResult(result) {
 
-    /* =================================
-       クーポンを抽選
-    ================================= */
+    /* 結果が渡されなかった場合だけ抽選 */
 
-    const result =
-        drawCoupon();
+    if (!result) {
 
-
-    /* =================================
-       結果を書き換える
-    ================================= */
-
-    rankText.textContent =
-        result.rank;
-
-    couponText.textContent =
-        result.name;
-
-
-    /* =================================
-       前回の等賞クラスを削除
-    ================================= */
-
-    resultCouponItem.classList.remove(
-        "rank-1",
-        "rank-2",
-        "rank-3",
-        "rank-4",
-        "rank-5",
-        "rank-6",
-        "rank-7",
-        "rank-8",
-        "rank-9",
-        "rank-10"
-    );
-
-
-    /* =================================
-       当選した等賞のCSSクラスを設定
-    ================================= */
-
-    const resultIndex =
-        coupons.indexOf(result);
-
-
-    resultCouponItem.classList.add(
-        `rank-${resultIndex + 1}`
-    );
-
-
-    /* =================================
-       スタート画面を隠す
-    ================================= */
-
-    startScreen.classList.add(
-        "hidden"
-    );
-
-
-    /* =================================
-       結果画面を表示
-    ================================= */
-
-    resultScreen.classList.remove(
-        "hidden"
-    );
-
-/* =================================
-   1等の場合は引き直しボタンを非表示
-   2等以下は表示
-================================= */
-
-if (result.rank === "1等") {
-
-    retryBtn.style.display = "none";
-
-} else {
-
-    retryBtn.style.display = "block";
-
-}
-    /* =================================
-       1等の場合だけ紙吹雪
-    ================================= */
-
-    if (result.rank === "1等") {
-
-        createConfetti();
+        result =
+            drawCoupon();
 
     }
 
-}
 
-/* ==================================================
-   初期処理
-================================================== */
+    /* 結果を設定 */
 
-/*
-   ページ読み込み時に
-   クーポンリストを自動生成
-*/
-
-createCouponList();
-
-
-/* ==================================================
-   抽選中アニメーション
-================================================== */
-
-const lotteryScreen =
-    document.getElementById("lotteryScreen");
-
-const skipButton =
-    document.getElementById("skipButton");
-
-const gachaMachine =
-    document.getElementById("gachaMachine");
-
-const gachaCapsule =
-    document.getElementById("gachaCapsule");
-
-const lotteryLight =
-    document.getElementById("lotteryLight");
-
-const whiteout =
-    document.getElementById("whiteout");
-
-
-/* =================================
-   抽選演出開始
-================================= */
-
-function startLotteryAnimation() {
-
-    /* 抽選結果を先に決定 */
-
-    const result =
-        drawCoupon();
-
-
-    /* 結果を書き換える */
-
-    rankText.textContent =
-        result.rank;
-
-    couponText.textContent =
-        result.name;
-
-
-    /* 等賞クラスをリセット */
-
-    resultCouponItem.classList.remove(
-        "rank-1",
-        "rank-2",
-        "rank-3",
-        "rank-4",
-        "rank-5",
-        "rank-6",
-        "rank-7",
-        "rank-8",
-        "rank-9",
-        "rank-10"
-    );
-
-
-    const resultIndex =
-        coupons.indexOf(result);
-
-
-    resultCouponItem.classList.add(
-        `rank-${resultIndex + 1}`
-    );
+    setResultCoupon(result);
 
 
     /* スタート画面を隠す */
@@ -472,31 +317,202 @@ function startLotteryAnimation() {
     );
 
 
-    /* 抽選画面を表示 */
+    /* 抽選画面を隠す */
+
+    lotteryScreen.classList.add(
+        "hidden"
+    );
+
+
+    /* 結果画面を表示 */
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* 1等なら引き直しボタンを非表示 */
+
+    if (result.rank === "1等") {
+
+        retryBtn.style.display =
+            "none";
+
+    } else {
+
+        retryBtn.style.display =
+            "block";
+
+    }
+
+
+    /* 1等なら紙吹雪 */
+
+    if (result.rank === "1等") {
+
+        createConfetti();
+
+    }
+
+}
+
+
+/* ==================================================
+   カプセルアニメーションを完全リセット
+================================================== */
+
+function resetCapsuleAnimation() {
+
+    /*
+     * すべてのアニメーションクラスを削除
+     */
+
+    gachaCapsule.classList.remove(
+        "eject",
+        "zoom",
+        "break"
+    );
+
+
+    /*
+     * ブラウザに状態を反映させる
+     */
+
+    void gachaCapsule.offsetWidth;
+
+
+    /*
+     * ガチャ機のアニメーションもリセット
+     */
+
+    gachaMachine.classList.remove(
+        "shake-1",
+        "shake-2"
+    );
+
+
+    void gachaMachine.offsetWidth;
+
+
+    /*
+     * 光もリセット
+     */
+
+    lotteryLight.classList.remove(
+        "flash"
+    );
+
+    whiteout.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* ==================================================
+   カプセルを確実に開く
+================================================== */
+
+function openCapsule() {
+
+    /*
+     * 念のため
+     * eject / zoom を削除
+     */
+
+    gachaCapsule.classList.remove(
+        "eject",
+        "zoom"
+    );
+
+
+    /*
+     * ブラウザに変更を認識させる
+     */
+
+    void gachaCapsule.offsetWidth;
+
+
+    /*
+     * ★ここで必ずbreakを付ける
+     */
+
+    gachaCapsule.classList.add(
+        "break"
+    );
+
+
+    /*
+     * デバッグ用
+     *
+     * ブラウザのコンソールで
+     * breakが付いたことを確認できます。
+     */
+
+    console.log(
+        "カプセル開封開始:",
+        gachaCapsule.className
+    );
+
+}
+
+
+/* ==================================================
+   抽選演出開始
+================================================== */
+
+function startLotteryAnimation() {
+
+    /*
+     * =============================================
+     * 抽選結果を最初に1回だけ決定
+     * =============================================
+     */
+
+    const result =
+        drawCoupon();
+
+
+    /*
+     * 結果画面の内容を先にセット
+     */
+
+    setResultCoupon(result);
+
+
+    /*
+     * =============================================
+     * 画面切り替え
+     * =============================================
+     */
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
 
     lotteryScreen.classList.remove(
         "hidden"
     );
 
 
-    /* アニメーションを初期化 */
+    /*
+     * =============================================
+     * アニメーションを完全リセット
+     * =============================================
+     */
 
-    gachaMachine.className =
-        "gacha-machine";
-
-    gachaCapsule.className =
-        "gacha-capsule";
-
-    lotteryLight.className =
-        "lottery-light";
-
-    whiteout.className =
-        "whiteout";
+    resetCapsuleAnimation();
 
 
-    /* =================================
-       ① ガチャ機1回目
-    ================================= */
+    /*
+     * =============================================
+     * ① ガチャ機1回目
+     * =============================================
+     */
 
     setTimeout(function () {
 
@@ -507,9 +523,11 @@ function startLotteryAnimation() {
     }, 300);
 
 
-    /* =================================
-       ② ガチャ機2回目
-    ================================= */
+    /*
+     * =============================================
+     * ② ガチャ機2回目
+     * =============================================
+     */
 
     setTimeout(function () {
 
@@ -526,22 +544,38 @@ function startLotteryAnimation() {
     }, 850);
 
 
-    /* =================================
-       ③ カプセル排出
-    ================================= */
+    /*
+     * =============================================
+     * ③ カプセル排出
+     * =============================================
+     */
 
     setTimeout(function () {
 
+        gachaCapsule.classList.remove(
+            "zoom",
+            "break"
+        );
+
+        void gachaCapsule.offsetWidth;
+
         gachaCapsule.classList.add(
             "eject"
+        );
+
+
+        console.log(
+            "カプセル排出開始"
         );
 
     }, 1300);
 
 
-    /* =================================
-       ④ カプセルズーム
-    ================================= */
+    /*
+     * =============================================
+     * ④ カプセルズーム
+     * =============================================
+     */
 
     setTimeout(function () {
 
@@ -555,33 +589,42 @@ function startLotteryAnimation() {
             "zoom"
         );
 
+
+        console.log(
+            "カプセルズーム開始"
+        );
+
     }, 2050);
 
 
-    /* =================================
-       ⑤ カプセルが割れる
-    ================================= */
+    /*
+     * =============================================
+     * ⑤ カプセル開封
+     *
+     * ★最重要部分
+     * =============================================
+     */
 
     setTimeout(function () {
 
-        gachaCapsule.classList.remove(
-            "zoom"
-        );
-
-        void gachaCapsule.offsetWidth;
-
-        gachaCapsule.classList.add(
-            "break"
-        );
+        openCapsule();
 
     }, 2800);
 
 
-    /* =================================
-       ⑥ 光が拡散
-    ================================= */
+    /*
+     * =============================================
+     * ⑥ カプセル中央の光
+     * =============================================
+     */
 
     setTimeout(function () {
+
+        lotteryLight.classList.remove(
+            "flash"
+        );
+
+        void lotteryLight.offsetWidth;
 
         lotteryLight.classList.add(
             "flash"
@@ -590,11 +633,19 @@ function startLotteryAnimation() {
     }, 2950);
 
 
-    /* =================================
-       ⑦ ホワイトアウト
-    ================================= */
+    /*
+     * =============================================
+     * ⑦ ホワイトアウト
+     * =============================================
+     */
 
     setTimeout(function () {
+
+        whiteout.classList.remove(
+            "show"
+        );
+
+        void whiteout.offsetWidth;
 
         whiteout.classList.add(
             "show"
@@ -603,9 +654,11 @@ function startLotteryAnimation() {
     }, 3250);
 
 
-    /* =================================
-       ⑧ 結果画面
-    ================================= */
+    /*
+     * =============================================
+     * ⑧ 結果画面
+     * =============================================
+     */
 
     setTimeout(function () {
 
@@ -618,7 +671,9 @@ function startLotteryAnimation() {
         );
 
 
-        /* 1等の場合だけ紙吹雪 */
+        /*
+         * 1等なら紙吹雪
+         */
 
         if (result.rank === "1等") {
 
@@ -654,7 +709,7 @@ skipButton.addEventListener(
     function () {
 
         /*
-         * 現在のアニメーションを止める
+         * 現在の抽選画面を終了
          */
 
         lotteryScreen.classList.add(
@@ -686,3 +741,10 @@ retryBtn.addEventListener(
 
     }
 );
+
+
+/* ==================================================
+   初期処理
+================================================== */
+
+createCouponList();
