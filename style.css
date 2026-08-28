@@ -1371,23 +1371,14 @@ body {
 ================================================== */
 
 .gacha-capsule.break .capsule-top-wrap {
-
-    animation:
-        capsuleTopBreak
-        0.8s
-        ease-out
-        forwards;
+    animation: capsuleTopBreak 0.8s ease-out forwards;
 }
 
 
 .gacha-capsule.break .capsule-bottom-wrap {
-
-    animation:
-        capsuleBottomBreak
-        0.8s
-        ease-out
-        forwards;
+    animation: capsuleBottomBreak 0.8s ease-out forwards;
 }
+
 
 
 /* ==================================================
