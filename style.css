@@ -643,7 +643,9 @@ body {
     left: 0;
 
     width: 100%;
-
+    height: 100svh;
+   
+    min-height: 100svh;
     background-color: #ffb300;
 
     background-image: url("images/background-logo.png");
@@ -669,7 +671,7 @@ body {
     position: relative;
 
     width: 100%;
-    height: 100%;
+    height: 100svh;
 
 }
 
@@ -1678,17 +1680,3 @@ body {
     }
 
 }
-
-/* =========================================
-   iPhone Safari レイアウト安定化
-========================================= */
-
-#resultScreen {
-    height: 100svh;
-    min-height: 100svh;
-}
-
-.result-top {
-    height: 100svh;
-}
-
