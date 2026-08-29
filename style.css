@@ -673,16 +673,12 @@ body {
     width: 100%;
     height: 480px;
 }
-
 /* =========================================
-   background-result.png
-   元画像：430 × 480
-   background-logoの上に重ねる
+   結果画面コンテンツ
+   background-result.pngを基準に配置
 ========================================= */
 
-.result-top::before {
-
-    content: "";
+.result-content {
 
     position: absolute;
 
@@ -694,27 +690,16 @@ body {
 
     aspect-ratio: 430 / 480;
 
-    height: auto;
-
     background-image: url("images/background-result.png");
 
     background-repeat: no-repeat;
 
     background-position: center top;
 
-    /*
-       画像を横幅いっぱいに拡大・縮小
-       元画像の比率を維持
-    */
     background-size: 100% 100%;
 
     z-index: 2;
-
-    pointer-events: none;
-
 }
-
-
 /* =========================================
    抽選結果タイトル
 ========================================= */
@@ -744,24 +729,27 @@ body {
 
 }
 
-
 /* =========================================
-   抽選結果のクーポン
-   既存のcoupon-itemをそのまま使用
+   結果画面のクーポン
 ========================================= */
 
-.result-top .coupon-item {
+.result-content .coupon-item {
 
-    position: relative;
+    position: absolute;
 
-    z-index: 3;
+    top: 85px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
 
     width: calc(100% - 66px);
 
-    margin: 85px auto 0;
+    margin: 0;
 
     padding-top: 21px;
 
+    z-index: 3;
 }
 
 
@@ -819,45 +807,55 @@ z-index: 20;
 クーポンを使用するボタン
 ========================================= */
 
-.result-use-button {
+.result-content .result-use-button {
 
+    position: absolute;
 
-position: relative;
+    top: 285px;
 
-display: block;
+    left: 50%;
 
-width: 300px;
-height: 60px;
+    transform: translateX(-50%);
 
-margin: 0;
+    display: block;
 
-border: none;
-border-radius: 10px;
+    width: 300px;
 
-background: #ffffd7;
-color: #ff7800;
+    height: 60px;
 
-font-family: inherit;
+    margin: 0;
 
-font-size: 25px;
-font-weight: 800;
+    border: none;
 
-letter-spacing: 0.04em;
-line-height: 1;
+    border-radius: 10px;
 
-text-align: center;
+    background: #ffffd7;
 
-cursor: pointer;
+    color: #ff7800;
 
-box-shadow:
-    0 6px 0 rgba(188, 92, 0, 0.95),
-    0 9px 13px rgba(120, 65, 0, 0.20);
+    font-family: inherit;
 
-transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease;
+    font-size: 25px;
 
+    font-weight: 800;
 
+    letter-spacing: 0.04em;
+
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 rgba(188, 92, 0, 0.95),
+        0 9px 13px rgba(120, 65, 0, 0.20);
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
+
+    z-index: 10;
 }
 
 /* =========================================
