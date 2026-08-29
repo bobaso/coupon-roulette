@@ -42,6 +42,8 @@ const couponBtn =
 const useCouponBtn =
     document.getElementById("useCouponBtn");
 
+let issuedCouponId = null;
+
 const retryBtn =
     document.getElementById("retryBtn");
 
