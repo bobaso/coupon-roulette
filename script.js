@@ -88,6 +88,48 @@ const lotteryText =
 const whiteout =
     document.getElementById("whiteout");
 
+javascript
+/* ==================================================
+   抽選演出タイマー管理
+================================================== */
+
+let lotteryTimers = [];
+
+let lotteryAnimationId = 0;
+
+
+/* ==================================================
+   抽選タイマーをすべて停止
+================================================== */
+
+function clearLotteryTimers() {
+
+    lotteryTimers.forEach(function (timer) {
+
+        clearTimeout(timer);
+
+    });
+
+    lotteryTimers = [];
+
+}
+
+
+/* ==================================================
+   タイマーを登録
+================================================== */
+
+function setLotteryTimer(callback, delay) {
+
+    const timer =
+        setTimeout(callback, delay);
+
+    lotteryTimers.push(timer);
+
+    return timer;
+
+}
+
 
 /* ==================================================
    抽選中テキストアニメーション
@@ -161,7 +203,7 @@ function startLotteryTextAnimation() {
        ① 文字を表示
        ========================================== */
 
-    setTimeout(function () {
+   setLotteryTimer(function () {
 
         lotteryText.classList.add(
             "is-active"
@@ -173,7 +215,7 @@ function startLotteryTextAnimation() {
            ========================================== */
 
         lotteryTextTimeout =
-            setTimeout(function () {
+            setLotteryTimer(function () {
 
                 lotteryText.classList.remove(
                     "is-active"
@@ -224,7 +266,7 @@ function startLotteryTextAnimation() {
              */
 
             lotteryTextTimeout =
-                setTimeout(function () {
+                setLotteryTimer(function () {
 
                     lotteryText.classList.remove(
                         "is-active"
@@ -621,8 +663,7 @@ startLotteryTextAnimation();
      * =============================================
      */
 
-    setTimeout(function () {
-
+    setLotteryTimer(function () {
         gachaMachine.classList.add(
             "shake-1"
         );
@@ -636,7 +677,7 @@ startLotteryTextAnimation();
      * =============================================
      */
 
-    setTimeout(function () {
+    setLotteryTimer(function () {
 
         gachaMachine.classList.remove(
             "shake-1"
@@ -657,7 +698,7 @@ startLotteryTextAnimation();
      * =============================================
      */
 
-    setTimeout(function () {
+    setLotteryTimer(function () {
 
 gachaCapsule.classList.remove(
     "zoom",
@@ -684,7 +725,7 @@ gachaCapsule.classList.remove(
      * =============================================
      */
 
-    setTimeout(function () {
+    setLotteryTimer(function () {
 
         gachaCapsule.classList.remove(
             "eject"
@@ -712,7 +753,7 @@ gachaCapsule.classList.remove(
      * =============================================
      */
 
-    setTimeout(function () {
+    setLotteryTimer(function () {
 
         openCapsule();
 
@@ -724,7 +765,7 @@ gachaCapsule.classList.remove(
    1等だけ強い光
 ============================================= */
 
-setTimeout(function () {
+setLotteryTimer(function () {
 
     lotteryLight.classList.remove(
         "flash",
@@ -757,7 +798,7 @@ setTimeout(function () {
      * =============================================
      */
 
-    setTimeout(function () {
+    setLotteryTimer(function () {
 
         whiteout.classList.remove(
             "show"
@@ -778,7 +819,7 @@ setTimeout(function () {
      * =============================================
      */
 
-setTimeout(function () {
+setLotteryTimer(function () {
 
     /*
      * 抽選中テキストを停止
