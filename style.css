@@ -1553,7 +1553,64 @@ body {
 
 }
 
+/* ==================================================
+   1等専用：開封時の強い光
+================================================== */
 
+.lottery-light.flash-first {
+
+    animation:
+        lotteryFlashFirst
+        0.8s
+        ease-out
+        forwards;
+
+}
+
+
+@keyframes lotteryFlashFirst {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+
+    }
+
+    20% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(5);
+
+    }
+
+    45% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(12);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(50);
+
+    }
+
+}
 @keyframes lotteryFlash {
 
     0% {
