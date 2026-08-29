@@ -823,8 +823,6 @@ body {
 .result-use-button {
 
     position: absolute;
-
-    top: 345px;
    
     margin: 0 auto;
    
@@ -892,7 +890,7 @@ body {
 ========================================= */
 
 .result-retry-button {
-  top: -45px;
+ 
    
     position: relative;
 
@@ -950,6 +948,156 @@ body {
         0 1px 0 rgba(188, 92, 0, 0.95),
         0 4px 8px rgba(120, 65, 0, 0.20);
 }
+/* =========================================
+結果画面ボタンエリア
+========================================= */
+
+.result-button-area {
+
+```
+position: absolute;
+
+left: 0;
+right: 0;
+
+top: 345px;
+
+width: 100%;
+
+display: flex;
+flex-direction: column;
+align-items: center;
+
+gap: 15px;
+
+z-index: 20;
+```
+
+}
+
+/* =========================================
+クーポンを使用するボタン
+========================================= */
+
+.result-use-button {
+
+```
+position: relative;
+
+display: block;
+
+width: 300px;
+height: 60px;
+
+margin: 0;
+
+border: none;
+border-radius: 10px;
+
+background: #ffffd7;
+color: #ff7800;
+
+font-family: inherit;
+
+font-size: 25px;
+font-weight: 800;
+
+letter-spacing: 0.04em;
+line-height: 1;
+
+text-align: center;
+
+cursor: pointer;
+
+box-shadow:
+    0 6px 0 rgba(188, 92, 0, 0.95),
+    0 9px 13px rgba(120, 65, 0, 0.20);
+
+transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+```
+
+}
+
+/* =========================================
+クーポンを使用する：押したとき
+========================================= */
+
+.result-use-button:active {
+
+```
+transform: translateY(6px);
+
+box-shadow:
+    0 1px 0 rgba(188, 92, 0, 0.95),
+    0 4px 8px rgba(120, 65, 0, 0.20);
+```
+
+}
+
+/* =========================================
+フォローして引き直し
+========================================= */
+
+.result-retry-button {
+
+```
+position: relative;
+
+display: block;
+
+width: calc(100% - 100px);
+
+height: 68px;
+
+margin: 0;
+
+border: none;
+border-radius: 10px;
+
+background: #ffffff;
+color: #ff7800;
+
+font-family: inherit;
+
+font-size: 23px;
+font-weight: 800;
+
+letter-spacing: 0.04em;
+line-height: 1;
+
+text-align: center;
+
+cursor: pointer;
+
+box-shadow:
+    0 6px 0 rgba(188, 92, 0, 0.95),
+    0 9px 13px rgba(120, 65, 0, 0.20);
+
+transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+```
+
+}
+
+/* =========================================
+フォローして引き直し：押したとき
+========================================= */
+
+.result-retry-button:active {
+
+```
+transform: translateY(6px);
+
+box-shadow:
+    0 1px 0 rgba(188, 92, 0, 0.95),
+    0 4px 8px rgba(120, 65, 0, 0.20);
+```
+
+}
+
 /* ==================================================
    抽選中画面
 ================================================== */
