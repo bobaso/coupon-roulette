@@ -808,7 +808,7 @@ body {
        ここを変更すると
        ボタンが上下に動きます。
     */
-    top: 285px;
+    top: 298px;
 
     left: 50%;
 
@@ -1691,11 +1691,4 @@ body {
 .result-top {
     height: 100svh;
 }
-/* =========================================
-   Safari専用
-   結果画面ボタン位置補正
-========================================= */
 
-body.safari-browser .result-content .result-use-button {
-    top: 315px;
-}
