@@ -206,14 +206,21 @@
 
 <div id="resultScreen" class="hidden">
 
+ <!-- =========================================
+     抽選結果画面
+========================================= -->
+
+<div id="resultScreen" class="hidden">
+
     <!-- =================================
          結果画面上部
     ================================== -->
 
     <section class="result-top">
 
-
-        <!-- 抽選結果タイトル -->
+        <!-- =================================
+             抽選結果タイトル
+        ================================== -->
 
         <h2 class="result-title">
             抽選結果
@@ -221,55 +228,85 @@
 
 
         <!-- =================================
-             当選結果
-
-             coupon-item
-             rank-1～rank-3
-             をクーポンリストと共通利用
+             結果コンテンツ
+             
+             background-result.png
+             クーポン
+             クーポンを使用するボタン
+             
+             を同じグループで管理
         ================================== -->
 
-        <div
-            id="resultCouponItem"
-            class="coupon-item"
-        >
+        <div class="result-content">
 
-            <div class="rank-label">
 
-                <span id="rankText"></span>
+            <!-- =================================
+                 当選結果
+                 
+                 coupon-item
+                 rank-1～rank-3
+                 をクーポンリストと共通利用
+            ================================== -->
+
+            <div
+                id="resultCouponItem"
+                class="coupon-item"
+            >
+
+                <div class="rank-label">
+
+                    <span id="rankText"></span>
+
+                </div>
+
+
+                <div
+                    class="coupon-content"
+                    id="couponText"
+                ></div>
 
             </div>
 
 
-            <div
-                class="coupon-content"
-                id="couponText"
-            ></div>
+            <!-- =================================
+                 クーポンを使用するボタン
+            ================================== -->
+
+            <button
+                type="button"
+                class="result-use-button"
+            >
+                クーポンを使用する
+            </button>
+
+
+        </div>
+
+
+        <!-- =================================
+             引き直しボタン
+             
+             background-result.pngとは
+             別グループで管理
+        ================================== -->
+
+        <div class="result-button-area">
+
+            <button
+                id="retryBtn"
+                class="result-retry-button"
+                type="button"
+            >
+                SNSをフォローして<br>
+                クーポンを引き直し
+            </button>
 
         </div>
 
 
     </section>
 
-
-<!-- =================================
-     結果画面ボタンエリア
-================================= -->
-
-<!-- クーポンを使用ボタン -->
-<button class="result-use-button">
-    クーポンを使用する
-</button>
-
-<!-- もう一度引くボタン -->
-<button
-    id="retryBtn"
-    class="result-retry-button"
->
-    SNSをフォローして<br>クーポンを引き直し
-</button>
-
 </div>
-
 
 
 </div>
