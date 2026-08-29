@@ -519,9 +519,10 @@ function resetCapsuleAnimation() {
      * 光をリセット
      */
 
-    lotteryLight.classList.remove(
-        "flash"
-    );
+lotteryLight.classList.remove(
+    "flash",
+    "flash-first"
+);
 
 
     /*
@@ -718,27 +719,38 @@ gachaCapsule.classList.remove(
     }, 2800);
 
 
-    /*
-     * =============================================
-     * ⑥ カプセル中央の光
-     * =============================================
-     */
+/* =============================================
+   ⑥ カプセル中央の光
+   1等だけ強い光
+============================================= */
 
-    setTimeout(function () {
+setTimeout(function () {
 
-        lotteryLight.classList.remove(
-            "flash"
+    lotteryLight.classList.remove(
+        "flash",
+        "flash-first"
+    );
+
+    void lotteryLight.offsetWidth;
+
+
+    /* 1等なら強い光 */
+
+    if (result.rank === "1等") {
+
+        lotteryLight.classList.add(
+            "flash-first"
         );
 
-        void lotteryLight.offsetWidth;
+    } else {
 
         lotteryLight.classList.add(
             "flash"
         );
 
-    }, 2950);
+    }
 
-
+}, 2950);
     /*
      * =============================================
      * ⑦ ホワイトアウト
