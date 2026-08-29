@@ -1688,7 +1688,7 @@ body {
 @supports (-webkit-touch-callout: none) {
 
     .result-content .result-use-button {
-        top: 280px;
+        top: 58%;
     }
 
 }
