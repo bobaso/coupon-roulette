@@ -39,6 +39,9 @@ const resultScreen =
 const couponBtn =
     document.getElementById("couponBtn");
 
+const useCouponBtn =
+    document.getElementById("useCouponBtn");
+
 const retryBtn =
     document.getElementById("retryBtn");
 
@@ -365,45 +368,6 @@ function createCouponList() {
 
 
 /* ==================================================
-   クーポン抽選
-================================================== */
-
-function drawCoupon() {
-
-    const random =
-        Math.random() * 100;
-
-    let cumulativeProbability = 0;
-
-
-    for (const coupon of coupons) {
-
-        cumulativeProbability +=
-            coupon.probability;
-
-
-        if (
-            random <
-            cumulativeProbability
-        ) {
-
-            return coupon;
-
-        }
-
-    }
-
-
-    /* 念のため */
-
-    return coupons[
-        coupons.length - 1
-    ];
-
-}
-
-
-/* ==================================================
    結果画面の等賞クラスを設定
 ================================================== */
 
@@ -609,7 +573,7 @@ function openCapsule() {
    抽選演出開始
 ================================================== */
 
-function startLotteryAnimation() {
+async function startLotteryAnimation() {
 clearLotteryTimers();
 
 clearInterval(lotteryTextTimer);
@@ -620,15 +584,22 @@ clearTimeout(lotteryTextTimeout);
      * =============================================
      */
 
-    const result =
-        drawCoupon();
+const response = await fetch(
+    "https://coupon-api.yoshioka-mwork.workers.dev/draw"
+);
+
+const data = await response.json();
+
+if (!data.success) {
+    alert(data.error || "クーポンを取得できませんでした");
+    return;
+}
+issuedCouponId =
+    data.issued_coupon_id;
+const result = data.coupon;
+
 setCapsuleImage(result);
-
-    /*
-     * 結果画面の内容を先にセット
-     */
-
-    setResultCoupon(result);
+setResultCoupon(result);
 
 
     /*
@@ -998,3 +969,84 @@ retryBtn.addEventListener(
 ================================================== */
 
 createCouponList();
+
+/* ==================================================
+   クーポンを使用する
+================================================== */
+
+useCouponBtn.addEventListener(
+    "click",
+    async function () {
+
+        if (!issuedCouponId) {
+
+            alert("クーポン情報がありません");
+
+            return;
+
+        }
+
+        useCouponBtn.disabled = true;
+
+        try {
+
+            const response = await fetch(
+                "https://coupon-api.yoshioka-mwork.workers.dev/use",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        issued_coupon_id:
+                            issuedCouponId
+                    })
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!data.success) {
+
+                alert(
+                    data.error ||
+                    "クーポンを使用できませんでした"
+                );
+
+                useCouponBtn.disabled = false;
+
+                return;
+
+            }
+
+
+            /* 使用成功 */
+
+            alert(
+                "クーポンを使用しました"
+            );
+
+
+            useCouponBtn.disabled = true;
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "通信エラーが発生しました"
+            );
+
+            useCouponBtn.disabled = false;
+
+        }
+
+    }
+);
