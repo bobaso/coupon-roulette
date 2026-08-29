@@ -24,7 +24,16 @@ const coupons = [
 
 ];
 
+/* =========================================
+   Safari判定
+========================================= */
 
+const isSafari =
+    /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+if (isSafari) {
+    document.body.classList.add("safari-browser");
+}
 /* ==================================================
    HTML要素取得
 ================================================== */
