@@ -662,20 +662,22 @@ body {
 
 
 /* =========================================
-   結果画面上部
-   background-logo.png
-   ========================================= */
+   結果画面全体
+========================================= */
 
 .result-top {
 
     position: relative;
 
     width: 100%;
-    height: 480px;
+    height: 100dvh;
+
 }
+
+
 /* =========================================
    結果画面コンテンツ
-   background-result.pngを基準に配置
+   background-result.pngを基準にする
 ========================================= */
 
 .result-content {
@@ -684,11 +686,15 @@ body {
 
     top: 50px;
 
-    left: 0;
+    left: 50%;
 
     width: 100%;
 
+    max-width: 430px;
+
     aspect-ratio: 430 / 480;
+
+    transform: translateX(-50%);
 
     background-image: url("images/background-result.png");
 
@@ -699,20 +705,27 @@ body {
     background-size: 100% 100%;
 
     z-index: 2;
+
 }
+
+
 /* =========================================
    抽選結果タイトル
 ========================================= */
 
 .result-title {
 
-    position: relative;
+    position: absolute;
 
-    z-index: 3;
+    top: 20px;
+
+    left: 0;
+
+    width: 100%;
 
     margin: 0;
 
-    padding-top: 20px;
+    padding: 0;
 
     color: #ffffd7;
 
@@ -727,10 +740,14 @@ body {
     text-shadow:
         0 3px 5px rgba(120, 65, 0, 0.25);
 
+    z-index: 10;
+
 }
+
 
 /* =========================================
    結果画面のクーポン
+   background-result.pngを基準に配置
 ========================================= */
 
 .result-content .coupon-item {
@@ -749,7 +766,8 @@ body {
 
     padding-top: 21px;
 
-    z-index: 3;
+    z-index: 5;
+
 }
 
 
@@ -757,9 +775,9 @@ body {
    結果画面のリボン
 ========================================= */
 
-.result-top .rank-label {
+.result-content .rank-label {
 
-    z-index: 5;
+    z-index: 6;
 
 }
 
@@ -768,57 +786,43 @@ body {
    結果画面のクーポン本体
 ========================================= */
 
-.result-top .coupon-content {
+.result-content .coupon-content {
 
     position: relative;
 
-    z-index: 4;
+    z-index: 5;
 
 }
 
-/* =========================================
-   結果画面
-   引き直しボタン
-========================================= */
-
-.result-button-area {
-
-    position: absolute;
-
-    top: 410px;
-
-    left: 0;
-
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    z-index: 20;
-}
 
 /* =========================================
-クーポンを使用するボタン
+   クーポンを使用するボタン
+   background-result.pngを基準に配置
 ========================================= */
 
 .result-content .result-use-button {
 
     position: absolute;
 
+    /*
+       background-result.pngの上からの位置
+
+       ここを変更すると
+       ボタンが上下に動きます。
+    */
     top: 285px;
 
     left: 50%;
 
     transform: translateX(-50%);
 
-    display: block;
-
     width: 300px;
 
     height: 60px;
 
     margin: 0;
+
+    padding: 0;
 
     border: none;
 
@@ -846,70 +850,118 @@ body {
         0 6px 0 rgba(188, 92, 0, 0.95),
         0 9px 13px rgba(120, 65, 0, 0.20);
 
+    z-index: 20;
+
     transition:
         transform 0.1s ease,
         box-shadow 0.1s ease;
 
-    z-index: 10;
 }
 
+
 /* =========================================
-クーポンを使用する：押したとき
+   クーポンを使用する
+   押したとき
 ========================================= */
 
-.result-use-button:active,
-.result-retry-button:active {
+.result-content .result-use-button:active {
 
-    transform: translateY(6px);
+    transform:
+        translateX(-50%)
+        translateY(6px);
 
     box-shadow:
         0 1px 0 rgba(188, 92, 0, 0.95),
         0 4px 8px rgba(120, 65, 0, 0.20);
+
 }
 
+
 /* =========================================
-フォローして引き直し
+   引き直しボタン
 ========================================= */
 
 .result-retry-button {
 
+    position: absolute;
 
-position: relative;
+    /*
+       result-contentの下に配置
 
-display: block;
+       430px端末の場合：
+       background-result.png
+       top 50px
+       高さ 480px
 
-width: calc(100% - 100px);
+       ↓
 
-height: 68px;
+       その下から少し間隔を空ける
+    */
+    top: 550px;
 
-margin: 0;
+    left: 50%;
 
-border: none;
-border-radius: 10px;
+    transform: translateX(-50%);
 
-background: #ffffff;
-color: #ff7800;
+    width: calc(100% - 100px);
 
-font-family: inherit;
+    max-width: 330px;
 
-font-size: 23px;
-font-weight: 800;
+    height: 68px;
 
-letter-spacing: 0.04em;
-line-height: 1;
+    margin: 0;
 
-text-align: center;
+    padding: 0;
 
-cursor: pointer;
+    border: none;
 
-box-shadow:
-    0 6px 0 rgba(188, 92, 0, 0.95),
-    0 9px 13px rgba(120, 65, 0, 0.20);
+    border-radius: 10px;
 
-transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease;
+    background: #ffffff;
 
+    color: #ff7800;
+
+    font-family: inherit;
+
+    font-size: 23px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 rgba(188, 92, 0, 0.95),
+        0 9px 13px rgba(120, 65, 0, 0.20);
+
+    z-index: 20;
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
+
+}
+
+
+/* =========================================
+   引き直しボタン
+   押したとき
+========================================= */
+
+.result-retry-button:active {
+
+    transform:
+        translateX(-50%)
+        translateY(6px);
+
+    box-shadow:
+        0 1px 0 rgba(188, 92, 0, 0.95),
+        0 4px 8px rgba(120, 65, 0, 0.20);
 
 }
 
