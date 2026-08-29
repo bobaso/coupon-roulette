@@ -1,16 +1,4 @@
-/* ==================================================
-   Safari専用判定
-   Chrome・Edge・Firefoxなどには適用しない
-================================================== */
 
-const isSafari =
-    /^((?!chrome|android).)*safari/i.test(
-        navigator.userAgent
-    );
-
-if (isSafari) {
-    document.documentElement.classList.add("is-safari");
-}
 /* ==================================================
    クーポン設定
 ================================================== */
