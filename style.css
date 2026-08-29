@@ -777,30 +777,25 @@ body {
 }
 
 /* =========================================
-結果画面ボタンエリア
+   結果画面
+   引き直しボタン
 ========================================= */
 
 .result-button-area {
 
+    position: absolute;
 
-position: absolute;
+    top: 410px;
 
-left: 0;
-right: 0;
+    left: 0;
 
-top: 345px;
+    width: 100%;
 
-width: 100%;
+    display: flex;
 
-display: flex;
-flex-direction: column;
-align-items: center;
+    justify-content: center;
 
-gap: 15px;
-
-z-index: 20;
-
-
+    z-index: 20;
 }
 
 /* =========================================
