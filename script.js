@@ -969,23 +969,121 @@ skipButton.addEventListener(
 
     }
 );
-
-
-
 /* ==================================================
    もう一度引く
 ================================================== */
 
 retryBtn.addEventListener(
     "click",
-    function () {
+    async function () {
 
-        startLotteryAnimation();
+        /* 古いクーポンIDがない場合 */
+
+        if (!issuedCouponId) {
+
+            alert(
+                "クーポン情報がありません"
+            );
+
+            return;
+
+        }
+
+
+        /* ボタンを一時的に無効化 */
+
+        retryBtn.disabled = true;
+
+
+        try {
+
+            /* =========================================
+               ① 古いクーポンを破棄
+            ========================================= */
+
+            const discardResponse =
+                await fetch(
+                    "https://coupon-api.yoshioka-mwork.workers.dev/discard",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            issued_coupon_id:
+                                issuedCouponId
+                        })
+                    }
+                );
+
+
+            const discardData =
+                await discardResponse.json();
+
+
+            console.log(
+                "破棄API:",
+                discardData
+            );
+
+
+            /* =========================================
+               破棄失敗
+            ========================================= */
+
+            if (!discardData.success) {
+
+                alert(
+                    discardData.error ||
+                    "クーポンを破棄できませんでした"
+                );
+
+                retryBtn.disabled = false;
+
+                return;
+
+            }
+
+
+            /* =========================================
+               ② 古いIDをクリア
+            ========================================= */
+
+            issuedCouponId = null;
+
+
+            /* =========================================
+               ③ 新しいクーポンを抽選
+            ========================================= */
+
+            await startLotteryAnimation();
+
+
+        } catch (error) {
+
+            console.error(
+                "引き直しエラー:",
+                error
+            );
+
+            alert(
+                "通信エラーが発生しました"
+            );
+
+        }
+
+
+        /* =========================================
+           ボタンを再び有効化
+        ========================================= */
+
+        retryBtn.disabled = false;
 
     }
 );
-
-
 /* ==================================================
    初期処理
 ================================================== */
