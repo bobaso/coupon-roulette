@@ -372,7 +372,6 @@ function createCouponList() {
 /* ==================================================
    結果画面の等賞クラスを設定
 ================================================== */
-
 function setResultCoupon(result) {
 
     /* 既存クラスを削除 */
@@ -400,17 +399,38 @@ function setResultCoupon(result) {
         result.name;
 
 
-    /* 当選順位を取得 */
+    /* =========================================
+       APIから返ってきた順位を直接判定
+    ========================================= */
 
-    const resultIndex =
-        coupons.indexOf(result);
+    let resultRankClass = "";
+
+    if (result.rank === "1等") {
+
+        resultRankClass = "rank-1";
+
+    } else if (result.rank === "2等") {
+
+        resultRankClass = "rank-2";
+
+    } else if (result.rank === "3等") {
+
+        resultRankClass = "rank-3";
+
+    }
 
 
-    /* クラスを追加 */
+    /* =========================================
+       結果画面に順位クラスを追加
+    ========================================= */
 
-    resultCouponItem.classList.add(
-        `rank-${resultIndex + 1}`
-    );
+    if (resultRankClass) {
+
+        resultCouponItem.classList.add(
+            resultRankClass
+        );
+
+    }
 
 }
 /* ==================================================
@@ -1028,15 +1048,11 @@ useCouponBtn.addEventListener(
             }
 
 
-            /* 使用成功 */
+    /* 使用成功 */
 
-            alert(
-                "クーポンを使用しました"
-            );
-
-
-            useCouponBtn.disabled = true;
-
+alert(
+    "クーポンを使用しました"
+);
 
         } catch (error) {
 
