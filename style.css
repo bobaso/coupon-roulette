@@ -1680,3 +1680,15 @@ body {
     }
 
 }
+/* =========================================
+   Safari専用
+   抽選結果画面ボタン位置
+========================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    .result-content .result-use-button {
+        top: 280px;
+    }
+
+}
