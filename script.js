@@ -612,7 +612,10 @@ function openCapsule() {
 ================================================== */
 
 function startLotteryAnimation() {
+clearLotteryTimers();
 
+clearInterval(lotteryTextTimer);
+clearTimeout(lotteryTextTimeout);
     /*
      * =============================================
      * 抽選結果を最初に1回だけ決定
@@ -899,12 +902,52 @@ couponBtn.addEventListener(
    Skipボタン
 ================================================== */
 
+```javascript
+/* ==================================================
+   Skipボタン
+================================================== */
+
 skipButton.addEventListener(
     "click",
     function () {
 
         /*
-         * 現在の抽選画面を終了
+         * =========================================
+         * 抽選演出のタイマーを完全停止
+         * =========================================
+         */
+
+        clearLotteryTimers();
+
+
+        /*
+         * =========================================
+         * 抽選中テキストも停止
+         * =========================================
+         */
+
+        clearInterval(lotteryTextTimer);
+        clearTimeout(lotteryTextTimeout);
+
+        lotteryText.classList.remove(
+            "is-active",
+            "is-hide"
+        );
+
+
+        /*
+         * =========================================
+         * カプセル演出をリセット
+         * =========================================
+         */
+
+        resetCapsuleAnimation();
+
+
+        /*
+         * =========================================
+         * 抽選画面を終了
+         * =========================================
          */
 
         lotteryScreen.classList.add(
@@ -913,15 +956,35 @@ skipButton.addEventListener(
 
 
         /*
+         * =========================================
          * 結果画面を表示
+         * =========================================
          */
 
         resultScreen.classList.remove(
             "hidden"
         );
 
+
+        /*
+         * =========================================
+         * 1等なら引き直しボタンを非表示
+         * =========================================
+         */
+
+        if (rankText.textContent === "1等") {
+
+            retryBtn.style.display = "none";
+
+        } else {
+
+            retryBtn.style.display = "block";
+
+        }
+
     }
 );
+```
 
 
 /* ==================================================
