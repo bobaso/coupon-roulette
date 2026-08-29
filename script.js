@@ -992,6 +992,7 @@ retryBtn.addEventListener(
 
 createCouponList();
 
+```javascript
 /* ==================================================
    クーポンを使用する
 ================================================== */
@@ -1000,15 +1001,27 @@ useCouponBtn.addEventListener(
     "click",
     async function () {
 
+        console.log(
+            "クーポン使用ボタンが押されました"
+        );
+
+        /* 発行ID確認 */
+
         if (!issuedCouponId) {
 
-            alert("クーポン情報がありません");
+            alert(
+                "クーポン情報がありません"
+            );
 
             return;
 
         }
 
+
+        /* 通信中だけボタンを無効化 */
+
         useCouponBtn.disabled = true;
+
 
         try {
 
@@ -1030,9 +1043,25 @@ useCouponBtn.addEventListener(
             );
 
 
+            console.log(
+                "APIレスポンス:",
+                response.status
+            );
+
+
             const data =
                 await response.json();
 
+
+            console.log(
+                "APIデータ:",
+                data
+            );
+
+
+            /* =================================
+               API側でエラー
+            ================================= */
 
             if (!data.success) {
 
@@ -1041,6 +1070,10 @@ useCouponBtn.addEventListener(
                     "クーポンを使用できませんでした"
                 );
 
+                /*
+                 * エラーの場合は再度押せるようにする
+                 */
+
                 useCouponBtn.disabled = false;
 
                 return;
@@ -1048,19 +1081,39 @@ useCouponBtn.addEventListener(
             }
 
 
-    /* 使用成功 */
+            /* =================================
+               使用成功
+            ================================= */
 
-alert(
-    "クーポンを使用しました"
-);
+            alert(
+                "クーポンを使用しました"
+            );
+
+
+            /*
+             * 成功後もボタンは押せる状態にする
+             *
+             * 2回目のクリックで
+             * Cloudflare側の
+             * 「すでに使用されています」
+             * を確認するため
+             */
+
+            useCouponBtn.disabled = false;
+
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "クーポン使用エラー:",
+                error
+            );
+
 
             alert(
                 "通信エラーが発生しました"
             );
+
 
             useCouponBtn.disabled = false;
 
@@ -1068,3 +1121,5 @@ alert(
 
     }
 );
+```
+
