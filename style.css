@@ -1742,8 +1742,8 @@ body {
      * ハンコの位置
      * 必要に応じて調整してください
      */
-    top: 20%;
-    left: 50%;
+    top: 15%;
+    left: 70%;
 
     transform:
         translate(-50%, -50%)
