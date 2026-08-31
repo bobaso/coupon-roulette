@@ -11,6 +11,11 @@ const resultScreen =
 const couponBtn =
     document.getElementById("couponBtn");
 
+let campaignStartDate = null;
+let campaignEndDate = null;
+
+let campaignActive = false;
+
 const useCouponBtn =
     document.getElementById("useCouponBtn");
 
@@ -320,6 +325,134 @@ function createCouponList(coupons) {
     });
 
 }
+/* ==================================================
+   キャンペーン開催期間取得
+================================================== */
+
+async function loadCampaign() {
+
+    try {
+
+        const response =
+            await fetch(
+                "https://coupon-api.yoshioka-mwork.workers.dev/admin/campaign"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            console.error(
+                "キャンペーン取得エラー:",
+                data.error
+            );
+
+            return false;
+
+        }
+
+
+        campaignStartDate =
+            data.campaign.start_date;
+
+        campaignEndDate =
+            data.campaign.end_date;
+
+
+        return checkCampaignPeriod();
+
+
+    } catch (error) {
+
+        console.error(
+            "キャンペーン期間取得エラー:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+/* ==================================================
+   キャンペーン開催期間チェック
+================================================== */
+
+function checkCampaignPeriod() {
+
+    if (
+        !campaignStartDate ||
+        !campaignEndDate
+    ) {
+
+        campaignActive = false;
+
+        return false;
+
+    }
+
+
+    /*
+     * 日本時間の日付を取得
+     */
+
+    const japanDate =
+        new Intl.DateTimeFormat(
+            "ja-JP",
+            {
+                timeZone: "Asia/Tokyo",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }
+        ).formatToParts(new Date());
+
+
+    const year =
+        japanDate.find(
+            part => part.type === "year"
+        ).value;
+
+    const month =
+        japanDate.find(
+            part => part.type === "month"
+        ).value;
+
+    const day =
+        japanDate.find(
+            part => part.type === "day"
+        ).value;
+
+
+    const today =
+        `${year}-${month}-${day}`;
+
+
+    /*
+     * 開催期間内か確認
+     *
+     * 開始日・終了日は両方とも含む
+     */
+
+    campaignActive =
+        today >= campaignStartDate &&
+        today <= campaignEndDate;
+
+
+    /*
+     * ボタン表示変更
+     */
+
+    updateCampaignButton();
+
+
+    return campaignActive;
+
+}
+
 /* ==================================================
    APIからクーポン一覧を取得
 ================================================== */
@@ -879,11 +1012,65 @@ couponBtn.addEventListener(
     "click",
     function () {
 
+        /*
+         * 開催期間外なら抽選しない
+         */
+
+        if (!checkCampaignPeriod()) {
+
+            alert(
+                "キャンペーン期間が終了しています"
+            );
+
+            return;
+
+        }
+
+
         startLotteryAnimation();
 
     }
 );
+/* ==================================================
+   クーポン取得ボタン表示
+================================================== */
 
+function updateCampaignButton() {
+
+    if (!couponBtn) {
+
+        return;
+
+    }
+
+
+    if (campaignActive) {
+
+        couponBtn.textContent =
+            "クーポンを取得";
+
+        couponBtn.disabled =
+            false;
+
+        couponBtn.classList.remove(
+            "campaign-ended"
+        );
+
+    } else {
+
+        couponBtn.textContent =
+            "キャンペーン終了";
+
+        couponBtn.disabled =
+            true;
+
+        couponBtn.classList.add(
+            "campaign-ended"
+        );
+
+    }
+
+}
 /* ==================================================
    Skipボタン
 ================================================== */
@@ -1084,7 +1271,16 @@ retryBtn.addEventListener(
    初期処理
 ================================================== */
 
-loadCoupons();
+async function initialize() {
+
+    await loadCampaign();
+
+    await loadCoupons();
+
+}
+
+
+initialize();
 
 /* ==================================================
    クーポンを使用する
@@ -1285,3 +1481,4 @@ useCouponBtn.addEventListener(
 
     }
 );
+
