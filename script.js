@@ -1,31 +1,3 @@
-
-/* ==================================================
-   クーポン設定
-================================================== */
-
-const coupons = [
-
-    {
-        rank: "1等",
-        name: "ドリンク一杯無料券",
-        probability: 10
-    },
-
-    {
-        rank: "2等",
-        name: "10％OFFクーポン",
-        probability: 30
-    },
-
-    {
-        rank: "3等",
-        name: "5％OFFクーポン",
-        probability: 60
-    }
-
-];
-
-
 /* ==================================================
    HTML要素取得
 ================================================== */
@@ -142,44 +114,7 @@ let lotteryTextTimer = null;
 let lotteryTextTimeout = null;
 
 
-/* ==================================================
-   抽選中テキストを1文字ずつ分解
-================================================== */
 
-function setupLotteryText() {
-
-    const text =
-        lotteryText.textContent.trim();
-
-    lotteryText.innerHTML = "";
-
-    const chars =
-        [...text];
-
-    chars.forEach(function (char, index) {
-
-        const span =
-            document.createElement("span");
-
-        span.classList.add("char");
-
-        span.style.setProperty(
-            "--char-index",
-            index
-        );
-
-        span.style.setProperty(
-            "--reverse-index",
-            chars.length - 1 - index
-        );
-
-        span.textContent = char;
-
-        lotteryText.appendChild(span);
-
-    });
-
-}
 
 
 /* ==================================================
@@ -289,18 +224,36 @@ function startLotteryTextAnimation() {
    クーポンリスト自動生成
 ================================================== */
 
-function createCouponList() {
+function createCouponList(coupons) {
 
     couponList.innerHTML = "";
 
-    coupons.forEach((coupon, index) => {
+    coupons.forEach((coupon) => {
 
         const couponItem =
             document.createElement("div");
 
+
+        /* =========================================
+           3等以下はすべて3等デザイン
+        ========================================= */
+
+        let designClass = "rank-3";
+
+        if (coupon.rank === "1等") {
+
+            designClass = "rank-1";
+
+        } else if (coupon.rank === "2等") {
+
+            designClass = "rank-2";
+
+        }
+
+
         couponItem.classList.add(
             "coupon-item",
-            `rank-${index + 1}`
+            designClass
         );
 
 
@@ -367,7 +320,55 @@ function createCouponList() {
     });
 
 }
+/* ==================================================
+   APIからクーポン一覧を取得
+================================================== */
 
+async function loadCoupons() {
+
+    try {
+
+        const response =
+            await fetch(
+                "https://coupon-api.yoshioka-mwork.workers.dev/admin/coupons"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            console.error(
+                "クーポン取得エラー:",
+                data.error
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           APIから取得した賞品でリスト生成
+        ========================================= */
+
+        createCouponList(
+            data.coupons
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "クーポン一覧取得エラー:",
+            error
+        );
+
+    }
+
+}
 
 /* ==================================================
    結果画面の等賞クラスを設定
@@ -379,14 +380,7 @@ function setResultCoupon(result) {
     resultCouponItem.classList.remove(
         "rank-1",
         "rank-2",
-        "rank-3",
-        "rank-4",
-        "rank-5",
-        "rank-6",
-        "rank-7",
-        "rank-8",
-        "rank-9",
-        "rank-10"
+        "rank-3"
     );
 
 
@@ -403,21 +397,23 @@ function setResultCoupon(result) {
        APIから返ってきた順位を直接判定
     ========================================= */
 
-    let resultRankClass = "";
+let resultRankClass = "";
 
-    if (result.rank === "1等") {
+if (result.rank === "1等") {
 
-        resultRankClass = "rank-1";
+    resultRankClass = "rank-1";
 
-    } else if (result.rank === "2等") {
+} else if (result.rank === "2等") {
 
-        resultRankClass = "rank-2";
+    resultRankClass = "rank-2";
 
-    } else if (result.rank === "3等") {
+} else {
 
-        resultRankClass = "rank-3";
+    /* 3等以下はすべて3等デザイン */
 
-    }
+    resultRankClass = "rank-3";
+
+}
 
 
     /* =========================================
@@ -1088,7 +1084,7 @@ retryBtn.addEventListener(
    初期処理
 ================================================== */
 
-createCouponList();
+loadCoupons();
 
 /* ==================================================
    クーポンを使用する
