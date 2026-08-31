@@ -212,6 +212,7 @@
 
     <section class="result-top">
 
+
         <!-- =================================
              抽選結果タイトル
         ================================== -->
@@ -226,60 +227,26 @@
              
              background-result.png
              クーポン
-             クーポンを使用するボタン
+             使用ボタン
+             使用済みハンコ
              
              を同じグループで管理
         ================================== -->
 
         <div class="result-content">
 
-<div class="result-content">
 
-    <!-- =================================
-         使用済みハンコ
-    ================================== -->
+            <!-- =================================
+                 使用済みハンコ
+            ================================== -->
 
-    <div
-        id="usedStamp"
-        class="used-stamp"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =================================
-         当選結果
-    ================================== -->
-
-    <div
-        id="resultCouponItem"
-        class="coupon-item"
-    >
-
-        <div class="rank-label">
-            <span id="rankText"></span>
-        </div>
-
-        <div
-            class="coupon-content"
-            id="couponText"
-        ></div>
-
-    </div>
+            <div
+                id="usedStamp"
+                class="used-stamp"
+                aria-hidden="true"
+            ></div>
 
 
-    <!-- =================================
-         クーポンを使用するボタン
-    ================================== -->
-
-    <button
-        type="button"
-        id="useCouponBtn"
-        class="result-use-button"
-    >
-        クーポンを使用する
-    </button>
-
-</div>
             <!-- =================================
                  当選結果
             ================================== -->
@@ -289,12 +256,16 @@
                 class="coupon-item"
             >
 
+                <!-- 等賞 -->
+
                 <div class="rank-label">
 
                     <span id="rankText"></span>
 
                 </div>
 
+
+                <!-- クーポン名 -->
 
                 <div
                     class="coupon-content"
@@ -308,13 +279,13 @@
                  クーポンを使用するボタン
             ================================== -->
 
-          <button
-    type="button"
-    id="useCouponBtn"
-    class="result-use-button"
->
-    クーポンを使用する
-</button>
+            <button
+                type="button"
+                id="useCouponBtn"
+                class="result-use-button"
+            >
+                クーポンを使用する
+            </button>
 
 
         </div>
@@ -341,11 +312,6 @@
     </section>
 
 </div>
-
-
-</div>
-
-    </main>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <script src="script.js"></script>
