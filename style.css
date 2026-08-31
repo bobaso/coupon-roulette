@@ -1753,8 +1753,8 @@ body {
     /*
      * ハンコのサイズ
      */
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
 
     border: 6px solid #c62828;
     border-radius: 50%;
