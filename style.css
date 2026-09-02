@@ -1058,80 +1058,39 @@ body {
    Skipボタン
 ================================================== */
 
-skipButton.addEventListener(
-    "click",
-    function () {
+.skip-button {
 
-        clearLotteryTimers();
+    position: absolute;
 
-        clearInterval(lotteryTextTimer);
-        clearTimeout(lotteryTextTimeout);
+    top: 20px;
 
-        lotteryText.classList.remove(
-            "is-active",
-            "is-hide"
-        );
+    right: 20px;
 
-        resetCapsuleAnimation();
+    width: 90px;
 
-        lotteryScreen.classList.add(
-            "hidden"
-        );
+    height: 42px;
 
-        resultScreen.classList.remove(
-            "hidden"
-        );
+    border: 3px solid #ff7800;
 
+    border-radius: 10px;
 
-        /* =========================================
-           結果画面のボタン表示
-        ========================================= */
+    background: #ff7800;
 
-        if (isLoseResult) {
+    color: #ffffff;
 
-            useCouponBtn.style.display =
-                "none";
+    font-family: inherit;
 
-            retryBtn.style.display =
-                "block";
+    font-size: 18px;
 
-        } else if (
-            rankText.textContent === "1等"
-        ) {
+    font-weight: 800;
 
-            useCouponBtn.style.display =
-                "block";
+    line-height: 1;
 
-            retryBtn.style.display =
-                "none";
+    cursor: pointer;
 
-        } else {
+    z-index: 50;
 
-            useCouponBtn.style.display =
-                "block";
-
-            retryBtn.style.display =
-                "block";
-
-        }
-
-
-        /* =========================================
-           1等なら紙吹雪
-        ========================================= */
-
-        if (
-            !isLoseResult &&
-            rankText.textContent === "1等"
-        ) {
-
-            createConfetti();
-
-        }
-
-    }
-);
-
+}
 
 /* ==================================================
    ガチャ演出エリア
