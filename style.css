@@ -1058,39 +1058,79 @@ body {
    Skipボタン
 ================================================== */
 
-.skip-button {
+skipButton.addEventListener(
+    "click",
+    function () {
 
-    position: absolute;
+        clearLotteryTimers();
 
-    top: 20px;
+        clearInterval(lotteryTextTimer);
+        clearTimeout(lotteryTextTimeout);
 
-    right: 20px;
+        lotteryText.classList.remove(
+            "is-active",
+            "is-hide"
+        );
 
-    width: 90px;
+        resetCapsuleAnimation();
 
-    height: 42px;
+        lotteryScreen.classList.add(
+            "hidden"
+        );
 
-    border: 3px solid #ff7800;
+        resultScreen.classList.remove(
+            "hidden"
+        );
 
-    border-radius: 10px;
 
-    background: #ff7800;
+        /* =========================================
+           結果画面のボタン表示
+        ========================================= */
 
-    color: #ffffff;
+        if (isLoseResult) {
 
-    font-family: inherit;
+            useCouponBtn.style.display =
+                "none";
 
-    font-size: 18px;
+            retryBtn.style.display =
+                "block";
 
-    font-weight: 800;
+        } else if (
+            rankText.textContent === "1等"
+        ) {
 
-    line-height: 1;
+            useCouponBtn.style.display =
+                "block";
 
-    cursor: pointer;
+            retryBtn.style.display =
+                "none";
 
-    z-index: 50;
+        } else {
 
-}
+            useCouponBtn.style.display =
+                "block";
+
+            retryBtn.style.display =
+                "block";
+
+        }
+
+
+        /* =========================================
+           1等なら紙吹雪
+        ========================================= */
+
+        if (
+            !isLoseResult &&
+            rankText.textContent === "1等"
+        ) {
+
+            createConfetti();
+
+        }
+
+    }
+);
 
 
 /* ==================================================
