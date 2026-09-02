@@ -604,9 +604,18 @@ body {
    ハズレ
 ========================================= */
 
+.rank-lose .rank-label {
+    display: none;
+}
 .rank-lose .coupon-content {
     border-color: #999999;
     color: #999999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
 /* =========================================
