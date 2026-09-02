@@ -728,31 +728,27 @@ body {
 ========================================= */
 
 .result-content {
-
     position: absolute;
-
     top: 50px;
-
     left: 50%;
-
     width: 100%;
-
     max-width: 430px;
-
     aspect-ratio: 430 / 480;
-
     transform: translateX(-50%);
-
     background-image: url("images/background-result.png");
-
     background-repeat: no-repeat;
-
     background-position: center top;
-
     background-size: 100% 100%;
-
     z-index: 2;
+}
 
+
+/* =========================================
+   ハズレ時だけ背景を変更
+========================================= */
+
+.result-content:has(.rank-lose) {
+    background-image: url("images/background-result3.png");
 }
 
 
