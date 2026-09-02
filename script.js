@@ -356,12 +356,76 @@ async function loadCampaign() {
         }
 
 
+        /* =========================================
+           キャンペーン期間を取得
+        ========================================= */
+
         campaignStartDate =
             data.campaign.start_date;
 
         campaignEndDate =
             data.campaign.end_date;
 
+
+        /* =========================================
+           画面上の開催期間を更新
+        ========================================= */
+
+        const campaignPeriod =
+            document.getElementById(
+                "campaignPeriod"
+            );
+
+
+        if (
+            campaignPeriod &&
+            campaignStartDate &&
+            campaignEndDate
+        ) {
+
+            /*
+             * YYYY-MM-DD
+             * ↓
+             * YYYY.M.D
+             */
+
+            const formatDate =
+                function (dateString) {
+
+                    const parts =
+                        dateString.split("-");
+
+                    const year =
+                        parts[0];
+
+                    const month =
+                        Number(parts[1]);
+
+                    const day =
+                        Number(parts[2]);
+
+                    return (
+                        year +
+                        "." +
+                        month +
+                        "." +
+                        day
+                    );
+
+                };
+
+
+            campaignPeriod.textContent =
+                formatDate(campaignStartDate) +
+                "~" +
+                formatDate(campaignEndDate);
+
+        }
+
+
+        /* =========================================
+           開催期間チェック
+        ========================================= */
 
         return checkCampaignPeriod();
 
