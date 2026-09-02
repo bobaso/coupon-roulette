@@ -33,7 +33,8 @@ const couponText =
 
 const resultCouponItem =
     document.getElementById("resultCouponItem");
-
+const usedStamp =
+    document.getElementById("usedStamp");
 const couponList =
     document.getElementById("couponList");
 
@@ -1594,10 +1595,30 @@ useCouponBtn.addEventListener(
                background-result2.png
             ========================================= */
 
-            resultContent.classList.add(
-                "is-used"
-            );
+         resultContent.classList.add(
+    "is-used"
+);
 
+
+/* =========================================
+   「済」ハンコを押す
+========================================= */
+
+usedStamp.classList.remove(
+    "show"
+);
+
+
+/*
+ * アニメーションを一度リセットしてから
+ * showを追加
+ */
+
+void usedStamp.offsetWidth;
+
+usedStamp.classList.add(
+    "show"
+);
 
             /* =========================================
                ボタン表示変更
