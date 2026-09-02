@@ -20,6 +20,7 @@ const useCouponBtn =
     document.getElementById("useCouponBtn");
 
 let issuedCouponId = null;
+let isLoseResult = false;
 
 const retryBtn =
     document.getElementById("retryBtn");
@@ -508,16 +509,29 @@ async function loadCoupons() {
 ================================================== */
 function setResultCoupon(result) {
 
-    /* 既存クラスを削除 */
+    /* =========================================
+       既存クラスを削除
+    ========================================= */
 
     resultCouponItem.classList.remove(
         "rank-1",
         "rank-2",
-        "rank-3"
+        "rank-3",
+        "rank-lose"
     );
 
 
-    /* 結果を書き換え */
+    /* =========================================
+       ハズレ判定
+    ========================================= */
+
+    isLoseResult =
+        result.rank === "ハズレ";
+
+
+    /* =========================================
+       結果を書き換え
+    ========================================= */
 
     rankText.textContent =
         result.rank;
@@ -527,39 +541,50 @@ function setResultCoupon(result) {
 
 
     /* =========================================
-       APIから返ってきた順位を直接判定
+       ハズレの場合
     ========================================= */
 
-let resultRankClass = "";
+    if (isLoseResult) {
 
-if (result.rank === "1等") {
+        resultCouponItem.classList.add(
+            "rank-lose"
+        );
 
-    resultRankClass = "rank-1";
+        return;
 
-} else if (result.rank === "2等") {
+    }
 
-    resultRankClass = "rank-2";
 
-} else {
+    /* =========================================
+       通常当選の場合
+    ========================================= */
 
-    /* 3等以下はすべて3等デザイン */
+    let resultRankClass = "";
 
-    resultRankClass = "rank-3";
+    if (result.rank === "1等") {
 
-}
+        resultRankClass = "rank-1";
+
+    } else if (result.rank === "2等") {
+
+        resultRankClass = "rank-2";
+
+    } else {
+
+        /* 3等以下はすべて3等デザイン */
+
+        resultRankClass = "rank-3";
+
+    }
 
 
     /* =========================================
        結果画面に順位クラスを追加
     ========================================= */
 
-    if (resultRankClass) {
-
-        resultCouponItem.classList.add(
-            resultRankClass
-        );
-
-    }
+    resultCouponItem.classList.add(
+        resultRankClass
+    );
 
 }
 /* ==================================================
@@ -747,7 +772,22 @@ if (!data.success) {
 }
 issuedCouponId =
     data.issued_coupon_id;
-const result = data.coupon;
+
+const result =
+    data.coupon;
+
+
+/* =========================================
+   ハズレ判定
+========================================= */
+
+isLoseResult =
+    data.lose === true;
+
+
+/* =========================================
+   結果を設定
+========================================= */
 
 setCapsuleImage(result);
 setResultCoupon(result);
@@ -972,22 +1012,60 @@ setLotteryTimer(function () {
     );
 
 
-    /*
-     * =========================================
-     * 1等なら「もう一度引く」を非表示
-     * =========================================
-     */
+/* =========================================
+   ハズレの場合
+========================================= */
 
-    if (result.rank === "1等") {
+if (isLoseResult) {
 
-        retryBtn.style.display = "none";
+    /* クーポン使用ボタンを非表示 */
 
-    } else {
+    useCouponBtn.style.display =
+        "none";
 
-        retryBtn.style.display = "block";
 
-    }
+    /* 引き直しボタンを表示 */
 
+    retryBtn.style.display =
+        "block";
+
+
+/* =========================================
+   1等の場合
+========================================= */
+
+} else if (result.rank === "1等") {
+
+    /* クーポン使用ボタンを表示 */
+
+    useCouponBtn.style.display =
+        "block";
+
+
+    /* 1等は引き直し不可 */
+
+    retryBtn.style.display =
+        "none";
+
+
+/* =========================================
+   通常当選の場合
+========================================= */
+
+} else {
+
+    /* クーポン使用ボタンを表示 */
+
+    useCouponBtn.style.display =
+        "block";
+
+
+    /* 引き直し可能 */
+
+    retryBtn.style.display =
+        "block";
+
+}
 
     /*
      * =========================================
@@ -1134,21 +1212,45 @@ skipButton.addEventListener(
         );
 
 
-        /*
-         * =========================================
-         * 1等なら引き直しボタンを非表示
-         * =========================================
-         */
+/* =========================================
+   ハズレの場合
+========================================= */
 
-        if (rankText.textContent === "1等") {
+if (isLoseResult) {
 
-            retryBtn.style.display = "none";
+    useCouponBtn.style.display =
+        "none";
 
-        } else {
+    retryBtn.style.display =
+        "block";
 
-            retryBtn.style.display = "block";
 
-        }
+/* =========================================
+   1等の場合
+========================================= */
+
+} else if (rankText.textContent === "1等") {
+
+    useCouponBtn.style.display =
+        "block";
+
+    retryBtn.style.display =
+        "none";
+
+
+/* =========================================
+   通常当選の場合
+========================================= */
+
+} else {
+
+    useCouponBtn.style.display =
+        "block";
+
+    retryBtn.style.display =
+        "block";
+
+}
 
     }
 );
@@ -1162,15 +1264,36 @@ retryBtn.addEventListener(
 
         /* 古いクーポンIDがない場合 */
 
-        if (!issuedCouponId) {
+     /* =========================================
+   ハズレの場合
+   発券IDがないので破棄処理は不要
+========================================= */
 
-            alert(
-                "クーポン情報がありません"
-            );
+if (isLoseResult) {
 
-            return;
+    issuedCouponId = null;
 
-        }
+    await startLotteryAnimation();
+
+    return;
+
+}
+
+
+/* =========================================
+   通常当選の場合
+   古いクーポンIDを確認
+========================================= */
+
+if (!issuedCouponId) {
+
+    alert(
+        "クーポン情報がありません"
+    );
+
+    return;
+
+}
 
 
         /* ボタンを一時的に無効化 */
