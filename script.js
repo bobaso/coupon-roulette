@@ -1307,15 +1307,27 @@ if (isLoseResult) {
    通常当選の場合
 ========================================= */
 
-} else {
+        } else {
 
-    useCouponBtn.style.display =
-        "block";
+            useCouponBtn.style.display =
+                "block";
 
-    retryBtn.style.display =
-        "block";
+            retryBtn.style.display =
+                "block";
 
-}
+        }
+
+
+        /* =========================================
+           Skipで1等の場合だけ紙吹雪
+        ========================================= */
+
+        if (
+            !isLoseResult &&
+            rankText.textContent === "1等"
+        ) {
+            createConfetti();
+        }
 
     }
 );
