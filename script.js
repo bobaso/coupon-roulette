@@ -14,6 +14,14 @@ const couponBtn =
 let campaignStartDate = null;
 let campaignEndDate = null;
 
+/* ==================================================
+   抽選モード
+   test：引き直し可能
+   daily：1日1回・引き直し不可
+================================================== */
+
+let campaignDrawMode = "test";
+
 let campaignActive = false;
 
 const useCouponBtn =
@@ -361,12 +369,25 @@ async function loadCampaign() {
            キャンペーン期間を取得
         ========================================= */
 
-        campaignStartDate =
-            data.campaign.start_date;
+campaignStartDate =
+    data.campaign.start_date;
 
-        campaignEndDate =
-            data.campaign.end_date;
+campaignEndDate =
+    data.campaign.end_date;
 
+
+/* =========================================
+   抽選モードを取得
+========================================= */
+
+campaignDrawMode =
+    data.campaign.draw_mode || "test";
+
+
+console.log(
+    "抽選モード:",
+    campaignDrawMode
+);
 
         /* =========================================
            画面上の開催期間を更新
@@ -811,6 +832,32 @@ function openCapsule() {
 
 }
 /* ==================================================
+   抽選端末識別用トークン
+================================================== */
+
+function getDeviceToken() {
+
+    let token =
+        localStorage.getItem(
+            "lottery_device_token"
+        );
+
+    if (!token) {
+
+        token =
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "lottery_device_token",
+            token
+        );
+
+    }
+
+    return token;
+
+}
+/* ==================================================
    抽選演出開始
 ================================================== */
 
@@ -825,8 +872,12 @@ clearTimeout(lotteryTextTimeout);
      * =============================================
      */
 
+const deviceToken =
+    getDeviceToken();
+
 const response = await fetch(
-    "https://coupon-api.yoshioka-mwork.workers.dev/draw"
+    "https://coupon-api.yoshioka-mwork.workers.dev/draw?device_token=" +
+    encodeURIComponent(deviceToken)
 );
 
 const data = await response.json();
@@ -1078,57 +1129,98 @@ setLotteryTimer(function () {
 
 
 /* =========================================
-   ハズレの場合
+   dailyモードの場合
+   どの結果でも引き直し不可
 ========================================= */
 
-if (isLoseResult) {
+if (campaignDrawMode === "daily") {
 
-    /* クーポン使用ボタンを非表示 */
+    /*
+     * クーポン使用ボタン
+     *
+     * ハズレの場合は非表示
+     * 当選の場合は表示
+     */
 
-    useCouponBtn.style.display =
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+    } else {
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
+
+
+    /*
+     * dailyモードでは
+     * 「もう一度引く」を必ず非表示
+     */
+
+    retryBtn.style.display =
         "none";
 
 
-    /* 引き直しボタンを表示 */
-
-    retryBtn.style.display =
-        "block";
-
-
 /* =========================================
-   1等の場合
-========================================= */
-
-} else if (result.rank === "1等") {
-
-    /* クーポン使用ボタンを表示 */
-
-    useCouponBtn.style.display =
-        "block";
-
-
-    /* 1等は引き直し不可 */
-
-    retryBtn.style.display =
-        "none";
-
-
-/* =========================================
-   通常当選の場合
+   testモード
 ========================================= */
 
 } else {
 
-    /* クーポン使用ボタンを表示 */
 
-    useCouponBtn.style.display =
-        "block";
+    /* =========================================
+       ハズレの場合
+    ========================================= */
+
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
 
 
-    /* 引き直し可能 */
+        retryBtn.style.display =
+            "block";
 
-    retryBtn.style.display =
-        "block";
+
+    /* =========================================
+       1等の場合
+    ========================================= */
+
+    } else if (result.rank === "1等") {
+
+        useCouponBtn.style.display =
+            "block";
+
+
+        /*
+         * 1等は引き直し不可
+         */
+
+        retryBtn.style.display =
+            "none";
+
+
+    /* =========================================
+       通常当選の場合
+    ========================================= */
+
+    } else {
+
+        useCouponBtn.style.display =
+            "block";
+
+
+        /*
+         * testモードでは引き直し可能
+         */
+
+        retryBtn.style.display =
+            "block";
+
+    }
 
 }
 
@@ -1278,46 +1370,86 @@ skipButton.addEventListener(
 
 
 /* =========================================
-   ハズレの場合
+   dailyモードの場合
+   どの結果でも引き直し不可
 ========================================= */
 
-if (isLoseResult) {
+if (campaignDrawMode === "daily") {
 
-    useCouponBtn.style.display =
-        "none";
+    /*
+     * ハズレの場合
+     */
+
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+    } else {
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
+
+
+    /*
+     * dailyモードでは
+     * 「もう一度引く」を必ず非表示
+     */
 
     retryBtn.style.display =
-        "block";
+        "none";
 
 
 /* =========================================
-   1等の場合
+   testモード
 ========================================= */
 
-} else if (rankText.textContent === "1等") {
-
-    useCouponBtn.style.display =
-        "block";
-
-    retryBtn.style.display =
-        "none";
+} else {
 
 
-/* =========================================
-   通常当選の場合
-========================================= */
+    /* =========================================
+       ハズレの場合
+    ========================================= */
 
-        } else {
+    if (isLoseResult) {
 
-            useCouponBtn.style.display =
-                "block";
+        useCouponBtn.style.display =
+            "none";
 
-            retryBtn.style.display =
-                "block";
-
-        }
+        retryBtn.style.display =
+            "block";
 
 
+    /* =========================================
+       1等の場合
+    ========================================= */
+
+    } else if (rankText.textContent === "1等") {
+
+        useCouponBtn.style.display =
+            "block";
+
+        retryBtn.style.display =
+            "none";
+
+
+    /* =========================================
+       通常当選の場合
+    ========================================= */
+
+    } else {
+
+        useCouponBtn.style.display =
+            "block";
+
+        retryBtn.style.display =
+            "block";
+
+    }
+
+}
         /* =========================================
            Skipで1等の場合だけ紙吹雪
         ========================================= */
@@ -1339,6 +1471,16 @@ retryBtn.addEventListener(
     "click",
     async function () {
 
+        /* =========================================
+           dailyモードでは引き直し不可
+           念のためクリック処理も停止
+        ========================================= */
+
+        if (campaignDrawMode === "daily") {
+
+            return;
+
+        }
         /* 古いクーポンIDがない場合 */
 
      /* =========================================
