@@ -909,6 +909,183 @@ setCapsuleImage(result);
 setResultCoupon(result);
 
 
+/* =========================================
+   dailyモードで本日すでに抽選済みの場合
+========================================= */
+
+if (
+    campaignDrawMode === "daily" &&
+    data.already_drawn === true
+) {
+
+    /*
+     * 抽選演出は行わない
+     */
+
+    clearLotteryTimers();
+
+    clearInterval(
+        lotteryTextTimer
+    );
+
+    clearTimeout(
+        lotteryTextTimeout
+    );
+
+
+    /*
+     * 抽選画面を非表示
+     */
+
+    lotteryScreen.classList.add(
+        "hidden"
+    );
+
+
+    /*
+     * 結果画面を表示
+     */
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* =========================================
+       使用済みクーポンの場合
+    ========================================= */
+
+    if (
+        data.used === true
+    ) {
+
+        /*
+         * クーポン使用ボタンを
+         * 「本日分使用済み」にする
+         */
+
+        useCouponBtn.textContent =
+            "本日分使用済み";
+
+
+        useCouponBtn.classList.add(
+            "is-used"
+        );
+
+
+        useCouponBtn.disabled =
+            true;
+
+
+        useCouponBtn.style.display =
+            "block";
+
+
+        /*
+         * 使用済み背景
+         */
+
+        const resultContent =
+            document.querySelector(
+                ".result-content"
+            );
+
+
+        resultContent.classList.add(
+            "is-used"
+        );
+
+
+        /*
+         * 「済」ハンコ
+         */
+
+        usedStamp.classList.remove(
+            "show"
+        );
+
+        void usedStamp.offsetWidth;
+
+        usedStamp.classList.add(
+            "show"
+        );
+
+
+    } else {
+
+        /*
+         * 未使用クーポン
+         */
+
+        const resultContent =
+            document.querySelector(
+                ".result-content"
+            );
+
+
+        resultContent.classList.remove(
+            "is-used"
+        );
+
+
+        usedStamp.classList.remove(
+            "show"
+        );
+
+
+        /*
+         * ハズレなら使用ボタンなし
+         */
+
+        if (isLoseResult) {
+
+            useCouponBtn.style.display =
+                "none";
+
+        } else {
+
+            /*
+             * 未使用クーポンなので
+             * 使用ボタンを表示
+             */
+
+            useCouponBtn.textContent =
+                "クーポンを使用する";
+
+            useCouponBtn.classList.remove(
+                "is-used"
+            );
+
+            useCouponBtn.disabled =
+                false;
+
+            useCouponBtn.style.display =
+                "block";
+
+        }
+
+    }
+
+
+    /*
+     * dailyモードなので
+     * 引き直しボタンは必ず非表示
+     */
+
+    retryBtn.style.display =
+        "none";
+
+
+    /*
+     * ここで処理終了
+     *
+     * 抽選アニメーションは実行しない
+     */
+
+    return;
+
+}
+
     /*
      * =============================================
      * 画面切り替え
