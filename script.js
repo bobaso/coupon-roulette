@@ -1655,9 +1655,10 @@ skipButton.addEventListener(
 
 if (campaignDrawMode === "daily") {
 
-    /*
-     * ハズレの場合
-     */
+    /* =========================================
+       dailyモード
+       クーポン使用ボタン
+    ========================================= */
 
     if (isLoseResult) {
 
@@ -1672,51 +1673,84 @@ if (campaignDrawMode === "daily") {
     }
 
 
-/* =========================================
-   SNS引き直し利用状況を確認
-========================================= */
+    /* =========================================
+       SNS引き直し利用状況を確認
+    ========================================= */
 
-if (
-    rankText.textContent === "1等"
-) {
+    if (result.rank === "1等") {
 
-    /*
-     * 1等は引き直し不可
-     */
-
-    retryBtn.style.display =
-        "none";
-
-} else {
-
-    /*
-     * Workerへ
-     * 今日の引き直し利用状況を確認
-     */
-
-    const canRetry =
-        await loadInstagramRetryStatus();
-
-
-    if (canRetry) {
-
-        retryBtn.style.display =
-            "block";
-
-    } else {
+        /*
+         * 1等は引き直し不可
+         */
 
         retryBtn.style.display =
             "none";
 
+    } else {
+
+        /*
+         * Workerへ
+         * 今日の引き直し利用状況を確認
+         */
+
+        const canRetry =
+            await loadInstagramRetryStatus();
+
+
+        if (canRetry) {
+
+            retryBtn.style.display =
+                "block";
+
+        } else {
+
+            retryBtn.style.display =
+                "none";
+
+        }
+
     }
 
-}
 
-/* =========================================
-   testモード
-========================================= */
+    /* =========================================
+       ハズレの場合
+    ========================================= */
 
-} else {
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+
+    /* =========================================
+       1等の場合
+    ========================================= */
+
+    } else if (result.rank === "1等") {
+
+        useCouponBtn.style.display =
+            "block";
+
+        /*
+         * 1等は引き直し不可
+         */
+
+        retryBtn.style.display =
+            "none";
+
+
+    /* =========================================
+       通常当選の場合
+    ========================================= */
+
+    } else {
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
+
+}else {
 
 
     /* =========================================
