@@ -2560,60 +2560,62 @@ usedStamp.classList.add(
    引き直しボタンを即時表示
 ================================================== */
 
+function restoreSnsRetryButton() {
+
+    if (!isSnsRetryPending()) {
+        return;
+    }
+
+    retryBtn.textContent =
+        "引き直す";
+
+    retryBtn.disabled =
+        false;
+
+    retryBtn.style.display =
+        "block";
+}
+
+
+/* =========================================
+   SNSから戻ってきたとき
+========================================= */
+
 window.addEventListener(
     "pageshow",
     function () {
 
-        if (!isSnsRetryPending()) {
-
-            return;
-
-        }
-
-
-        /* =========================================
-           スタート画面を非表示
-        ========================================= */
-
-        startScreen.classList.add(
-            "hidden"
-        );
-
-
-        /* =========================================
-           抽選画面を非表示
-        ========================================= */
-
-        lotteryScreen.classList.add(
-            "hidden"
-        );
-
-
-        /* =========================================
-           結果画面を表示
-        ========================================= */
-
-        resultScreen.classList.remove(
-            "hidden"
-        );
-
-
-        /* =========================================
-           引き直しボタンを即時表示
-        ========================================= */
-
-        retryBtn.textContent =
-            "引き直す";
-
-        retryBtn.disabled =
-            false;
-
-        retryBtn.style.display =
-            "block";
+        restoreSnsRetryButton();
 
     }
 );
 
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            restoreSnsRetryButton();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "focus",
+    function () {
+
+        restoreSnsRetryButton();
+
+    }
+);
 
 /* ==================================================
    初回ページ読み込み
