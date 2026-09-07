@@ -38,7 +38,76 @@ let instagramRetryUrl =
 
 const SNS_RETRY_PENDING_KEY =
     "sns_retry_pending";
+/* ==================================================
+   SNS再抽選結果保存用
+================================================== */
 
+const SNS_RETRY_RESULT_KEY =
+    "sns_retry_result";
+
+
+/* ==================================================
+   SNS再抽選結果を保存
+================================================== */
+
+function saveSnsRetryResult(
+    issuedCouponId,
+    coupon,
+    lose
+) {
+
+    localStorage.setItem(
+        SNS_RETRY_RESULT_KEY,
+        JSON.stringify({
+
+            issued_coupon_id:
+                issuedCouponId,
+
+            coupon:
+                coupon,
+
+            lose:
+                lose
+
+        })
+    );
+
+}
+
+
+/* ==================================================
+   SNS再抽選結果を取得
+================================================== */
+
+function getSnsRetryResult() {
+
+    const saved =
+        localStorage.getItem(
+            SNS_RETRY_RESULT_KEY
+        );
+
+    if (!saved) {
+        return null;
+    }
+
+    try {
+
+        return JSON.parse(
+            saved
+        );
+
+    } catch (error) {
+
+        console.error(
+            "SNS再抽選結果の読み込みエラー:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
 
 /* ==================================================
    SNSへ移動した状態を保存
@@ -1685,7 +1754,102 @@ couponBtn.addEventListener(
         }
 
 
-        startLotteryAnimation();
+  /* =========================================
+   SNS再抽選済みの場合
+   保存している再抽選結果を表示
+========================================= */
+
+const savedRetryResult =
+    getSnsRetryResult();
+
+if (savedRetryResult) {
+
+    issuedCouponId =
+        savedRetryResult.issued_coupon_id;
+
+    isLoseResult =
+        savedRetryResult.lose === true;
+
+    const result =
+        savedRetryResult.coupon;
+
+
+    /* =========================================
+       保存している再抽選結果を表示
+    ========================================= */
+
+    setCapsuleImage(
+        result
+    );
+
+    setResultCoupon(
+        result
+    );
+
+
+    /* =========================================
+       画面切り替え
+    ========================================= */
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    lotteryScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* =========================================
+       使用ボタン
+    ========================================= */
+
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+    } else {
+
+        useCouponBtn.textContent =
+            "クーポンを使用する";
+
+        useCouponBtn.classList.remove(
+            "is-used"
+        );
+
+        useCouponBtn.disabled =
+            false;
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================
+       再抽選ボタン
+       1日1回なので表示しない
+    ========================================= */
+
+    retryBtn.style.display =
+        "none";
+
+
+    return;
+
+}
+
+
+/* =========================================
+   通常の抽選
+========================================= */
+
+startLotteryAnimation();
 
     }
 );
@@ -2046,8 +2210,21 @@ const response =
                新しい発券IDを保存
             ========================================= */
 
-            issuedCouponId =
-                data.issued_coupon_id;
+issuedCouponId =
+    data.issued_coupon_id;
+
+
+/* =========================================
+   SNS再抽選結果を保存
+========================================= */
+
+saveSnsRetryResult(
+    data.issued_coupon_id,
+    data.coupon,
+    data.lose === true
+);
+
+
 clearSnsRetryPending();
 
             /* =========================================
