@@ -2557,18 +2557,59 @@ usedStamp.classList.add(
 
 /* ==================================================
    SNSから戻ってきたとき
-   引き直しボタンを即時有効化
+   引き直しボタンを即時表示
 ================================================== */
 
 window.addEventListener(
     "pageshow",
     function () {
 
-        if (isSnsRetryPending()) {
+        if (!isSnsRetryPending()) {
 
-            updateSnsRetryButton();
+            return;
 
         }
+
+
+        /* =========================================
+           スタート画面を非表示
+        ========================================= */
+
+        startScreen.classList.add(
+            "hidden"
+        );
+
+
+        /* =========================================
+           抽選画面を非表示
+        ========================================= */
+
+        lotteryScreen.classList.add(
+            "hidden"
+        );
+
+
+        /* =========================================
+           結果画面を表示
+        ========================================= */
+
+        resultScreen.classList.remove(
+            "hidden"
+        );
+
+
+        /* =========================================
+           引き直しボタンを即時表示
+        ========================================= */
+
+        retryBtn.textContent =
+            "引き直す";
+
+        retryBtn.disabled =
+            false;
+
+        retryBtn.style.display =
+            "block";
 
     }
 );
