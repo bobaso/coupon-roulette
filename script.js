@@ -980,45 +980,7 @@ function getDeviceToken() {
     return token;
 
 }
-async function loadInstagramRetryUrl() {
 
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/instagram-retry-setting"
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                "SNS設定の取得に失敗しました"
-            );
-        }
-
-        const data =
-            await response.json();
-
-        if (
-            data.success &&
-            data.instagram_retry_url
-        ) {
-
-            instagramRetryUrl =
-                data.instagram_retry_url;
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "SNSフォロー先URL取得エラー:",
-            error
-        );
-
-    }
-
-}
 /* ==================================================
    SNS引き直し利用状況確認
 ================================================== */
@@ -1112,11 +1074,6 @@ if (!data.success) {
 }
 issuedCouponId =
     data.issued_coupon_id;
-/* =========================================
-   SNS引き直し済み状態を解除
-========================================= */
-
-clearSnsRetryPending();
    
 const result =
     data.coupon;
