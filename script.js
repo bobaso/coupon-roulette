@@ -44,7 +44,57 @@ const SNS_RETRY_PENDING_KEY =
 
 const SNS_RETRY_RESULT_KEY =
     "sns_retry_result";
+/* ==================================================
+   SNS再抽選クーポン使用済み保存用
+================================================== */
 
+const SNS_RETRY_USED_KEY =
+    "sns_retry_used_date";
+
+
+/* ==================================================
+   日本時間の日付を取得
+================================================== */
+
+function getJapanToday() {
+
+    return new Date().toLocaleDateString(
+        "sv-SE",
+        {
+            timeZone: "Asia/Tokyo"
+        }
+    );
+
+}
+
+
+/* ==================================================
+   SNS再抽選クーポン使用済み保存
+================================================== */
+
+function saveSnsRetryUsed() {
+
+    localStorage.setItem(
+        SNS_RETRY_USED_KEY,
+        getJapanToday()
+    );
+
+}
+
+
+/* ==================================================
+   SNS再抽選クーポン使用済み確認
+================================================== */
+
+function isSnsRetryUsed() {
+
+    return (
+        localStorage.getItem(
+            SNS_RETRY_USED_KEY
+        ) === getJapanToday()
+    );
+
+}
 
 /* ==================================================
    SNS再抽選結果を保存
@@ -2708,15 +2758,26 @@ useCouponBtn.addEventListener(
 
             }
 
+ /* =========================================
+   使用成功
+========================================= */
 
-            /* =========================================
-               使用成功
-            ========================================= */
+console.log(
+    "クーポン使用成功"
+);
 
-            console.log(
-                "クーポン使用成功"
-            );
 
+/* =========================================
+   SNS再抽選クーポンの使用済み状態を保存
+========================================= */
+
+if (
+    getSnsRetryResult()
+) {
+
+    saveSnsRetryUsed();
+
+}
 
             /* =========================================
                結果画面を使用済み状態に変更
@@ -2909,100 +2970,185 @@ loadInstagramRetryUrl()
             getSnsRetryResult();
 
 
-        if (savedRetryResult) {
+       if (savedRetryResult) {
 
-            /*
-             * 保存されている発券IDを復元
-             */
+    /*
+     * 保存されている発券IDを復元
+     */
 
-            issuedCouponId =
-                savedRetryResult.issued_coupon_id;
-
-
-            /*
-             * ハズレ状態を復元
-             */
-
-            isLoseResult =
-                savedRetryResult.lose === true;
+    issuedCouponId =
+        savedRetryResult.issued_coupon_id;
 
 
-            /*
-             * 保存されている結果を取得
-             */
+    /*
+     * ハズレ状態を復元
+     */
 
-            const result =
-                savedRetryResult.coupon;
+    isLoseResult =
+        savedRetryResult.lose === true;
 
 
-            /*
-             * 結果画面を復元
-             */
+    /*
+     * 保存されている結果を取得
+     */
 
-            setCapsuleImage(
-                result
+    const result =
+        savedRetryResult.coupon;
+
+
+    /*
+     * 結果画面を復元
+     */
+
+    setCapsuleImage(
+        result
+    );
+
+    setResultCoupon(
+        result
+    );
+
+
+    /*
+     * 画面を結果画面へ
+     */
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    lotteryScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* =========================================
+       使用済みの場合
+    ========================================= */
+
+    if (
+        isSnsRetryUsed()
+    ) {
+
+        /*
+         * 使用済み背景
+         */
+
+        const resultContent =
+            document.querySelector(
+                ".result-content"
             );
 
-            setResultCoupon(
-                result
+
+        resultContent.classList.add(
+            "is-used"
+        );
+
+
+        /*
+         * 「済」ハンコ
+         */
+
+        usedStamp.classList.remove(
+            "show"
+        );
+
+        void usedStamp.offsetWidth;
+
+        usedStamp.classList.add(
+            "show"
+        );
+
+
+        /*
+         * 使用済みボタン
+         */
+
+        useCouponBtn.textContent =
+            "本日分使用済み";
+
+        useCouponBtn.classList.add(
+            "is-used"
+        );
+
+        useCouponBtn.disabled =
+            true;
+
+        useCouponBtn.style.display =
+            "block";
+
+
+        /*
+         * 引き直しボタンは非表示
+         */
+
+        retryBtn.style.display =
+            "none";
+
+
+        return;
+
+    }
+
+
+    /* =========================================
+       未使用の場合
+    ========================================= */
+
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+    } else {
+
+        const resultContent =
+            document.querySelector(
+                ".result-content"
             );
 
 
-            /*
-             * 画面を結果画面へ
-             */
-
-            startScreen.classList.add(
-                "hidden"
-            );
-
-            lotteryScreen.classList.add(
-                "hidden"
-            );
-
-            resultScreen.classList.remove(
-                "hidden"
-            );
+        resultContent.classList.remove(
+            "is-used"
+        );
 
 
-            /*
-             * 使用ボタン
-             */
-
-            if (isLoseResult) {
-
-                useCouponBtn.style.display =
-                    "none";
-
-            } else {
-
-                useCouponBtn.textContent =
-                    "クーポンを使用する";
-
-                useCouponBtn.classList.remove(
-                    "is-used"
-                );
-
-                useCouponBtn.disabled =
-                    false;
-
-                useCouponBtn.style.display =
-                    "block";
-
-            }
+        usedStamp.classList.remove(
+            "show"
+        );
 
 
-            /*
-             * 引き直しは1日1回なので非表示
-             */
+        useCouponBtn.textContent =
+            "クーポンを使用する";
 
-            retryBtn.style.display =
-                "none";
+        useCouponBtn.classList.remove(
+            "is-used"
+        );
+
+        useCouponBtn.disabled =
+            false;
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
 
 
-            return;
+    /*
+     * 引き直しは1日1回なので非表示
+     */
 
-        }
+    retryBtn.style.display =
+        "none";
+
+
+    return;
+
+}
 
 
         /* =========================================
