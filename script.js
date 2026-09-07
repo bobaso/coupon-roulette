@@ -1369,7 +1369,7 @@ setLotteryTimer(function () {
      * =============================================
      */
 
-setLotteryTimer(function () {
+setLotteryTimer(async function () {
 
     /*
      * 抽選中テキストを停止
