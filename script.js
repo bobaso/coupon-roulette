@@ -2022,7 +2022,7 @@ retryBtn.addEventListener(
 
             issuedCouponId =
                 data.issued_coupon_id;
-
+clearSnsRetryPending();
 
             /* =========================================
                新しい結果を保存
