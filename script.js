@@ -21,7 +21,7 @@ let campaignEndDate = null;
 ================================================== */
 
 let campaignDrawMode = "test";
-
+let instagramRetryEnabled = false;
 let campaignActive = false;
 
 const useCouponBtn =
@@ -858,6 +858,68 @@ function getDeviceToken() {
 
 }
 /* ==================================================
+   SNS引き直し利用状況確認
+================================================== */
+
+async function loadInstagramRetryStatus() {
+
+    try {
+
+        const deviceToken =
+            getDeviceToken();
+
+
+        const response =
+            await fetch(
+                "https://coupon-api.yoshioka-mwork.workers.dev/retry-status?device_token=" +
+                encodeURIComponent(deviceToken) +
+                "&platform=instagram"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "SNS引き直し利用状況:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            instagramRetryEnabled =
+                false;
+
+            return false;
+
+        }
+
+
+        instagramRetryEnabled =
+            data.can_retry === true;
+
+
+        return instagramRetryEnabled;
+
+
+    } catch (error) {
+
+        console.error(
+            "SNS引き直し利用状況取得エラー:",
+            error
+        );
+
+        instagramRetryEnabled =
+            false;
+
+        return false;
+
+    }
+
+}
+/* ==================================================
    抽選演出開始
 ================================================== */
 
@@ -1067,13 +1129,45 @@ if (
     }
 
 
+  /* =========================================
+   SNS引き直し利用状況を確認
+========================================= */
+
+if (
+    result.rank === "1等"
+) {
+
     /*
-     * dailyモードなので
-     * 引き直しボタンは必ず非表示
+     * 1等は引き直し不可
      */
 
     retryBtn.style.display =
         "none";
+
+} else {
+
+    /*
+     * Workerへ
+     * 今日の引き直し利用状況を確認
+     */
+
+    const canRetry =
+        await loadInstagramRetryStatus();
+
+
+    if (canRetry) {
+
+        retryBtn.style.display =
+            "block";
+
+    } else {
+
+        retryBtn.style.display =
+            "none";
+
+    }
+
+}
 
 
     /*
@@ -1312,12 +1406,10 @@ setLotteryTimer(function () {
 
 if (campaignDrawMode === "daily") {
 
-    /*
-     * クーポン使用ボタン
-     *
-     * ハズレの場合は非表示
-     * 当選の場合は表示
-     */
+    /* =========================================
+       dailyモード
+       クーポン使用ボタン
+    ========================================= */
 
     if (isLoseResult) {
 
@@ -1332,21 +1424,45 @@ if (campaignDrawMode === "daily") {
     }
 
 
+/* =========================================
+   SNS引き直し利用状況を確認
+========================================= */
+
+if (
+    result.rank === "1等"
+) {
+
     /*
-     * dailyモードでは
-     * 「もう一度引く」を必ず非表示
+     * 1等は引き直し不可
      */
 
     retryBtn.style.display =
         "none";
 
-
-/* =========================================
-   testモード
-========================================= */
-
 } else {
 
+    /*
+     * Workerへ
+     * 今日の引き直し利用状況を確認
+     */
+
+    const canRetry =
+        await loadInstagramRetryStatus();
+
+
+    if (canRetry) {
+
+        retryBtn.style.display =
+            "block";
+
+    } else {
+
+        retryBtn.style.display =
+            "none";
+
+    }
+
+}
 
     /* =========================================
        ハズレの場合
@@ -1356,10 +1472,6 @@ if (campaignDrawMode === "daily") {
 
         useCouponBtn.style.display =
             "none";
-
-
-        retryBtn.style.display =
-            "block";
 
 
     /* =========================================
@@ -1387,14 +1499,6 @@ if (campaignDrawMode === "daily") {
     } else {
 
         useCouponBtn.style.display =
-            "block";
-
-
-        /*
-         * testモードでは引き直し可能
-         */
-
-        retryBtn.style.display =
             "block";
 
     }
@@ -1489,8 +1593,7 @@ function updateCampaignButton() {
 
 skipButton.addEventListener(
     "click",
-    function () {
-
+    async function () {
         /*
          * =========================================
          * 抽選演出のタイマーを完全停止
@@ -1548,7 +1651,6 @@ skipButton.addEventListener(
 
 /* =========================================
    dailyモードの場合
-   どの結果でも引き直し不可
 ========================================= */
 
 if (campaignDrawMode === "daily") {
@@ -1570,14 +1672,45 @@ if (campaignDrawMode === "daily") {
     }
 
 
+/* =========================================
+   SNS引き直し利用状況を確認
+========================================= */
+
+if (
+    rankText.textContent === "1等"
+) {
+
     /*
-     * dailyモードでは
-     * 「もう一度引く」を必ず非表示
+     * 1等は引き直し不可
      */
 
     retryBtn.style.display =
         "none";
 
+} else {
+
+    /*
+     * Workerへ
+     * 今日の引き直し利用状況を確認
+     */
+
+    const canRetry =
+        await loadInstagramRetryStatus();
+
+
+    if (canRetry) {
+
+        retryBtn.style.display =
+            "block";
+
+    } else {
+
+        retryBtn.style.display =
+            "none";
+
+    }
+
+}
 
 /* =========================================
    testモード
@@ -1642,6 +1775,7 @@ if (campaignDrawMode === "daily") {
 );
 /* ==================================================
    もう一度引く
+   SNS引き直し
 ================================================== */
 
 retryBtn.addEventListener(
@@ -1649,50 +1783,8 @@ retryBtn.addEventListener(
     async function () {
 
         /* =========================================
-           dailyモードでは引き直し不可
-           念のためクリック処理も停止
+           ボタンを一時的に無効化
         ========================================= */
-
-        if (campaignDrawMode === "daily") {
-
-            return;
-
-        }
-        /* 古いクーポンIDがない場合 */
-
-     /* =========================================
-   ハズレの場合
-   発券IDがないので破棄処理は不要
-========================================= */
-
-if (isLoseResult) {
-
-    issuedCouponId = null;
-
-    await startLotteryAnimation();
-
-    return;
-
-}
-
-
-/* =========================================
-   通常当選の場合
-   古いクーポンIDを確認
-========================================= */
-
-if (!issuedCouponId) {
-
-    alert(
-        "クーポン情報がありません"
-    );
-
-    return;
-
-}
-
-
-        /* ボタンを一時的に無効化 */
 
         retryBtn.disabled = true;
 
@@ -1700,74 +1792,316 @@ if (!issuedCouponId) {
         try {
 
             /* =========================================
-               ① 古いクーポンを破棄
+               device_token取得
             ========================================= */
 
-            const discardResponse =
+            const deviceToken =
+                getDeviceToken();
+
+
+            /* =========================================
+               SNS引き直しAPI
+            ========================================= */
+
+            const response =
                 await fetch(
-                    "https://coupon-api.yoshioka-mwork.workers.dev/discard",
+                    "https://coupon-api.yoshioka-mwork.workers.dev/retry-draw?device_token=" +
+                    encodeURIComponent(deviceToken) +
+                    "&platform=instagram",
                     {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            issued_coupon_id:
-                                issuedCouponId
-                        })
+                        method: "POST"
                     }
                 );
 
 
-            const discardData =
-                await discardResponse.json();
+            const data =
+                await response.json();
 
 
             console.log(
-                "破棄API:",
-                discardData
+                "SNS引き直しAPI:",
+                data
             );
 
 
             /* =========================================
-               破棄失敗
+               APIエラー
             ========================================= */
 
-            if (!discardData.success) {
+            if (!data.success) {
 
                 alert(
-                    discardData.error ||
-                    "クーポンを破棄できませんでした"
+                    data.error ||
+                    "引き直しできませんでした"
                 );
 
-                retryBtn.disabled = false;
-
                 return;
-
             }
 
 
             /* =========================================
-               ② 古いIDをクリア
+               新しい発券IDを保存
             ========================================= */
 
-            issuedCouponId = null;
+            issuedCouponId =
+                data.issued_coupon_id;
 
 
             /* =========================================
-               ③ 新しいクーポンを抽選
+               新しい結果を保存
             ========================================= */
 
-            await startLotteryAnimation();
+            const result =
+                data.coupon;
+
+
+            isLoseResult =
+                data.lose === true;
+
+
+            /* =========================================
+               新しい結果を表示
+            ========================================= */
+
+            setCapsuleImage(result);
+
+            setResultCoupon(result);
+
+
+            /* =========================================
+               抽選演出開始
+            ========================================= */
+
+            startScreen.classList.add(
+                "hidden"
+            );
+
+            resultScreen.classList.add(
+                "hidden"
+            );
+
+            lotteryScreen.classList.remove(
+                "hidden"
+            );
+
+
+            startLotteryTextAnimation();
+
+
+            /* =========================================
+               カプセルアニメーションリセット
+            ========================================= */
+
+            resetCapsuleAnimation();
+
+
+            /* =========================================
+               ① ガチャ機1回目
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                gachaMachine.classList.add(
+                    "shake-1"
+                );
+
+            }, 300);
+
+
+            /* =========================================
+               ② ガチャ機2回目
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                gachaMachine.classList.remove(
+                    "shake-1"
+                );
+
+                void gachaMachine.offsetWidth;
+
+                gachaMachine.classList.add(
+                    "shake-2"
+                );
+
+            }, 850);
+
+
+            /* =========================================
+               ③ カプセル排出
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                gachaCapsule.classList.remove(
+                    "zoom",
+                    "open"
+                );
+
+                void gachaCapsule.offsetWidth;
+
+                gachaCapsule.classList.add(
+                    "eject"
+                );
+
+            }, 1300);
+
+
+            /* =========================================
+               ④ カプセルズーム
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                gachaCapsule.classList.remove(
+                    "eject"
+                );
+
+                void gachaCapsule.offsetWidth;
+
+                gachaCapsule.classList.add(
+                    "zoom"
+                );
+
+            }, 2050);
+
+
+            /* =========================================
+               ⑤ カプセル開封
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                openCapsule();
+
+            }, 2800);
+
+
+            /* =========================================
+               ⑥ カプセル中央の光
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                lotteryLight.classList.remove(
+                    "flash",
+                    "flash-first"
+                );
+
+                void lotteryLight.offsetWidth;
+
+
+                if (
+                    result.rank === "1等"
+                ) {
+
+                    lotteryLight.classList.add(
+                        "flash-first"
+                    );
+
+                } else {
+
+                    lotteryLight.classList.add(
+                        "flash"
+                    );
+
+                }
+
+            }, 2950);
+
+
+            /* =========================================
+               ⑦ ホワイトアウト
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                whiteout.classList.remove(
+                    "show"
+                );
+
+                void whiteout.offsetWidth;
+
+                whiteout.classList.add(
+                    "show"
+                );
+
+            }, 3250);
+
+
+            /* =========================================
+               ⑧ 結果画面
+            ========================================= */
+
+            setLotteryTimer(function () {
+
+                clearInterval(
+                    lotteryTextTimer
+                );
+
+                clearTimeout(
+                    lotteryTextTimeout
+                );
+
+
+                lotteryText.classList.remove(
+                    "is-active",
+                    "is-hide"
+                );
+
+
+                lotteryScreen.classList.add(
+                    "hidden"
+                );
+
+
+                resultScreen.classList.remove(
+                    "hidden"
+                );
+
+
+                /* =========================================
+                   結果に応じたボタン表示
+                ========================================= */
+
+                if (isLoseResult) {
+
+                    useCouponBtn.style.display =
+                        "none";
+
+                    retryBtn.style.display =
+                        "none";
+
+                } else {
+
+                    useCouponBtn.style.display =
+                        "block";
+
+                    retryBtn.style.display =
+                        "none";
+
+                }
+
+
+                /* =========================================
+                   1等なら紙吹雪
+                ========================================= */
+
+                if (
+                    result.rank === "1等"
+                ) {
+
+                    createConfetti();
+
+                }
+
+            }, 3700);
 
 
         } catch (error) {
 
             console.error(
-                "引き直しエラー:",
+                "SNS引き直しエラー:",
                 error
             );
 
@@ -1775,14 +2109,11 @@ if (!issuedCouponId) {
                 "通信エラーが発生しました"
             );
 
+        } finally {
+
+            retryBtn.disabled = false;
+
         }
-
-
-        /* =========================================
-           ボタンを再び有効化
-        ========================================= */
-
-        retryBtn.disabled = false;
 
     }
 );
