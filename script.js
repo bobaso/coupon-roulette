@@ -22,8 +22,131 @@ let campaignEndDate = null;
 
 let campaignDrawMode = "test";
 let instagramRetryEnabled = false;
-let campaignActive = false;
+let instagramRetryUrl =
+    "https://www.instagram.com/umakitack/";
+/* ==================================================
+   SNS引き直し用
+   SNSへ移動した状態を保存
+================================================== */
 
+const SNS_RETRY_PENDING_KEY =
+    "sns_retry_pending";
+
+
+/* ==================================================
+   SNSへ移動した状態を保存
+================================================== */
+
+function setSnsRetryPending() {
+
+    localStorage.setItem(
+        SNS_RETRY_PENDING_KEY,
+        "true"
+    );
+
+}
+
+
+/* ==================================================
+   SNSへ移動した状態を確認
+================================================== */
+
+function isSnsRetryPending() {
+
+    return (
+        localStorage.getItem(
+            SNS_RETRY_PENDING_KEY
+        ) === "true"
+    );
+
+}
+
+
+/* ==================================================
+   SNSへ移動した状態を削除
+================================================== */
+
+function clearSnsRetryPending() {
+
+    localStorage.removeItem(
+        SNS_RETRY_PENDING_KEY
+    );
+
+}
+/* ==================================================
+   SNSフォロー先URL取得
+================================================== */
+
+async function loadInstagramRetryUrl() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/instagram-retry-setting"
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "SNS設定の取得に失敗しました"
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+
+      if (data.success) {
+
+    /* =========================================
+       SNS引き直しON / OFF
+    ========================================= */
+
+    instagramRetryEnabled =
+        data.instagram_retry_enabled === true;
+
+
+    /* =========================================
+       SNSフォロー先URL
+    ========================================= */
+
+    if (data.instagram_retry_url) {
+
+        instagramRetryUrl =
+            data.instagram_retry_url;
+
+    }
+
+}
+
+    } catch (error) {
+
+        console.error(
+            "SNSフォロー先URL取得エラー:",
+            error
+        );
+
+    }
+
+}
+/* ==================================================
+   SNSから戻った後の引き直しボタン表示
+================================================== */
+
+function updateSnsRetryButton() {
+
+    if (!isSnsRetryPending()) {
+        return;
+    }
+
+    retryBtn.textContent =
+        "引き直す";
+
+}
+let campaignActive = false;
 const useCouponBtn =
     document.getElementById("useCouponBtn");
 
@@ -989,7 +1112,12 @@ if (!data.success) {
 }
 issuedCouponId =
     data.issued_coupon_id;
+/* =========================================
+   SNS引き直し済み状態を解除
+========================================= */
 
+clearSnsRetryPending();
+   
 const result =
     data.coupon;
 
@@ -1467,29 +1595,34 @@ if (campaignDrawMode === "daily") {
    SNS引き直し利用状況を確認
 ========================================= */
 
-if (
-    result.rank === "1等"
-) {
+if (result.rank === "1等") {
 
-    /*
-     * 1等は引き直し不可
-     */
+    retryBtn.style.display =
+        "none";
+
+} else if (!instagramRetryEnabled) {
 
     retryBtn.style.display =
         "none";
 
 } else {
 
-    /*
-     * Workerへ
-     * 今日の引き直し利用状況を確認
-     */
-
     const canRetry =
         await loadInstagramRetryStatus();
 
-
     if (canRetry) {
+
+        if (isSnsRetryPending()) {
+
+            retryBtn.textContent =
+                "引き直す";
+
+        } else {
+
+            retryBtn.textContent =
+                "SNSをフォローして引き直す";
+
+        }
 
         retryBtn.style.display =
             "block";
@@ -1847,6 +1980,30 @@ if (campaignDrawMode === "daily") {
     }
 );
 /* ==================================================
+   SNSへ移動
+================================================== */
+
+retryBtn.addEventListener(
+    "click",
+    function () {
+
+        /* ==========================================
+           SNSへ移動したことを保存
+        ========================================== */
+
+        setSnsRetryPending();
+
+
+        /* ==========================================
+           設定されているSNSへ移動
+        ========================================== */
+
+        window.location.href =
+            instagramRetryUrl;
+
+    }
+);
+/* ==================================================
    もう一度引く
    SNS引き直し
 ================================================== */
@@ -1860,7 +2017,20 @@ retryBtn.addEventListener(
         ========================================= */
 
         retryBtn.disabled = true;
+        /* =========================================
+           SNSへ移動したことがまだない場合
+        ========================================= */
 
+        if (!isSnsRetryPending()) {
+
+            setSnsRetryPending();
+
+            window.location.href =
+                instagramRetryUrl;
+
+            return;
+
+        }
 
         try {
 
@@ -2425,3 +2595,13 @@ usedStamp.classList.add(
     }
 );
 
+/* ==================================================
+   ページ読み込み時
+================================================== */
+
+loadInstagramRetryUrl()
+    .then(function () {
+
+        updateSnsRetryButton();
+
+    });
