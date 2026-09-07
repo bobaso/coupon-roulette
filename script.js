@@ -344,9 +344,9 @@ async function loadCampaign() {
     try {
 
         const response =
-            await fetch(
-                "https://coupon-api.yoshioka-mwork.workers.dev/admin/campaign"
-            );
+           await fetch(
+    "https://coupon-api.yoshioka-mwork.workers.dev/campaign"
+);
 
 
         const data =
@@ -549,9 +549,9 @@ async function loadCoupons() {
     try {
 
         const response =
-            await fetch(
-                "https://coupon-api.yoshioka-mwork.workers.dev/admin/coupons"
-            );
+      await fetch(
+    "https://coupon-api.yoshioka-mwork.workers.dev/coupons"
+);
 
 
         const data =
