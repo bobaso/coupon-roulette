@@ -2622,6 +2622,29 @@ window.addEventListener(
 loadInstagramRetryUrl()
     .then(function () {
 
-        updateSnsRetryButton();
+        if (!isSnsRetryPending()) {
+            return;
+        }
+
+        startScreen.classList.add(
+            "hidden"
+        );
+
+        lotteryScreen.classList.add(
+            "hidden"
+        );
+
+        resultScreen.classList.remove(
+            "hidden"
+        );
+
+        retryBtn.textContent =
+            "引き直す";
+
+        retryBtn.disabled =
+            false;
+
+        retryBtn.style.display =
+            "block";
 
     });
