@@ -1980,15 +1980,28 @@ retryBtn.addEventListener(
                SNS引き直しAPI
             ========================================= */
 
-            const response =
-                await fetch(
-                    "https://coupon-api.yoshioka-mwork.workers.dev/retry-draw?device_token=" +
-                    encodeURIComponent(deviceToken) +
-                    "&platform=instagram",
-                    {
-                        method: "POST"
-                    }
-                );
+const response =
+    await fetch(
+        "https://coupon-api.yoshioka-mwork.workers.dev/retry-draw",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+
+            body: JSON.stringify({
+
+                device_token:
+                    deviceToken,
+
+                platform:
+                    "instagram"
+
+            })
+        }
+    );
 
 
             const data =
