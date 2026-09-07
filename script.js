@@ -2895,34 +2895,145 @@ window.addEventListener(
 
 /* ==================================================
    初回ページ読み込み
+   SNS引き直し結果を復元
 ================================================== */
 
 loadInstagramRetryUrl()
     .then(function () {
 
-        if (!isSnsRetryPending()) {
+        /* =========================================
+           SNS引き直し結果が保存されている場合
+        ========================================= */
+
+        const savedRetryResult =
+            getSnsRetryResult();
+
+
+        if (savedRetryResult) {
+
+            /*
+             * 保存されている発券IDを復元
+             */
+
+            issuedCouponId =
+                savedRetryResult.issued_coupon_id;
+
+
+            /*
+             * ハズレ状態を復元
+             */
+
+            isLoseResult =
+                savedRetryResult.lose === true;
+
+
+            /*
+             * 保存されている結果を取得
+             */
+
+            const result =
+                savedRetryResult.coupon;
+
+
+            /*
+             * 結果画面を復元
+             */
+
+            setCapsuleImage(
+                result
+            );
+
+            setResultCoupon(
+                result
+            );
+
+
+            /*
+             * 画面を結果画面へ
+             */
+
+            startScreen.classList.add(
+                "hidden"
+            );
+
+            lotteryScreen.classList.add(
+                "hidden"
+            );
+
+            resultScreen.classList.remove(
+                "hidden"
+            );
+
+
+            /*
+             * 使用ボタン
+             */
+
+            if (isLoseResult) {
+
+                useCouponBtn.style.display =
+                    "none";
+
+            } else {
+
+                useCouponBtn.textContent =
+                    "クーポンを使用する";
+
+                useCouponBtn.classList.remove(
+                    "is-used"
+                );
+
+                useCouponBtn.disabled =
+                    false;
+
+                useCouponBtn.style.display =
+                    "block";
+
+            }
+
+
+            /*
+             * 引き直しは1日1回なので非表示
+             */
+
+            retryBtn.style.display =
+                "none";
+
+
             return;
+
         }
 
-        startScreen.classList.add(
-            "hidden"
-        );
 
-        lotteryScreen.classList.add(
-            "hidden"
-        );
+        /* =========================================
+           SNSへ移動しただけの場合
+           （まだ引き直していない）
+        ========================================= */
 
-        resultScreen.classList.remove(
-            "hidden"
-        );
+        if (isSnsRetryPending()) {
 
-        retryBtn.textContent =
-            "引き直す";
+            startScreen.classList.add(
+                "hidden"
+            );
 
-        retryBtn.disabled =
-            false;
+            lotteryScreen.classList.add(
+                "hidden"
+            );
 
-        retryBtn.style.display =
-            "block";
+            resultScreen.classList.remove(
+                "hidden"
+            );
+
+
+            retryBtn.textContent =
+                "引き直す";
+
+            retryBtn.disabled =
+                false;
+
+            retryBtn.style.display =
+                "block";
+
+        }
 
     });
