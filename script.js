@@ -2507,6 +2507,105 @@ async function initialize() {
 
     await loadCoupons();
 
+
+    /* =========================================
+       保存されているSNS再抽選結果を復元
+    ========================================= */
+
+    const savedRetryResult =
+        getSnsRetryResult();
+
+    if (!savedRetryResult) {
+
+        return;
+
+    }
+
+
+    /* =========================================
+       発券IDを復元
+    ========================================= */
+
+    issuedCouponId =
+        savedRetryResult.issued_coupon_id;
+
+
+    /* =========================================
+       ハズレ判定を復元
+    ========================================= */
+
+    isLoseResult =
+        savedRetryResult.lose === true;
+
+
+    /* =========================================
+       抽選結果を復元
+    ========================================= */
+
+    const result =
+        savedRetryResult.coupon;
+
+
+    setCapsuleImage(
+        result
+    );
+
+    setResultCoupon(
+        result
+    );
+
+
+    /* =========================================
+       結果画面を表示
+    ========================================= */
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    lotteryScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    /* =========================================
+       クーポン使用ボタン
+    ========================================= */
+
+    if (isLoseResult) {
+
+        useCouponBtn.style.display =
+            "none";
+
+    } else {
+
+        useCouponBtn.textContent =
+            "クーポンを使用する";
+
+        useCouponBtn.classList.remove(
+            "is-used"
+        );
+
+        useCouponBtn.disabled =
+            false;
+
+        useCouponBtn.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================
+       SNS引き直しは1日1回なので非表示
+    ========================================= */
+
+    retryBtn.style.display =
+        "none";
+
 }
 
 
