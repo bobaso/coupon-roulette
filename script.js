@@ -152,6 +152,12 @@ function updateSnsRetryButton() {
     retryBtn.textContent =
         "引き直す";
 
+    retryBtn.disabled =
+        false;
+
+    retryBtn.style.display =
+        "block";
+
 }
 let campaignActive = false;
 const useCouponBtn =
