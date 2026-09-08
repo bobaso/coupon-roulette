@@ -2178,20 +2178,24 @@ retryBtn.addEventListener(
         ========================================= */
 
         retryBtn.disabled = true;
-        /* =========================================
-           SNSへ移動したことがまだない場合
-        ========================================= */
+ /* =========================================
+   SNSへ移動したことがまだない場合
+   dailyモードのみ
+========================================= */
 
-        if (!isSnsRetryPending()) {
+if (
+    campaignDrawMode === "daily" &&
+    !isSnsRetryPending()
+) {
 
-            setSnsRetryPending();
+    setSnsRetryPending();
 
-            window.location.href =
-                instagramRetryUrl;
+    window.location.href =
+        instagramRetryUrl;
 
-            return;
+    return;
 
-        }
+}
 
         try {
 
@@ -2207,28 +2211,40 @@ retryBtn.addEventListener(
                SNS引き直しAPI
             ========================================= */
 
-const response =
-    await fetch(
-        "https://coupon-api.yoshioka-mwork.workers.dev/retry-draw",
-        {
-            method: "POST",
+let response;
 
-            headers: {
-                "Content-Type":
-                    "application/json"
-            },
+if (campaignDrawMode === "test") {
 
-            body: JSON.stringify({
+    response =
+        await fetch(
+            `${API_URL}/draw?device_token=${encodeURIComponent(deviceToken)}`
+        );
 
-                device_token:
-                    deviceToken,
+} else {
 
-                platform:
-                    "instagram"
+    response =
+        await fetch(
+            `${API_URL}/retry-draw`,
+            {
+                method: "POST",
 
-            })
-        }
-    );
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    device_token:
+                        deviceToken,
+
+                    platform:
+                        "instagram"
+
+                })
+            }
+        );
+}
 
 
             const data =
@@ -2256,9 +2272,9 @@ const response =
             }
 
 
-            /* =========================================
-               新しい発券IDを保存
-            ========================================= */
+/* =========================================
+   新しい発券IDを保存
+========================================= */
 
 issuedCouponId =
     data.issued_coupon_id;
@@ -2266,16 +2282,20 @@ issuedCouponId =
 
 /* =========================================
    SNS再抽選結果を保存
+   dailyモードのみ
 ========================================= */
 
-saveSnsRetryResult(
-    data.issued_coupon_id,
-    data.coupon,
-    data.lose === true
-);
+if (campaignDrawMode === "daily") {
 
+    saveSnsRetryResult(
+        data.issued_coupon_id,
+        data.coupon,
+        data.lose === true
+    );
 
-clearSnsRetryPending();
+    clearSnsRetryPending();
+
+}
 
             /* =========================================
                新しい結果を保存
@@ -2490,27 +2510,45 @@ clearSnsRetryPending();
                 );
 
 
-                /* =========================================
-                   結果に応じたボタン表示
-                ========================================= */
+/* =========================================
+   結果に応じたボタン表示
+========================================= */
 
-                if (isLoseResult) {
+if (isLoseResult) {
 
-                    useCouponBtn.style.display =
-                        "none";
+    useCouponBtn.style.display =
+        "none";
 
-                    retryBtn.style.display =
-                        "none";
+    if (campaignDrawMode === "test") {
 
-                } else {
+        retryBtn.style.display =
+            "block";
 
-                    useCouponBtn.style.display =
-                        "block";
+    } else {
 
-                    retryBtn.style.display =
-                        "none";
+        retryBtn.style.display =
+            "none";
 
-                }
+    }
+
+} else {
+
+    useCouponBtn.style.display =
+        "block";
+
+    if (campaignDrawMode === "test") {
+
+        retryBtn.style.display =
+            "block";
+
+    } else {
+
+        retryBtn.style.display =
+            "none";
+
+    }
+
+}
 
 
                 /* =========================================
