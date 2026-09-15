@@ -3274,28 +3274,8 @@ loadInstagramRetryUrl()
         ========================================= */
 
         if (isSnsRetryPending()) {
-
-            startScreen.classList.add(
-                "hidden"
-            );
-
-            lotteryScreen.classList.add(
-                "hidden"
-            );
-
-            resultScreen.classList.remove(
-                "hidden"
-            );
-
-
             retryBtn.textContent =
                 "引き直す";
-
-            retryBtn.disabled =
-                false;
-
-            retryBtn.style.display =
-                "block";
 
         }
 
