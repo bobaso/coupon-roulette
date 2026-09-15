@@ -117,7 +117,10 @@ function saveSnsRetryResult(
                 coupon,
 
             lose:
-                lose
+                lose,
+
+            retry_date:
+                getJapanToday()
 
         })
     );
@@ -142,9 +145,34 @@ function getSnsRetryResult() {
 
     try {
 
-        return JSON.parse(
-            saved
-        );
+        const result =
+            JSON.parse(saved);
+
+
+        /* =========================================
+           保存された結果の日付を確認
+        ========================================= */
+
+        if (
+            !result.retry_date ||
+            result.retry_date !== getJapanToday()
+        ) {
+
+            /*
+             * 前日の結果なので削除
+             */
+
+            localStorage.removeItem(
+                SNS_RETRY_RESULT_KEY
+            );
+
+            return null;
+
+        }
+
+
+        return result;
+
 
     } catch (error) {
 
@@ -152,6 +180,16 @@ function getSnsRetryResult() {
             "SNS再抽選結果の読み込みエラー:",
             error
         );
+
+
+        /*
+         * 壊れたデータも削除
+         */
+
+        localStorage.removeItem(
+            SNS_RETRY_RESULT_KEY
+        );
+
 
         return null;
 
