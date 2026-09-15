@@ -2598,34 +2598,28 @@ if (isLoseResult) {
     useCouponBtn.style.display =
         "none";
 
-    if (campaignDrawMode === "test") {
-
-        retryBtn.style.display =
-            "block";
-
-    } else {
-
-        retryBtn.style.display =
-            "none";
-
-    }
-
 } else {
 
     useCouponBtn.style.display =
         "block";
 
-    if (campaignDrawMode === "test") {
+}
 
-        retryBtn.style.display =
-            "block";
 
-    } else {
+/* =========================================
+   dailyモードのSNS引き直し後
+   引き直しボタンを非表示
+========================================= */
 
-        retryBtn.style.display =
-            "none";
+if (campaignDrawMode === "daily") {
 
-    }
+    retryBtn.style.display =
+        "none";
+
+} else {
+
+    retryBtn.style.display =
+        "block";
 
 }
 
