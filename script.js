@@ -205,7 +205,10 @@ function setSnsRetryPending() {
 
     localStorage.setItem(
         SNS_RETRY_PENDING_KEY,
-        "true"
+        JSON.stringify({
+            pending: true,
+            pending_date: getJapanToday()
+        })
     );
 
 }
@@ -217,11 +220,49 @@ function setSnsRetryPending() {
 
 function isSnsRetryPending() {
 
-    return (
+    const saved =
         localStorage.getItem(
             SNS_RETRY_PENDING_KEY
-        ) === "true"
-    );
+        );
+
+    if (!saved) {
+        return false;
+    }
+
+    try {
+
+        const pending =
+            JSON.parse(saved);
+
+        if (
+            pending.pending !== true ||
+            !pending.pending_date ||
+            pending.pending_date !== getJapanToday()
+        ) {
+
+            localStorage.removeItem(
+                SNS_RETRY_PENDING_KEY
+            );
+
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "SNS再抽選保留状態の読み込みエラー:",
+            error
+        );
+
+        localStorage.removeItem(
+            SNS_RETRY_PENDING_KEY
+        );
+
+        return false;
+
+    }
 
 }
 
