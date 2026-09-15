@@ -51,7 +51,156 @@ const SNS_RETRY_RESULT_KEY =
 const SNS_RETRY_USED_KEY =
     "sns_retry_used_date";
 
+/* ==================================================
+   今日の抽選リセット日時を取得
+================================================== */
 
+async function checkTodayDrawReset() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/campaign"
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !data.success ||
+            !data.campaign
+        ) {
+            return;
+        }
+
+
+        /* =========================================
+           Worker側の更新日時
+        ========================================= */
+
+        const serverUpdatedAt =
+            data.campaign.updated_at;
+
+        if (!serverUpdatedAt) {
+            return;
+        }
+
+
+        /* =========================================
+           前回確認した更新日時
+        ========================================= */
+
+        const localUpdatedAt =
+            localStorage.getItem(
+                "campaign_updated_at"
+            );
+
+
+        /* =========================================
+           初回の場合
+           現在の日時を保存するだけ
+        ========================================= */
+
+        if (!localUpdatedAt) {
+
+            localStorage.setItem(
+                "campaign_updated_at",
+                serverUpdatedAt
+            );
+
+            return;
+
+        }
+
+
+        /* =========================================
+           Worker側の更新日時が変わった
+           → 管理者によるリセットと判断
+        ========================================= */
+
+        if (
+            serverUpdatedAt !==
+            localUpdatedAt
+        ) {
+
+            console.log(
+                "今日の抽選リセットを検知しました"
+            );
+
+
+            /* =========================================
+               SNS関連の保存データを削除
+            ========================================= */
+
+            localStorage.removeItem(
+                SNS_RETRY_RESULT_KEY
+            );
+
+            localStorage.removeItem(
+                SNS_RETRY_PENDING_KEY
+            );
+
+            localStorage.removeItem(
+                SNS_RETRY_USED_KEY
+            );
+
+
+            /* =========================================
+               更新日時を保存
+            ========================================= */
+
+            localStorage.setItem(
+                "campaign_updated_at",
+                serverUpdatedAt
+            );
+
+
+            /* =========================================
+               ホーム画面へ戻す
+            ========================================= */
+
+            startScreen.classList.remove(
+                "hidden"
+            );
+
+            lotteryScreen.classList.add(
+                "hidden"
+            );
+
+            resultScreen.classList.add(
+                "hidden"
+            );
+
+
+            /* =========================================
+               結果情報もリセット
+            ========================================= */
+
+            issuedCouponId = null;
+
+            isLoseResult = false;
+
+
+            retryBtn.style.display =
+                "none";
+
+
+            useCouponBtn.style.display =
+                "none";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "抽選リセット確認エラー:",
+            error
+        );
+
+    }
+
+}
 /* ==================================================
    日本時間の日付を取得
 ================================================== */
@@ -2665,6 +2814,8 @@ if (campaignDrawMode === "daily") {
 async function initialize() {
 
     await loadCampaign();
+
+    await checkTodayDrawReset();
 
     await loadCoupons();
 
